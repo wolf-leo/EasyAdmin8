@@ -3,6 +3,8 @@
 > `EasyAdmin8` 基于 [`EasyAdmin`](https://gitee.com/zhongshaofa/easyadmin) 的基础上更新 ThinkPHP 框架到 8.0 ，PHP 最低版本要求不低于 8.0
 >
 > ThinkPHP v8.0 和 layui v2.8.x 的快速开发的后台管理系统。
+>
+> 演示地址：[easyadmin8.wolfcode.top](http://easyadmin8.wolfcode.top)
 
 ## 安装教程
 
@@ -39,6 +41,23 @@
   }
 
 ```
+
+## 界面预览
+
+### 
+<center>
+  <img src="public/static/common/images/easyadmin8-01.png" />
+</center>
+
+### 
+<center>
+  <img src="public/static/common/images/easyadmin8-02.png" />
+</center>
+
+### 
+<center>
+  <img src="public/static/common/images/easyadmin8-03.png" />
+</center>
 
 ## 项目特性
 
