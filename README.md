@@ -17,11 +17,11 @@
 ```
 1.下载安装包
 
-  git clone https://github.com/wolfcode-cn/easyAdmin8
+  git clone https://github.com/wolf-leo/easyAdmin8
 
   或者
 
-  git clone https://gitee.com/wolf-code/easyAdmin8
+  git clone https://gitee.com/wolf18/easyAdmin8
 
 2.安装依赖包（确保 PHP 版本 >= 8.0）
 
