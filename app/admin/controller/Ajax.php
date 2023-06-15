@@ -57,6 +57,7 @@ class Ajax extends AdminController
      */
     public function upload()
     {
+        $this->isDemo && $this->error('演示环境下不允许修改');
         $this->checkPostRequest();
         $data         = [
             'upload_type' => $this->request->post('upload_type'),
@@ -91,6 +92,7 @@ class Ajax extends AdminController
      */
     public function uploadEditor(): Json
     {
+        $this->isDemo && $this->error('演示环境下不允许修改');
         $this->checkPostRequest();
         $data         = [
             'upload_type' => $this->request->post('upload_type'),
