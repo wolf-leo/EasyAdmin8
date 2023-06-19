@@ -1,18 +1,18 @@
 {
-    "name": "zhongshaofa/easyadmin",
-    "description": "基于ThinkPHP6.0和layui的快速开发的后台管理系统。",
+    "name": "wolfcode/easyadmin",
+    "description": "基于ThinkPHP8.0和layui的快速开发的后台管理系统。",
     "type": "project",
     "keywords": [
         "easyadmin",
         "thinkphp",
         "admin"
     ],
-    "homepage": "http://easyadmin.99php.cn/",
+    "homepage": "http://easyadmin8.wolfcode.top/",
     "license": "MIT",
     "authors": [
         {
-            "name": "zhongshaofa",
-            "email": "2286732552@qq.com"
+            "name": "wolfcode",
+            "url": "https://github.com/wolf-leo/easyAdmin8"
         }
     ],
     "require": {
