@@ -27,9 +27,8 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
             });
         },
         welcome: function () {
-
             miniTab.listen();
-
+            $('#layui-version').text('v' + layui.v);
             /**
              * 查看公告信息
              **/

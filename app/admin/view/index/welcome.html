@@ -111,38 +111,65 @@
                     <div class="layui-card-body layui-text">
                         <table class="layui-table">
                             <colgroup>
-                                <col width="100">
+                                <col width="150">
                                 <col>
                             </colgroup>
                             <tbody>
                             <tr>
                                 <td>框架名称</td>
                                 <td>
-                                    EasyAdmin8
+                                    <button type="button" class="layui-btn layui-btn-xs layui-btn-primary">EasyAdmin8</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ThinkPHP版本</td>
+                                <td>
+                                    <button type="button" class="layui-btn layui-btn-xs layui-btn-primary">{$versions.tpVersion|default='-'}</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PHP版本</td>
+                                <td>
+                                    <button type="button" class="layui-btn layui-btn-xs layui-btn-primary">{$versions.phpVersion|default='-'}</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>MySQL版本</td>
+                                <td>
+                                    <button type="button" class="layui-btn layui-btn-xs layui-btn-primary">{$versions.mysqlVersion|default='-'}</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Layui版本</td>
+                                <td>
+                                    <button type="button" class="layui-btn layui-btn-xs layui-btn-primary" id="layui-version">-</button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>主要特色</td>
-                                <td>零门槛 / 响应式 / 清爽 / 极简</td>
+                                <td>
+                                    <span class="layui-btn layui-btn-xs layui-btn-primary layui-border">零门槛</span>
+                                    <span class="layui-btn layui-btn-xs layui-btn-primary layui-border">响应式</span>
+                                    <span class="layui-btn layui-btn-xs layui-btn-primary layui-border">清爽</span>
+                                    <span class="layui-btn layui-btn-xs layui-btn-primary layui-border">极简</span>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Gitee</td>
-                                <td style="padding-bottom: 0;">
+                                <td>
                                     <div class="layui-btn-container">
-                                        <a href="https://gitee.com/wolf18/easyAdmin8" style="margin-right: 15px" target="_blank">
-                                            https://gitee.com/wolf18/easyAdmin8
+                                        <a href='https://gitee.com/wolf18/easyAdmin8' target="_blank">
+                                            <img src='https://gitee.com/wolf18/easyAdmin8/badge/star.svg?theme=dark' alt='star'/>
                                         </a>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Github</td>
-                                <td style="padding-bottom: 0;">
-                                    <div class="layui-btn-container">
-                                        <a href="https://github.com/wolf-leo/easyAdmin8" style="margin-right: 15px" target="_blank">
-                                            https://github.com/wolf-leo/easyAdmin8
-                                        </a>
-                                    </div>
+                                <td>
+                                    <a href="https://github.com/wolf-leo/easyAdmin8" target="_blank" style="text-decoration: none;">
+                                        <i class="layui-icon layui-icon-github" style="font-size: 25px; color: #333333;"></i>
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>

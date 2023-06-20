@@ -10,6 +10,7 @@ use think\App;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\facade\Db;
 use think\facade\Env;
 
 class Index extends AdminController
@@ -34,12 +35,16 @@ class Index extends AdminController
      */
     public function welcome(): string
     {
-        $quicks = SystemQuick::field('id,title,icon,href')
+        $tpVersion    = \think\facade\App::version();
+        $mysqlVersion = Db::query("select version() as version")[0]['version'] ?? '未知';
+        $phpVersion   = phpversion();
+        $versions     = compact('tpVersion', 'mysqlVersion', 'phpVersion');
+        $quicks       = SystemQuick::field('id,title,icon,href')
             ->where(['status' => 1])
             ->order('sort', 'desc')
             ->limit(8)
             ->select();
-        $this->assign('quicks', $quicks);
+        $this->assign(compact('quicks', 'versions'));
         return $this->fetch();
     }
 
@@ -52,7 +57,7 @@ class Index extends AdminController
      */
     public function editAdmin(): string
     {
-        $id = session('admin.id');
+        $id  = session('admin.id');
         $row = (new SystemAdmin())
             ->withoutField('password')
             ->find($id);
@@ -84,7 +89,7 @@ class Index extends AdminController
      */
     public function editPassword(): string
     {
-        $id = session('admin.id');
+        $id  = session('admin.id');
         $row = (new SystemAdmin())
             ->withoutField('password')
             ->find($id);
@@ -105,8 +110,8 @@ class Index extends AdminController
 
             try {
                 $save = $row->save([
-                    'password' => password($post['password']),
-                ]);
+                                       'password' => password($post['password']),
+                                   ]);
             } catch (Exception $e) {
                 $this->error('保存失败');
             }
