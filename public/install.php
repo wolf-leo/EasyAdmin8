@@ -89,6 +89,16 @@ if (isAjax()) {
         ];
         die(json_encode($data));
     }
+    $envFile = '../.env';
+    if (!is_file($envFile)) {
+        $data = [
+            'code' => 0,
+            'msg'  => '.env 配置文件不存在',
+        ];
+        die(json_encode($data));
+    }
+    $envConfig = parse_ini_file($envFile, true);
+    $charset   = $envConfig['DATABASE']['CHARSET'] ?? 'utf8mb4';
 
     // DB类初始化
     $config = [
@@ -97,7 +107,7 @@ if (isAjax()) {
         'username' => $dbUsername,
         'password' => $dbPassword,
         'hostport' => $hostport,
-        'charset'  => 'utf8',
+        'charset'  => $charset,
         'prefix'   => $prefix,
         'debug'    => true,
     ];
@@ -108,7 +118,6 @@ if (isAjax()) {
                           'install' => array_merge($config, ['database' => $database]),
                       ],
                   ]);
-
     // 检测数据库连接
     if (!checkConnect()) {
         $data = [
@@ -126,7 +135,7 @@ if (isAjax()) {
         die(json_encode($data));
     }
     // 创建数据库
-    createDatabase($database);
+    createDatabase($database, $config);
     // 导入sql语句等等
     $install = install($username, $password, array_merge($config, ['database' => $database]), $adminUrl);
     if ($install !== true) {
@@ -170,7 +179,15 @@ function checkPhpVersion($version)
 function checkConnect()
 {
     try {
-        Db::query("select version()");
+        $mysqlVersion = Db::query("select version() as version");
+        $_version     = $mysqlVersion[0]['version'] ?? 0;
+        if (version_compare($_version, '5.7.0', '<')) {
+            $data = [
+                'code' => 0,
+                'msg'  => 'mysql版本最低要求 5.7.x',
+            ];
+            die(json_encode($data));
+        }
     } catch (\Exception $e) {
         return false;
     }
@@ -187,10 +204,10 @@ function checkDatabase($database)
     }
 }
 
-function createDatabase($database)
+function createDatabase($database, $config)
 {
     try {
-        Db::execute("CREATE DATABASE IF NOT EXISTS `{$database}` DEFAULT CHARACTER SET utf8");
+        Db::execute("CREATE DATABASE IF NOT EXISTS `{$database}` DEFAULT CHARACTER SET {$config['charset']}");
     } catch (\Exception $e) {
         return false;
     }
@@ -370,8 +387,8 @@ return [
             'hostport'          => Env::get('DATABASE.HOSTPORT', '{$data['hostport']}'),
             // 数据库连接参数
             'params'            => [],
-            // 数据库编码默认采用utf8
-            'charset'           => Env::get('DATABASE.CHARSET', 'utf8'),
+            // 数据库编码默认采用utf8mb4
+            'charset'           => Env::get('DATABASE.CHARSET', 'utf8mb4'),
             // 数据库表前缀
             'prefix'            => Env::get('DATABASE.PREFIX', '{$data['prefix']}'),
 
