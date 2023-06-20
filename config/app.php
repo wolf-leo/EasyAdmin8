@@ -41,5 +41,5 @@ return [
     // 显示错误信息
     'show_error_msg'        => false,
     // 静态资源上传到OSS前缀
-    'oss_static_prefix'     => Env::get('EASYADMIN.OSS_STATIC_PREFIX', 'static_EASYADMIN'),
+    'oss_static_prefix'     => Env::get('EASYADMIN.OSS_STATIC_PREFIX', 'static_easyadmin'),
 ];
