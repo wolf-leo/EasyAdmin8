@@ -4,32 +4,11 @@
 >
 > ThinkPHP v8.0 和 layui v2.8.x 的快速开发的后台管理系统。
 >
-> 演示地址：[easyadmin8.wolfcode.top](http://easyadmin8.wolfcode.top)
-
-## 相关文档
-
-* [ThinkPHP 8.0](https://doc.thinkphp.cn/v8_0) 
-
-* [EasyAdmin](http://easyadmin.99php.cn/docs)
-
-* [Layui 2.8.x](https://layui.dev/docs/2.8/)
-
-* [Layuimini](https://github.com/zhongshaofa/layuimini)
-
-* [Annotations](https://github.com/doctrine/annotations)
-
-* [Jquery](https://github.com/jquery/jquery)
-
-* [RequireJs](https://github.com/requirejs/requirejs)
-
-* [CKEditor](https://github.com/ckeditor/ckeditor4)
-
-* [Echarts](https://github.com/apache/incubator-echarts)
+> 演示地址：[http://easyadmin8.wolfcode.top](http://easyadmin8.wolfcode.top)
 
 ## 安装教程
 
 > EasyAdmin8 使用 Composer 来管理项目依赖。因此，在使用 EasyAdmin8 之前，请确保你的机器已经安装了 Composer。
-
 
 ### 通过git下载安装包，composer安装依赖包
 
@@ -42,7 +21,7 @@
 
   git clone https://gitee.com/wolf18/easyAdmin8
 
-2.安装依赖包（确保 PHP 版本 >= 8.0）
+2.安装依赖包（确保 PHP 版本 >= 8.0 且安装 fileinfo 扩展）
 
   composer install
   
@@ -75,6 +54,26 @@
 <center>
   <img src="public/static/common/images/easyadmin8-03.png" />
 </center>
+
+## 相关文档
+
+* [ThinkPHP 8.0](https://doc.thinkphp.cn/v8_0) 
+
+* [EasyAdmin](http://easyadmin.99php.cn/docs)
+
+* [Layui 2.8.x](https://layui.dev/docs/2.8/)
+
+* [Layuimini](https://github.com/zhongshaofa/layuimini)
+
+* [Annotations](https://github.com/doctrine/annotations)
+
+* [Jquery](https://github.com/jquery/jquery)
+
+* [RequireJs](https://github.com/requirejs/requirejs)
+
+* [CKEditor](https://github.com/ckeditor/ckeditor4)
+
+* [Echarts](https://github.com/apache/incubator-echarts)
 
 ## 免责声明
 
