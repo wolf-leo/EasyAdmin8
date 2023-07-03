@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "12d74ce8c06f3a292083ec0877539efe",
+    "content-hash": "785d1ad4524c293ce35086a50d83d0b8",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -2811,12 +2811,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "6b1372ab2795235dce1903e14004b04774113575"
+                "reference": "a598c38b40573f1dd68dfb2667119d99239809fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/framework/zipball/6b1372ab2795235dce1903e14004b04774113575",
-                "reference": "6b1372ab2795235dce1903e14004b04774113575",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/a598c38b40573f1dd68dfb2667119d99239809fa",
+                "reference": "a598c38b40573f1dd68dfb2667119d99239809fa",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2842,6 +2842,7 @@
                 "mockery/mockery": "^1.2",
                 "phpunit/phpunit": "^9.5"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [],
@@ -2874,7 +2875,7 @@
                 "issues": "https://github.com/top-think/framework/issues",
                 "source": "https://github.com/top-think/framework/tree/8.0"
             },
-            "time": "2023-05-19T09:54:47+00:00"
+            "time": "2023-07-03T04:20:34+00:00"
         },
         {
             "name": "topthink/think-captcha",
@@ -3095,16 +3096,16 @@
         },
         {
             "name": "topthink/think-orm",
-            "version": "v3.0.9",
+            "version": "v3.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-orm.git",
-                "reference": "af55970ee87833cf534d04c7e05284680daffb16"
+                "reference": "68b011d5e8b350f8739b9e92c0503a723b47a29c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-orm/zipball/af55970ee87833cf534d04c7e05284680daffb16",
-                "reference": "af55970ee87833cf534d04c7e05284680daffb16",
+                "url": "https://api.github.com/repos/top-think/think-orm/zipball/68b011d5e8b350f8739b9e92c0503a723b47a29c",
+                "reference": "68b011d5e8b350f8739b9e92c0503a723b47a29c",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3150,9 +3151,9 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/think-orm/issues",
-                "source": "https://github.com/top-think/think-orm/tree/v3.0.9"
+                "source": "https://github.com/top-think/think-orm/tree/v3.0.10"
             },
-            "time": "2023-04-20T14:35:04+00:00"
+            "time": "2023-06-21T02:40:23+00:00"
         },
         {
             "name": "topthink/think-template",

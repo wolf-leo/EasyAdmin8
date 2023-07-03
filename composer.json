@@ -1,62 +1,62 @@
 {
-    "name": "wolfcode/easyadmin",
-    "description": "基于ThinkPHP8.0和layui的快速开发的后台管理系统。",
-    "type": "project",
-    "keywords": [
-        "easyadmin",
-        "thinkphp",
-        "admin"
-    ],
-    "homepage": "http://easyadmin8.wolfcode.top/",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "wolfcode",
-            "url": "https://github.com/wolf-leo/easyAdmin8"
-        }
-    ],
-    "require": {
-        "php": ">=8.0.0",
-        "topthink/framework": "8.0.x-dev",
-        "topthink/think-orm": "^3.0",
-        "topthink/think-multi-app": "^1.0",
-        "topthink/think-view": "^2.0",
-        "topthink/think-captcha": "^3.0",
-        "topthink/think-filesystem": "^2.0",
-        "aliyuncs/oss-sdk-php": "^2.3",
-        "qcloud/cos-sdk-v5": "^2.0",
-        "qiniu/php-sdk": "^7.2",
-        "alibabacloud/client": "^1.5",
-        "jianyan74/php-excel": "^1.0",
-        "doctrine/annotations": "^1.13",
-        "ext-json": "*"
-    },
-    "require-dev": {
-        "symfony/var-dumper": "^4.2",
-        "eaglewu/swoole-ide-helper": "dev-master"
-    },
-    "autoload": {
-        "psr-4": {
-            "app\\": "app"
-        },
-        "psr-0": {
-            "": "extend/"
-        }
-    },
-    "config": {
-        "preferred-install": "dist",
-        "secure-http": false
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "@php think service:discover",
-            "@php think vendor:publish"
-        ]
-    },
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://mirrors.aliyun.com/composer/"
-        }
+  "name": "wolfcode/easyadmin8",
+  "url": "https://github.com/wolf-leo/easyAdmin8",
+  "description": "基于ThinkPHP8.0和Layui的快速开发的后台管理系统。",
+  "type": "project",
+  "keywords": [
+    "easyadmin",
+    "thinkphp",
+    "admin"
+  ],
+  "homepage": "http://easyadmin8.wolfcode.top/",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "wolfcode"
     }
+  ],
+  "require": {
+    "php": ">=8.0.0",
+    "topthink/framework": "8.0.x-dev",
+    "topthink/think-orm": "^3.0",
+    "topthink/think-multi-app": "^1.0",
+    "topthink/think-view": "^2.0",
+    "topthink/think-captcha": "^3.0",
+    "topthink/think-filesystem": "^2.0",
+    "aliyuncs/oss-sdk-php": "^2.3",
+    "qcloud/cos-sdk-v5": "^2.0",
+    "qiniu/php-sdk": "^7.2",
+    "alibabacloud/client": "^1.5",
+    "jianyan74/php-excel": "^1.0",
+    "doctrine/annotations": "^1.13",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^4.2",
+    "eaglewu/swoole-ide-helper": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "app\\": "app"
+    },
+    "psr-0": {
+      "": "extend/"
+    }
+  },
+  "config": {
+    "preferred-install": "dist",
+    "secure-http": false
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "@php think service:discover",
+      "@php think vendor:publish"
+    ]
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://mirrors.aliyun.com/composer/"
+    }
+  }
 }
