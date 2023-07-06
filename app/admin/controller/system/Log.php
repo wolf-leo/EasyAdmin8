@@ -7,6 +7,8 @@ use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnotation;
 use think\App;
+use think\db\exception\DbException;
+use think\db\exception\PDOException;
 
 /**
  * @ControllerAnnotation(title="操作日志管理")
@@ -32,13 +34,16 @@ class Log extends AdminController
                 return $this->selectList();
             }
             [$page, $limit, $where, $excludeFields] = $this->buildTableParams(['month']);
-            $month = (isset($excludeFields['month']) && !empty($excludeFields['month']))
-                ? date('Ym', strtotime($excludeFields['month']))
-                : date('Ym');
+            $month = !empty($excludeFields['month']) ? date('Ym', strtotime($excludeFields['month'])) : date('Ym');
             $model = $this->model->setMonth($month)->with('admin')->where($where);
-            $count = $model->count();
-            $list  = $model->page($page, $limit)->order($this->sort)->select();
-            $data  = [
+            try {
+                $count = $model->count();
+                $list  = $model->page($page, $limit)->order($this->sort)->select();
+            } catch (PDOException | DbException $exception) {
+                $count = 0;
+                $list  = [];
+            }
+            $data = [
                 'code'  => 0,
                 'msg'   => '',
                 'count' => $count,
