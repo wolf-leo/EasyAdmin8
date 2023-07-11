@@ -1,10 +1,12 @@
 ## 项目介绍
 
-> `EasyAdmin8` 基于 [`EasyAdmin`](https://gitee.com/zhongshaofa/easyadmin) 的基础上更新 ThinkPHP 框架到 8.0 ，PHP 最低版本要求不低于 8.0
+> `EasyAdmin8` 在 [`EasyAdmin`](https://gitee.com/zhongshaofa/easyadmin) 的基础上更新 ThinkPHP 框架到 8.0 ，PHP 最低版本要求不低于 8.0
 >
 > ThinkPHP v8.0 和 layui v2.8.x 的快速开发的后台管理系统。
 >
 > 演示地址：[http://easyadmin8.wolfcode.top](http://easyadmin8.wolfcode.top)
+> 
+>#####【如果不能访问，可以自行本地搭建预览或参考下方界面预览图】
 
 ## 安装教程
 
@@ -23,9 +25,9 @@
 
 2.安装依赖包（确保 PHP 版本 >= 8.0 且安装 fileinfo 扩展）
 
-  composer install
+  在根目录下 composer install ，如果有报错信息可以使用命令 composer install --ignore-platform-reqs
   
-3. 拷贝 .example.env 文件重命名名为 .env
+3. 拷贝 .example.env 文件重命名为 .env ，命令 cp .example.env .env ，修改数据库账号密码参数
 
 4.配置伪静态(以 Nginx 为例)
   
