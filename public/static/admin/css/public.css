@@ -179,16 +179,14 @@ html, body {
 
 /**表格url样式*/
 .layuimini-table-url {
-    background-color: #1497f3;
-    color: #ffffff;
+    color: #1497f3;
     border-radius: 3px;
     size: 8px !important;
     padding: 2px
 }
 
 .layuimini-table-url:hover {
-    background-color: #1497f3;
-    color: #ffffff;
+    color: #1497f3;
     border-radius: 3px;
     size: 8px !important;
     padding: 2px

@@ -38,7 +38,7 @@ CREATE TABLE `ea_mall_cate`
 -- Records of ea_mall_cate
 -- ----------------------------
 INSERT INTO `ea_mall_cate`
-VALUES ('9', '手机', 'http://admin.host/upload/20200514/98fc09b0c4ad4d793a6f04bef79a0edc.jpg', '0', '1', '', '1589440437', '1589440437', null);
+VALUES ('9', '手机', '/static/common/images/logo-1.png', '0', '1', '', '1589440437', '1589440437', null);
 
 -- ----------------------------
 -- Table structure for ea_mall_goods
@@ -72,10 +72,10 @@ CREATE TABLE `ea_mall_goods`
 -- Records of ea_mall_goods
 -- ----------------------------
 INSERT INTO `ea_mall_goods`
-VALUES ('8', '10', '落地-风扇', 'http://admin.host/upload/20200514/a0f7fe9637abd219f7e93ceb2820df9b.jpg', 'http://admin.host/upload/20200514/95496713918290f6315ea3f87efa6bf2.jpg|http://admin.host/upload/20200514/ae29fa9cba4fc02defb7daed41cb2b13.jpg|http://admin.host/upload/20200514/f0a104d88ec7dc6fb42d2f87cbc71b76.jpg|http://admin.host/upload/20200514/3b88be4b1934690e5c1bd6b54b9ab5c8.jpg',
-        '<p>76654757</p>\n\n<p><img alt=\"\" src=\"http://admin.host/upload/20200515/198070421110fa01f2c2ac2f52481647.jpg\" style=\"height:689px; width:790px\" /></p>\n\n<p><img alt=\"\" src=\"http://admin.host/upload/20200515/a07a742c15a78781e79f8a3317006c1d.jpg\" style=\"height:877px; width:790px\" /></p>\n', '599.00', '368.00', '0', '594', '0', '0', '675', '1', '', '1589454309', '1589567016', null);
+VALUES ('8', '10', '落地-风扇', '/static/common/images/logo-1.png', '/static/common/images/logo-1.png|/static/common/images/logo-1.png|/static/common/images/logo-1.png|/static/common/images/logo-1.png',
+        '<p>76654757</p>\n\n<p><img alt=\"\" src=\"/static/common/images/logo-1.png\" style=\"height:689px; width:790px\" /></p>\n\n<p><img alt=\"\" src=\"/static/common/images/logo-1.png\" style=\"height:877px; width:790px\" /></p>\n', '599.00', '368.00', '0', '594', '0', '0', '675', '1', '', '1589454309', '1589567016', null);
 INSERT INTO `ea_mall_goods`
-VALUES ('9', '9', '电脑', 'http://admin.host/upload/20200514/bbf858d469dec2e12a89460110068d3d.jpg', 'http://admin.host/upload/20200514/f0a104d88ec7dc6fb42d2f87cbc71b76.jpg', '<p>477</p>\n', '0.00', '0.00', '0', '0', '115', '320', '0', '1', '', '1589465215', '1589476345', null);
+VALUES ('9', '9', '电脑', '/static/common/images/logo-1.png', '/static/common/images/logo-1.png', '<p>477</p>\n', '0.00', '0.00', '0', '0', '115', '320', '0', '1', '', '1589465215', '1589476345', null);
 
 -- ----------------------------
 -- Table structure for ea_system_admin
@@ -558,7 +558,5 @@ INSERT INTO `ea_system_uploadfile`
 VALUES ('289', 'alioss', 'image/jpeg', 'https://lxn-99php.oss-cn-shenzhen.aliyuncs.com/upload/20191111/28cefa547f573a951bcdbbeb1396b06f.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);
 INSERT INTO `ea_system_uploadfile`
 VALUES ('290', 'alioss', 'image/jpeg', 'https://lxn-99php.oss-cn-shenzhen.aliyuncs.com/upload/20191111/2c412adf1b30c8be3a913e603c7b6e4a.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);
-INSERT INTO `ea_system_uploadfile`
-VALUES ('291', 'alioss', 'image/jpeg', 'http://easyadmin.oss-cn-shenzhen.aliyuncs.com/upload/20191113/ff793ced447febfa9ea2d86f9f88fa8e.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);
 INSERT INTO `ea_system_uploadfile`
 VALUES ('296', 'txcos', 'image/jpeg', 'https://easyadmin-1251997243.cos.ap-guangzhou.myqcloud.com/upload/20191114/2381eaf81208ac188fa994b6f2579953.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);
