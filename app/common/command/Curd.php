@@ -2,14 +2,12 @@
 
 namespace app\common\command;
 
-use app\admin\model\SystemNode;
-use EasyAdmin\console\CliEcho;
-use EasyAdmin\curd\BuildCurd;
+use app\admin\service\console\CliEcho;
+use app\admin\service\curd\BuildCurd;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Option;
 use think\console\Output;
-use EasyAdmin\auth\Node as NodeService;
 use think\Exception;
 
 class Curd extends Command
@@ -49,41 +47,41 @@ class Curd extends Command
     protected function execute(Input $input, Output $output)
     {
 
-        $table = $input->getOption('table');
+        $table              = $input->getOption('table');
         $controllerFilename = $input->getOption('controllerFilename');
-        $modelFilename = $input->getOption('modelFilename');
+        $modelFilename      = $input->getOption('modelFilename');
 
         $checkboxFieldSuffix = $input->getOption('checkboxFieldSuffix');
-        $radioFieldSuffix = $input->getOption('radioFieldSuffix');
-        $imageFieldSuffix = $input->getOption('imageFieldSuffix');
-        $imagesFieldSuffix = $input->getOption('imagesFieldSuffix');
-        $fileFieldSuffix = $input->getOption('fileFieldSuffix');
-        $filesFieldSuffix = $input->getOption('filesFieldSuffix');
-        $dateFieldSuffix = $input->getOption('dateFieldSuffix');
-        $switchFields = $input->getOption('switchFields');
-        $selectFileds = $input->getOption('selectFileds');
-        $sortFields = $input->getOption('sortFields');
-        $ignoreFields = $input->getOption('ignoreFields');
+        $radioFieldSuffix    = $input->getOption('radioFieldSuffix');
+        $imageFieldSuffix    = $input->getOption('imageFieldSuffix');
+        $imagesFieldSuffix   = $input->getOption('imagesFieldSuffix');
+        $fileFieldSuffix     = $input->getOption('fileFieldSuffix');
+        $filesFieldSuffix    = $input->getOption('filesFieldSuffix');
+        $dateFieldSuffix     = $input->getOption('dateFieldSuffix');
+        $switchFields        = $input->getOption('switchFields');
+        $selectFileds        = $input->getOption('selectFileds');
+        $sortFields          = $input->getOption('sortFields');
+        $ignoreFields        = $input->getOption('ignoreFields');
 
-        $relationTable = $input->getOption('relationTable');
-        $foreignKey = $input->getOption('foreignKey');
-        $primaryKey = $input->getOption('primaryKey');
+        $relationTable         = $input->getOption('relationTable');
+        $foreignKey            = $input->getOption('foreignKey');
+        $primaryKey            = $input->getOption('primaryKey');
         $relationModelFilename = $input->getOption('relationModelFilename');
-        $relationOnlyFileds = $input->getOption('relationOnlyFileds');
-        $relationBindSelect = $input->getOption('relationBindSelect');
+        $relationOnlyFileds    = $input->getOption('relationOnlyFileds');
+        $relationBindSelect    = $input->getOption('relationBindSelect');
 
-        $force = $input->getOption('force');
+        $force  = $input->getOption('force');
         $delete = $input->getOption('delete');
 
         $relations = [];
         foreach ($relationTable as $key => $val) {
             $relations[] = [
-                'table'         => $relationTable[$key],
-                'foreignKey'    => isset($foreignKey[$key]) ? $foreignKey[$key] : null,
-                'primaryKey'    => isset($primaryKey[$key]) ? $primaryKey[$key] : null,
-                'modelFilename' => isset($relationModelFilename[$key]) ? $relationModelFilename[$key] : null,
-                'onlyFileds'    => isset($relationOnlyFileds[$key]) ? explode(",", $relationOnlyFileds[$key]) : [],
-                'relationBindSelect' => isset($relationBindSelect[$key]) ? $relationBindSelect[$key] : null,
+                'table'              => $val,
+                'foreignKey'         => $foreignKey[$key] ?? null,
+                'primaryKey'         => $primaryKey[$key] ?? null,
+                'modelFilename'      => $relationModelFilename[$key] ?? null,
+                'onlyFileds'         => isset($relationOnlyFileds[$key]) ? explode(",", $relationOnlyFileds[$key]) : [],
+                'relationBindSelect' => $relationBindSelect[$key] ?? null,
             ];
         }
 
@@ -113,15 +111,15 @@ class Curd extends Command
             !empty($ignoreFields) && $build = $build->setIgnoreFields($ignoreFields);
 
             foreach ($relations as $relation) {
-                $build = $build->setRelation($relation['table'], $relation['foreignKey'], $relation['primaryKey'], $relation['modelFilename'], $relation['onlyFileds'],$relation['relationBindSelect']);
+                $build = $build->setRelation($relation['table'], $relation['foreignKey'], $relation['primaryKey'], $relation['modelFilename'], $relation['onlyFileds'], $relation['relationBindSelect']);
             }
 
-            $build = $build->render();
+            $build    = $build->render();
             $fileList = $build->getFileList();
 
             if (!$delete) {
                 $result = $build->create();
-                if($force){
+                if ($force) {
                     $output->info(">>>>>>>>>>>>>>>");
                     foreach ($fileList as $key => $val) {
                         $output->info($key);
