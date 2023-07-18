@@ -1,9 +1,9 @@
 <?php
 
-namespace EasyAdmin\curd;
+namespace app\admin\service\curd;
 
-use EasyAdmin\curd\exceptions\TableException;
-use EasyAdmin\tool\CommonTool;
+use app\admin\service\curd\exceptions\TableException;
+use app\admin\service\tool\CommonTool;
 use think\exception\FileException;
 use think\facade\Db;
 
@@ -233,9 +233,9 @@ class BuildCurd
     public function __construct()
     {
         $this->tablePrefix = config('database.connections.mysql.prefix');
-        $this->dbName = config('database.connections.mysql.database');
-        $this->dir = __DIR__;
-        $this->rootDir = root_path();
+        $this->dbName      = config('database.connections.mysql.database');
+        $this->dir         = __DIR__;
+        $this->rootDir     = root_path();
         return $this;
     }
 
@@ -273,7 +273,7 @@ class BuildCurd
             }
 
             // 获取表名注释
-            $tableSchema = Db::query("SELECT table_name,table_comment FROM information_schema.TABLES WHERE table_schema = 'easyadmin' AND table_name = '{$this->tablePrefix}{$this->table}'");
+            $tableSchema        = Db::query("SELECT table_name,table_comment FROM information_schema.TABLES WHERE table_schema = 'easyadmin' AND table_name = '{$this->tablePrefix}{$this->table}'");
             $this->tableComment = (isset($tableSchema[0]['table_comment']) && !empty($tableSchema[0]['table_comment'])) ? $tableSchema[0]['table_comment'] : $this->table;
         } catch (\Exception $e) {
             throw new TableException($e->getMessage());
@@ -324,9 +324,9 @@ class BuildCurd
             $modelFilename = str_replace('/', $this->DS, $modelFilename);
         }
         try {
-            $colums = Db::query("SHOW FULL COLUMNS FROM {$this->tablePrefix}{$relationTable}");
+            $colums       = Db::query("SHOW FULL COLUMNS FROM {$this->tablePrefix}{$relationTable}");
             $formatColums = [];
-            $delete = false;
+            $delete       = false;
             if (!empty($bindSelectField) && !in_array($bindSelectField, array_column($colums, 'Field'))) {
                 throw new TableException("关联表{$relationTable}不存在该字段: {$bindSelectField}");
             }
@@ -352,8 +352,8 @@ class BuildCurd
             }
 
             $modelFilename = empty($modelFilename) ? ucfirst(CommonTool::lineToHump($relationTable)) : $modelFilename;
-            $modelArray = explode($this->DS, $modelFilename);
-            $modelName = array_pop($modelArray);
+            $modelArray    = explode($this->DS, $modelFilename);
+            $modelName     = array_pop($modelArray);
 
             $relation = [
                 'modelFilename'   => $modelFilename,
@@ -365,12 +365,12 @@ class BuildCurd
                 'tableColumns'    => $formatColums,
             ];
             if (!empty($bindSelectField)) {
-                $relationArray = explode('\\', $modelFilename);
+                $relationArray                                      = explode('\\', $modelFilename);
                 $this->tableColumns[$foreignKey]['bindSelectField'] = $bindSelectField;
-                $this->tableColumns[$foreignKey]['bindRelation'] = end($relationArray);
+                $this->tableColumns[$foreignKey]['bindRelation']    = end($relationArray);
             }
             $this->relationArray[$relationTable] = $relation;
-            $this->selectFileds[] = $foreignKey;
+            $this->selectFileds[]                = $foreignKey;
         } catch (\Exception $e) {
             throw new TableException($e->getMessage());
         }
@@ -570,19 +570,19 @@ class BuildCurd
      */
     protected function buildViewJsUrl()
     {
-        $nodeArray = explode($this->DS, $this->controllerFilename);
+        $nodeArray   = explode($this->DS, $this->controllerFilename);
         $formatArray = [];
         foreach ($nodeArray as $vo) {
             $formatArray[] = CommonTool::humpToLine(lcfirst($vo));
         }
         $this->controllerUrl = implode('.', $formatArray);
-        $this->viewFilename = implode($this->DS, $formatArray);
-        $this->jsFilename = $this->viewFilename;
+        $this->viewFilename  = implode($this->DS, $formatArray);
+        $this->jsFilename    = $this->viewFilename;
 
         // 控制器命名空间
-        $namespaceArray = $nodeArray;
-        $this->controllerName = array_pop($namespaceArray);
-        $namespaceSuffix = implode('\\', $namespaceArray);
+        $namespaceArray            = $nodeArray;
+        $this->controllerName      = array_pop($namespaceArray);
+        $namespaceSuffix           = implode('\\', $namespaceArray);
         $this->controllerNamespace = empty($namespaceSuffix) ? "app\admin\controller" : "app\admin\controller\\{$namespaceSuffix}";
 
         // 主表模型命名
@@ -639,7 +639,7 @@ class BuildCurd
         preg_match('/{[\s\S]*?}/i', $string, $formTypeMatch);
         if (!empty($formTypeMatch) && isset($formTypeMatch[0])) {
             $colum['comment'] = str_replace($formTypeMatch[0], '', $colum['comment']);
-            $formType = trim(str_replace('}', '', str_replace('{', '', $formTypeMatch[0])));
+            $formType         = trim(str_replace('}', '', str_replace('{', '', $formTypeMatch[0])));
             if (in_array($formType, $this->formTypeArray)) {
                 $colum['formType'] = $formType;
             }
@@ -679,8 +679,8 @@ class BuildCurd
      */
     protected function buildSelectController($field)
     {
-        $field = CommonTool::lineToHump(ucfirst($field));
-        $name = "get{$field}List";
+        $field      = CommonTool::lineToHump(ucfirst($field));
+        $name       = "get{$field}List";
         $selectCode = CommonTool::replaceTemplate(
             $this->getTemplate("controller{$this->DS}select"),
             [
@@ -697,13 +697,13 @@ class BuildCurd
      */
     protected function buildSelectModel($field, $array)
     {
-        $field = CommonTool::lineToHump(ucfirst($field));
-        $name = "get{$field}List";
+        $field  = CommonTool::lineToHump(ucfirst($field));
+        $name   = "get{$field}List";
         $values = '[';
         foreach ($array as $k => $v) {
             $values .= "'{$k}'=>'{$v}',";
         }
-        $values .= ']';
+        $values     .= ']';
         $selectCode = CommonTool::replaceTemplate(
             $this->getTemplate("model{$this->DS}select"),
             [
@@ -722,9 +722,9 @@ class BuildCurd
     protected function buildRelationSelectModel($relation, $filed)
     {
         $relationArray = explode('\\', $relation);
-        $name = end($relationArray);
-        $name = "get{$name}List";
-        $selectCode = CommonTool::replaceTemplate(
+        $name          = end($relationArray);
+        $name          = "get{$name}List";
+        $selectCode    = CommonTool::replaceTemplate(
             $this->getTemplate("model{$this->DS}relationSelect"),
             [
                 'name'     => $name,
@@ -742,8 +742,8 @@ class BuildCurd
      */
     protected function buildOptionView($field, $select = '')
     {
-        $field = CommonTool::lineToHump(ucfirst($field));
-        $name = "get{$field}List";
+        $field      = CommonTool::lineToHump(ucfirst($field));
+        $name       = "get{$field}List";
         $optionCode = CommonTool::replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}option"),
             [
@@ -762,8 +762,8 @@ class BuildCurd
     protected function buildRadioView($field, $select = '')
     {
         $formatField = CommonTool::lineToHump(ucfirst($field));
-        $name = "get{$formatField}List";
-        $optionCode = CommonTool::replaceTemplate(
+        $name        = "get{$formatField}List";
+        $optionCode  = CommonTool::replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}radioInput"),
             [
                 'field'  => $field,
@@ -782,8 +782,8 @@ class BuildCurd
     protected function buildCheckboxView($field, $select = '')
     {
         $formatField = CommonTool::lineToHump(ucfirst($field));
-        $name = "get{$formatField}List";
-        $optionCode = CommonTool::replaceTemplate(
+        $name        = "get{$formatField}List";
+        $optionCode  = CommonTool::replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}checkboxInput"),
             [
                 'field'  => $field,
@@ -977,7 +977,7 @@ class BuildCurd
         } else {
             $relationCode = '';
             foreach ($this->relationArray as $key => $val) {
-                $relation = CommonTool::lineToHump($key);
+                $relation     = CommonTool::lineToHump($key);
                 $relationCode = "->withJoin('{$relation}', 'LEFT')\r";
             }
             $controllerIndexMethod = CommonTool::replaceTemplate(
@@ -990,7 +990,7 @@ class BuildCurd
         foreach ($this->relationArray as $relation) {
             if (!empty($relation['bindSelectField'])) {
                 $relationArray = explode('\\', $relation['modelFilename']);
-                $selectList .= $this->buildSelectController(end($relationArray));
+                $selectList    .= $this->buildSelectController(end($relationArray));
             }
         }
         foreach ($this->tableColumns as $field => $val) {
@@ -999,9 +999,9 @@ class BuildCurd
             }
         }
 
-        $modelFilenameExtend = str_replace($this->DS,'\\',$this->modelFilename);
+        $modelFilenameExtend = str_replace($this->DS, '\\', $this->modelFilename);
 
-        $controllerValue = CommonTool::replaceTemplate(
+        $controllerValue                 = CommonTool::replaceTemplate(
             $this->getTemplate("controller{$this->DS}controller"),
             [
                 'controllerName'       => $this->controllerName,
@@ -1028,7 +1028,7 @@ class BuildCurd
         } else {
             $relationList = '';
             foreach ($this->relationArray as $key => $val) {
-                $relation = CommonTool::lineToHump($key);
+                $relation     = CommonTool::lineToHump($key);
                 $relationCode = CommonTool::replaceTemplate(
                     $this->getTemplate("model{$this->DS}relation"),
                     [
@@ -1054,13 +1054,13 @@ class BuildCurd
         }
 
         $extendNamespaceArray = explode($this->DS, $this->modelFilename);
-        $extendNamespace = null;
+        $extendNamespace      = null;
         if (count($extendNamespaceArray) > 1) {
             array_pop($extendNamespaceArray);
             $extendNamespace = '\\' . implode('\\', $extendNamespaceArray);
         }
 
-        $modelValue = CommonTool::replaceTemplate(
+        $modelValue                 = CommonTool::replaceTemplate(
             $this->getTemplate("model{$this->DS}model"),
             [
                 'modelName'      => $this->modelName,
@@ -1086,13 +1086,13 @@ class BuildCurd
             }
 
             $extendNamespaceArray = explode($this->DS, $val['modelFilename']);
-            $extendNamespace = null;
+            $extendNamespace      = null;
             if (count($extendNamespaceArray) > 1) {
                 array_pop($extendNamespaceArray);
                 $extendNamespace = '\\' . implode('\\', $extendNamespaceArray);
             }
 
-            $relationModelValue = CommonTool::replaceTemplate(
+            $relationModelValue                 = CommonTool::replaceTemplate(
                 $this->getTemplate("model{$this->DS}model"),
                 [
                     'modelName'      => $val['modelName'],
@@ -1114,8 +1114,8 @@ class BuildCurd
     protected function renderView()
     {
         // 列表页面
-        $viewIndexFile = "{$this->rootDir}app{$this->DS}admin{$this->DS}view{$this->DS}{$this->viewFilename}{$this->DS}index.html";
-        $viewIndexValue = CommonTool::replaceTemplate(
+        $viewIndexFile                  = "{$this->rootDir}app{$this->DS}admin{$this->DS}view{$this->DS}{$this->viewFilename}{$this->DS}index.html";
+        $viewIndexValue                 = CommonTool::replaceTemplate(
             $this->getTemplate("view{$this->DS}index"),
             [
                 'controllerUrl' => $this->controllerUrl,
@@ -1132,19 +1132,19 @@ class BuildCurd
             }
 
             $templateFile = "view{$this->DS}module{$this->DS}input";
-            $define = '';
+            $define       = '';
 
             // 根据formType去获取具体模板
             if ($val['formType'] == 'image') {
                 $templateFile = "view{$this->DS}module{$this->DS}image";
             } elseif ($val['formType'] == 'images') {
                 $templateFile = "view{$this->DS}module{$this->DS}images";
-                $define = isset($val['define']) ? $val['define'] : '|';
+                $define       = isset($val['define']) ? $val['define'] : '|';
             } elseif ($val['formType'] == 'file') {
                 $templateFile = "view{$this->DS}module{$this->DS}file";
             } elseif ($val['formType'] == 'files') {
                 $templateFile = "view{$this->DS}module{$this->DS}files";
-                $define = isset($val['define']) ? $val['define'] : '|';
+                $define       = isset($val['define']) ? $val['define'] : '|';
             } elseif ($val['formType'] == 'editor') {
                 $templateFile = "view{$this->DS}module{$this->DS}editor";
             } elseif ($val['formType'] == 'date') {
@@ -1188,7 +1188,7 @@ class BuildCurd
                     'define'   => $define,
                 ]);
         }
-        $viewAddValue = CommonTool::replaceTemplate(
+        $viewAddValue                 = CommonTool::replaceTemplate(
             $this->getTemplate("view{$this->DS}form"),
             [
                 'formList' => $addFormList,
@@ -1208,7 +1208,7 @@ class BuildCurd
             $templateFile = "view{$this->DS}module{$this->DS}input";
 
             $define = '';
-            $value = '{$row.' . $field . '|default=\'\'}';
+            $value  = '{$row.' . $field . '|default=\'\'}';
 
             // 根据formType去获取具体模板
             if ($val['formType'] == 'image') {
@@ -1221,7 +1221,7 @@ class BuildCurd
                 $templateFile = "view{$this->DS}module{$this->DS}files";
             } elseif ($val['formType'] == 'editor') {
                 $templateFile = "view{$this->DS}module{$this->DS}editor";
-                $value = '{$row.' . $field . '|raw|default=\'\'}';
+                $value        = '{$row.' . $field . '|raw|default=\'\'}';
             } elseif ($val['formType'] == 'date') {
                 $templateFile = "view{$this->DS}module{$this->DS}date";
                 if (isset($val['define']) && !empty($val['define'])) {
@@ -1251,7 +1251,7 @@ class BuildCurd
                 }
             } elseif (in_array($field, ['remark']) || $val['formType'] == 'textarea') {
                 $templateFile = "view{$this->DS}module{$this->DS}textarea";
-                $value = '{$row.' . $field . '|raw|default=\'\'}';
+                $value        = '{$row.' . $field . '|raw|default=\'\'}';
             }
 
             $editFormList .= CommonTool::replaceTemplate(
@@ -1264,7 +1264,7 @@ class BuildCurd
                     'define'   => $define,
                 ]);
         }
-        $viewEditValue = CommonTool::replaceTemplate(
+        $viewEditValue                 = CommonTool::replaceTemplate(
             $this->getTemplate("view{$this->DS}form"),
             [
                 'formList' => $editFormList,
@@ -1299,14 +1299,14 @@ class BuildCurd
                 continue;
             } elseif (in_array($field, $this->switchFields)) {
                 if (isset($val['define']) && !empty($val['define'])) {
-                    $values = json_encode($val['define'], JSON_UNESCAPED_UNICODE);
+                    $values        = json_encode($val['define'], JSON_UNESCAPED_UNICODE);
                     $templateValue = "{field: '{$field}', search: 'select', selectList: {$values}, title: '{$val['comment']}', templet: ea.table.switch}";
                 } else {
                     $templateValue = "{field: '{$field}', title: '{$val['comment']}', templet: ea.table.switch}";
                 }
             } elseif (in_array($val['formType'], ['select', 'checkbox', 'radio', 'switch'])) {
                 if (isset($val['define']) && !empty($val['define'])) {
-                    $values = json_encode($val['define'], JSON_UNESCAPED_UNICODE);
+                    $values        = json_encode($val['define'], JSON_UNESCAPED_UNICODE);
                     $templateValue = "{field: '{$field}', search: 'select', selectList: {$values}, title: '{$val['comment']}'}";
                 } else {
                     $templateValue = "{field: '{$field}', title: '{$val['comment']}'}";
@@ -1354,7 +1354,7 @@ class BuildCurd
 
         $indexCols .= $this->formatColsRow("{width: 250, title: '操作', templet: ea.table.tool},\r");
 
-        $jsValue = CommonTool::replaceTemplate(
+        $jsValue                 = CommonTool::replaceTemplate(
             $this->getTemplate("static{$this->DS}js"),
             [
                 'controllerUrl' => $this->controllerUrl,
