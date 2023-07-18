@@ -6,6 +6,8 @@
 >
 > 演示地址：[http://easyadmin8.wolfcode.top](http://easyadmin8.wolfcode.top)
 > 
+> 如果您之前已经用过 `FastAdmin` 或者 `EasyAdmin` , 那么入手 `EasyAdmin8` 将会更加轻松
+> 
 >#####【如果不能访问，可以自行本地搭建预览或参考下方界面预览图】
 
 ## 安装教程
@@ -39,7 +41,10 @@
   }
 
 ```
-
+## CURD命令大全
+>
+> 参考 [CURD命令大全](CURD.md)
+> 
 ## 界面预览
 
 ### 
