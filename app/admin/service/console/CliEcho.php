@@ -1,6 +1,6 @@
 <?php
 
-namespace EasyAdmin\console;
+namespace app\admin\service\console;
 
 class CliEcho
 {
