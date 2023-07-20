@@ -1,5 +1,5 @@
 <div class="layuimini-container">
-    <form id="app-form" class="layui-form layuimini-form">
+    <form id="app-form" class="layui-form layuimini-form" autocomplete="off">
 
         <div class="layui-form-item">
             <label class="layui-form-label required">用户头像</label>
@@ -15,8 +15,15 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">登录账户</label>
             <div class="layui-input-block">
-                <input type="text" name="username" class="layui-input" lay-verify="required" lay-reqtext="请输入登录账户" placeholder="请输入登录账户" value="">
+                <input type="text" name="username" class="layui-input" lay-verify="required" lay-reqtext="请输入登录账户" placeholder="请输入登录账户" value="" readonly onclick="this.removeAttribute('readonly');">
                 <tip>填写登录账户。</tip>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">登录密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" class="layui-input" placeholder="请输入登录密码" value="" readonly onclick="this.removeAttribute('readonly');">
+                <tip>为空默认 123456</tip>
             </div>
         </div>
 
