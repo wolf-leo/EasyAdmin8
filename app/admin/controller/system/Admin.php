@@ -73,6 +73,8 @@ class Admin extends AdminController
             $post['auth_ids'] = implode(',', array_keys($authIds));
             $rule             = [];
             $this->validate($post, $rule);
+            if (empty($post['password'])) $post['password'] = '123456';
+            $post['password'] = password($post['password']);
             try {
                 $save = $this->model->save($post);
             } catch (\Exception $e) {
