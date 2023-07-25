@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace app\admin\service\upload\driver;
 
 use app\admin\service\upload\FileBase;
@@ -21,6 +19,13 @@ class Local extends FileBase
      */
     public function save()
     {
+        if (pathinfo($this->file->getOriginalName(), PATHINFO_EXTENSION) === 'php') {
+            return [
+                'save' => false,
+                'msg'  => '上传文件中存在异常文件，请重新选择',
+                'url'  => '',
+            ];
+        }
         parent::save();
         SaveDb::trigger($this->tableName, [
             'upload_type'   => $this->uploadType,

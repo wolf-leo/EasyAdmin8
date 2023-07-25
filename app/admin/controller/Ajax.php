@@ -77,7 +77,7 @@ class Ajax extends AdminController
                 ->setFile($data['file'])
                 ->save();
         } catch (\Exception $e) {
-            $this->error($e->getMessage());
+            return $this->error($e->getMessage());
         }
         if ($upload['save'] == true) {
             $this->success($upload['msg'], ['url' => $upload['url']]);
@@ -112,20 +112,22 @@ class Ajax extends AdminController
                 ->setFile($data['file'])
                 ->save();
         } catch (\Exception $e) {
-            $this->error($e->getMessage());
+            return $this->error($e->getMessage());
         }
         if ($upload['save'] == true) {
             return json([
-                            'error'    => [
-                                'message' => '上传成功',
-                                'number'  => 201,
-                            ],
+                            'error'    => ['message' => '上传成功', 'number' => 201,],
                             'fileName' => '',
                             'uploaded' => 1,
                             'url'      => $upload['url'],
                         ]);
         } else {
-            $this->error($upload['msg']);
+            return json([
+                            'error'    => ['message' => $upload['msg'], 'number' => -1,],
+                            'fileName' => '',
+                            'uploaded' => 0,
+                            'url'      => '',
+                        ]);
         }
     }
 
