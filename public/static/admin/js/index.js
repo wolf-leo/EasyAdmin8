@@ -50,7 +50,6 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
         },
         welcome: function () {
             miniTab.listen();
-            $('#layui-version').text('v' + layui.v);
             /**
              * 查看公告信息
              **/
@@ -86,6 +85,7 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
              * 报表功能
              */
             $(function () {
+                $('#layui-version').text('v' + layui.v);
                 let echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
                 let optionRecords = {
                     title: {
