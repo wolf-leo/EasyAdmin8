@@ -2,6 +2,7 @@
 
 namespace app\admin\model;
 
+use app\admin\service\SystemLogService;
 use app\common\model\TimeModel;
 
 class SystemLog extends TimeModel
@@ -15,6 +16,7 @@ class SystemLog extends TimeModel
 
     public function setMonth($month)
     {
+        SystemLogService::instance()->detectTable();
         $this->name = 'system_log_' . $month;
         return $this;
     }
