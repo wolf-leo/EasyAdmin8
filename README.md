@@ -4,7 +4,9 @@
 >
 > ThinkPHP v8.0 和 layui v2.8.x 的快速开发的后台管理系统。
 >
-> 演示地址：[http://easyadmin8.wolfcode.top](http://easyadmin8.wolfcode.top)
+> 项目地址：[http://easyadmin8.wolfcode.top](http://easyadmin8.wolfcode.top)
+> 
+> 演示地址：[http://easyadmin8.wolfcode.top/admin](http://easyadmin8.wolfcode.top/admin)
 > 
 > 如果您之前已经用过 `FastAdmin` 或者 `EasyAdmin` , 那么入手 `EasyAdmin8` 将会更加轻松
 > 
