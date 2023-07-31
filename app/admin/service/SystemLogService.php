@@ -110,9 +110,8 @@ class SystemLogService
      * 根据后缀获取创建表的sql
      * @return string
      */
-    protected function getCreateSql()
+    protected function getCreateSql(): string
     {
-        $charset = Env::get('DATABASE.CHARSET', 'utf8');
         return <<<EOT
 CREATE TABLE `{$this->tableName}` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -125,7 +124,7 @@ CREATE TABLE `{$this->tableName}` (
   `useragent` varchar(255) DEFAULT '' COMMENT 'User-Agent',
   `create_time` int(10) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET={$charset} ROW_FORMAT=COMPACT COMMENT='后台操作日志表 - {$this->tableSuffix}';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='后台操作日志表 - {$this->tableSuffix}';
 EOT;
     }
 
