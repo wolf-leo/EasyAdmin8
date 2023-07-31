@@ -2,8 +2,10 @@
 
 namespace app\admin\service;
 
+use think\facade\Cache;
 use think\facade\Db;
 use think\facade\Config;
+use think\facade\Env;
 
 /**
  * 系统日志表
@@ -45,7 +47,7 @@ class SystemLogService
     {
         $this->tablePrefix = Config::get('database.connections.mysql.prefix');
         $this->tableSuffix = date('Ym', time());
-        $this->tableName = "{$this->tablePrefix}system_log_{$this->tableSuffix}";
+        $this->tableName   = "{$this->tablePrefix}system_log_{$this->tableSuffix}";
         return $this;
     }
 
@@ -85,13 +87,17 @@ class SystemLogService
      * 检测数据表
      * @return bool
      */
-    protected function detectTable()
+    public function detectTable(): bool
     {
+        // 手动删除日志表时候 记得清除缓存
+        $isset = Cache::get("systemLog{$this->tableName}Table");
+        if ($isset) return true;
         $check = Db::query("show tables like '{$this->tableName}'");
         if (empty($check)) {
             $sql = $this->getCreateSql();
             Db::execute($sql);
         }
+        Cache::set("system_log_{$this->tableName}_table", !empty($check));
         return true;
     }
 
@@ -106,6 +112,7 @@ class SystemLogService
      */
     protected function getCreateSql()
     {
+        $charset = Env::get('DATABASE.CHARSET', 'utf8');
         return <<<EOT
 CREATE TABLE `{$this->tableName}` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -118,7 +125,7 @@ CREATE TABLE `{$this->tableName}` (
   `useragent` varchar(255) DEFAULT '' COMMENT 'User-Agent',
   `create_time` int(10) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=630 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='后台操作日志表 - {$this->tableSuffix}';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET={$charset} ROW_FORMAT=COMPACT COMMENT='后台操作日志表 - {$this->tableSuffix}';
 EOT;
     }
 
