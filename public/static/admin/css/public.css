@@ -7,11 +7,19 @@ html, body {
     background: #f2f2f2;
 }
 
+html.dark, body {
+    height: 100%;
+    background: var(--lay-color-bg-1);
+}
+
+.ws-header-theme .layui-form-switch {
+    vertical-align: baseline;
+}
+
 .layuimini-container {
     min-height: 250px;
     padding: 15px;
     margin: 0 auto;
-    background: #FFFFFF;
 }
 
 .layuimini-main {
@@ -19,6 +27,14 @@ html, body {
     padding: 15px 15px;
     background-color: #ffffff;
     border: 1px solid #f2f2f2;
+    border-radius: 5px;
+}
+
+.dark .layuimini-main {
+    position: relative;
+    padding: 15px 15px;
+    background-color: var(--lay-color-bg-1);
+    border: 1px solid #363636;
     border-radius: 5px;
 }
 
@@ -49,6 +65,14 @@ html, body {
     border-top: 1px dashed #e7eaec;
 }
 
+.dark .hr-line {
+    color: #363636;
+    height: 1px;
+    margin: 30px 0;
+    background-color: #363636;
+    border-top: 1px dashed #363636;
+}
+
 /**重写layui表格自适应*/
 .layuimini-container .layui-table-cell {
     height: 100%;
@@ -61,6 +85,14 @@ html, body {
     border: 1px solid #e6e6e6;
     padding: 10px 20px 5px 20px;
     color: #6b6b6b;
+}
+
+/**数据表格-搜索表单样式*/
+.dark .layuimini-container .table-search-fieldset {
+    margin: 0;
+    border: 1px solid #363636;
+    padding: 10px 20px 5px 20px;
+    color: #bdbdbd;
 }
 
 .layuimini-container .table-search-fieldset input::-webkit-input-placeholder {
@@ -122,6 +154,13 @@ html, body {
     position: absolute;
     right: 0px;
     background-color: #fff;
+}
+
+.dark .layuimini-upload .layuimini-upload-btn {
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+    background-color: #363636;
 }
 
 .layuimini-upload-show {
@@ -218,6 +257,12 @@ table样式
     padding-bottom: 15px !important;
 }
 
+.dark .layuimini-container .layui-table-tool {
+    background-color: var(--lay-color-bg-1);
+    border-bottom: none !important;
+    padding-bottom: 15px !important;
+}
+
 .layuimini-container .layui-table-view {
     border: none !important;
 }
@@ -226,6 +271,12 @@ table样式
     border-width: 1px;
     border-style: solid;
     border-color: #e6e6e6;
+}
+
+.dark .layuimini-container .layui-table-box {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #363636;
 }
 
 .layuimini-container .layui-table-page, .layui-table-total {
@@ -393,7 +444,6 @@ table样式
 .layui-layer-easy .layui-layer-setwin .layui-layer-min:before,
 .layui-layer-easy .layui-layer-setwin .layui-layer-min:after {
     border-color: #FFFFFF;
-    background: #FFFFFF;
 }
 
 .layui-layer-easy .layui-layer-setwin .layui-layer-max:before,

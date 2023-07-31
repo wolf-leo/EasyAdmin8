@@ -11,5 +11,5 @@
 use think\facade\Route;
 
 Route::any('/', function () {
-    return redirect(url('/' . env('EASYADMIN.ADMIN')));
+    return redirect('/home/');
 });
