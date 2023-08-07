@@ -8,8 +8,9 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+use think\facade\Env;
 use think\facade\Route;
 
 Route::any('/', function () {
-    return view('index');
+    return redirect('/' . Env::get('EASYADMIN.ADMIN', false));
 });

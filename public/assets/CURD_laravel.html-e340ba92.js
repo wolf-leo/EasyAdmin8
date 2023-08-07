@@ -1,1 +1,0 @@
-const e=JSON.parse('{"key":"v-6872b6e2","path":"/guide/CURD_laravel.html","title":"CURD命令大全","lang":"zh-CN","frontmatter":{},"headers":[],"git":{},"filePathRelative":"guide/CURD_laravel.md"}');export{e as data};
