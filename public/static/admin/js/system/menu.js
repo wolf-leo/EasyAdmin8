@@ -127,17 +127,19 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
             ea.listen();
         },
         add: function () {
-            iconPickerFa.render({
-                elem: '#icon',
-                url: PATH_CONFIG.iconLess,
-                limit: 12,
-                click: function (data) {
-                    $('#icon').val('fa ' + data.icon);
-                },
-                success: function (d) {
-                    console.log(d);
-                }
-            });
+            $(function () {
+                iconPickerFa.render({
+                    elem: '#icon',
+                    url: PATH_CONFIG.iconLess,
+                    limit: 12,
+                    click: function (data) {
+                        $('#icon').val('fa ' + data.icon);
+                    },
+                    success: function (d) {
+                        console.log(d);
+                    }
+                });
+            })
             autocomplete.render({
                 elem: $('#href')[0],
                 url: ea.url('system.menu/getMenuTips'),
@@ -158,17 +160,19 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
             });
         },
         edit: function () {
-            iconPickerFa.render({
-                elem: '#icon',
-                url: PATH_CONFIG.iconLess,
-                limit: 12,
-                click: function (data) {
-                    $('#icon').val('fa ' + data.icon);
-                },
-                success: function (d) {
-                    console.log(d);
-                }
-            });
+            $(function () {
+                iconPickerFa.render({
+                    elem: '#icon',
+                    url: PATH_CONFIG.iconLess,
+                    limit: 12,
+                    click: function (data) {
+                        $('#icon').val('fa ' + data.icon);
+                    },
+                    success: function (d) {
+                        console.log(d);
+                    }
+                });
+            })
             autocomplete.render({
                 elem: $('#href')[0],
                 url: ea.url('system.menu/getMenuTips'),
