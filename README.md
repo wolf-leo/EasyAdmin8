@@ -10,7 +10,13 @@
 > 
 > 如果您之前已经用过 `FastAdmin` 或者 `EasyAdmin` , 那么入手 `EasyAdmin8` 将会更加轻松
 > 
->#####【如果不能访问，可以自行本地搭建预览或参考下方界面预览图】
+>【如果不能访问，可以自行本地搭建预览或参考下方界面预览图】
+
+## 所有PHP版本
+> ThinKPHP:[GitHub](https://github.com/wolf-leo/EasyAdmin8)  [Gitee](https://gitee.com/wolf18/easyAdmin8)
+>
+> Laravel :[GitHub](https://github.com/wolf-leo/EasyAdmin8-Laravel)  [Gitee](https://gitee.com/wolf18/EasyAdmin8-Laravel)
+> 
 
 ## 安装教程
 
