@@ -6,7 +6,7 @@
 >
 > 项目地址：[http://easyadmin8.wolfcode.top](http://easyadmin8.wolfcode.top)
 > 
-> 演示地址：[http://easyadmin8.wolfcode.top/admin](http://easyadmin8.wolfcode.top/admin)
+> 演示地址：[http://thinkphp.easyadmin8.top/admin](http://thinkphp.easyadmin8.top/admin)
 > 
 > 如果您之前已经用过 `FastAdmin` 或者 `EasyAdmin` , 那么入手 `EasyAdmin8` 将会更加轻松
 > 
