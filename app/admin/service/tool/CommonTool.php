@@ -14,7 +14,7 @@ class CommonTool
     {
         $str = preg_replace_callback('/([-_]+([a-z]{1}))/i', function ($matches) {
             return strtoupper($matches[2]);
-        }, $str);
+        },                           $str);
         return $str;
     }
 
@@ -27,7 +27,7 @@ class CommonTool
     {
         $str = preg_replace_callback('/([A-Z]{1})/', function ($matches) {
             return '_' . strtolower($matches[0]);
-        }, $str);
+        },                           $str);
         return $str;
     }
 
@@ -39,7 +39,7 @@ class CommonTool
     {
         $ip = $_SERVER['REMOTE_ADDR'];
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match_all('#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s', $_SERVER['HTTP_X_FORWARDED_FOR'], $matches)) {
-            foreach ($matches[0] AS $xip) {
+            foreach ($matches[0] as $xip) {
                 if (!preg_match('#^(10|172\.16|192\.168)\.#', $xip)) {
                     $ip = $xip;
                     break;
@@ -69,10 +69,10 @@ class CommonTool
             if ($file != ".." && $file != ".") {
                 if (is_dir($path . DIRECTORY_SEPARATOR . $file)) {
                     $childFiles = self::readDirAllFiles($path . DIRECTORY_SEPARATOR . $file, $basePath);
-                    $list = array_merge($childFiles, $list);
+                    $list       = array_merge($childFiles, $list);
                 } else {
-                    $filePath = $path . DIRECTORY_SEPARATOR . $file;
-                    $fileName = str_replace($basePath . DIRECTORY_SEPARATOR, '', $filePath);
+                    $filePath        = $path . DIRECTORY_SEPARATOR . $file;
+                    $fileName        = str_replace($basePath . DIRECTORY_SEPARATOR, '', $filePath);
                     $list[$fileName] = $filePath;
                 }
             }
@@ -89,6 +89,7 @@ class CommonTool
     public static function replaceTemplate($string, $array)
     {
         foreach ($array as $key => $val) {
+            if (is_null($val)) $val = '';
             $string = str_replace("{{" . $key . "}}", $val, $string);
         }
         return $string;
