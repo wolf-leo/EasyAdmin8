@@ -5,18 +5,12 @@
 > ThinkPHP v8.0 和 layui v2.8.x 的快速开发的后台管理系统。
 >
 > 项目地址：[http://easyadmin8.wolfcode.top](http://easyadmin8.wolfcode.top)
-> 
-> 演示地址：[http://thinkphp.easyadmin8.top/admin](http://thinkphp.easyadmin8.top/admin)
-> 
-> 如果您之前已经用过 `FastAdmin` 或者 `EasyAdmin` , 那么入手 `EasyAdmin8` 将会更加轻松
-> 
->【如果不能访问，可以自行本地搭建预览或参考下方界面预览图】
-
-## 所有PHP版本
-> ThinKPHP:[GitHub](https://github.com/wolf-leo/EasyAdmin8)  [Gitee](https://gitee.com/wolf18/easyAdmin8)
 >
-> Laravel :[GitHub](https://github.com/wolf-leo/EasyAdmin8-Laravel)  [Gitee](https://gitee.com/wolf18/EasyAdmin8-Laravel)
-> 
+> 演示地址：[http://thinkphp.easyadmin8.top/admin](http://thinkphp.easyadmin8.top/admin)
+>
+> 如果您之前已经用过 `FastAdmin` 或者 `EasyAdmin` , 那么入手 `EasyAdmin8` 将会更加轻松
+>
+>【如果不能访问，可以自行本地搭建预览或参考下方界面预览图】
 
 ## 安装教程
 
@@ -49,30 +43,56 @@
   }
 
 ```
+
 ## CURD命令大全
 
 > 参考 [CURD命令大全](CURD.md)
 
 ## 界面预览
 
-### 
+###  
+
 <center>
   <img src="public/static/common/images/easyadmin8-01.png" />
 </center>
 
-### 
+###  
+
 <center>
   <img src="public/static/common/images/easyadmin8-02.png" />
 </center>
 
-### 
+###  
+
 <center>
   <img src="public/static/common/images/easyadmin8-03.png" />
 </center>
 
+## 所有PHP版本
+
+> #### ThinKPHP:
+>
+>   [https://github.com/wolf-leo/EasyAdmin8](https://github.com/wolf-leo/EasyAdmin8)
+>
+>   [https://gitee.com/wolf18/easyAdmin8](https://gitee.com/wolf18/easyAdmin8)
+>
+> #### Laravel :
+>
+>   [https://github.com/wolf-leo/EasyAdmin8-Laravel](https://github.com/wolf-leo/EasyAdmin8-Laravel)
+>
+>   [https://gitee.com/wolf18/EasyAdmin8-Laravel](https://gitee.com/wolf18/EasyAdmin8-Laravel)
+
+## 交流群
+
+<center>
+
+![EasyAdmin8-ThinkPHP 交流群](public/static/common/images/EasyAdmin8-ThinkPHP.png)
+
+</center>
+
 ## 相关文档
 
-* [ThinkPHP 8.0](https://doc.thinkphp.cn/v8_0) 
+* [ThinkPHP 8.0](https://doc.thinkphp.cn/v8_0)
 
 * [EasyAdmin](http://easyadmin.99php.cn/docs)
 
@@ -99,7 +119,7 @@
 * `EasyAdmin8`后台框架是一款开源免费的后台快速开发框架 ，主要用于更便捷地开发后台管理；其尊重并保护所有用户的个人隐私权，不窃取任何用户计算机中的信息。更不具备用户数据存储等网络传输功能。
 
 * 您承诺秉着合法、合理的原则使用`EasyAdmin8`后台框架，不利用`EasyAdmin8`后台框架进行任何违法、侵害他人合法利益等恶意的行为，亦不将`EasyAdmin8`后台框架运用于任何违反我国法律法规的 Web 平台。
- 
+
 * 任何单位或个人因下载使用`EasyAdmin8`后台框架而产生的任何意外、疏忽、合约毁坏、诽谤、版权或知识产权侵犯及其造成的损失 (包括但不限于直接、间接、附带或衍生的损失等)，本开源项目不承担任何法律责任。
 
 * 用户明确并同意本声明条款列举的全部内容，对使用`EasyAdmin8`后台框架可能存在的风险和相关后果将完全由用户自行承担，本开源项目不承担任何法律责任。
