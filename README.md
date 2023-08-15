@@ -4,7 +4,7 @@
 >
 > ThinkPHP v8.0 和 layui v2.8.x 的快速开发的后台管理系统。
 >
-> 项目地址：[http://easyadmin8.wolfcode.top](http://easyadmin8.wolfcode.top)
+> 项目地址：[http://easyadmin8.top](http://easyadmin8.top)
 >
 > 演示地址：[http://thinkphp.easyadmin8.top/admin](http://thinkphp.easyadmin8.top/admin)
 >
@@ -81,6 +81,12 @@
 >   [https://github.com/wolf-leo/EasyAdmin8-Laravel](https://github.com/wolf-leo/EasyAdmin8-Laravel)
 >
 >   [https://gitee.com/wolf18/EasyAdmin8-Laravel](https://gitee.com/wolf18/EasyAdmin8-Laravel)
+>
+> #### webman :
+>
+>   [https://github.com/wolf-leo/EasyAdmin8-webman](https://github.com/wolf-leo/EasyAdmin8-webman)
+>
+>   [https://gitee.com/wolf18/EasyAdmin8-webman](https://gitee.com/wolf18/EasyAdmin8-webman)
 
 ## 交流群
 
