@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "280a2e069fbe038b791d7d06e11590c8",
+    "content-hash": "bcdc64a64bbf0b2934132cd1981c572b",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -865,16 +865,16 @@
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "1.5.3",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "67ab6e18aaa14d753cc148911d273f6e6cb6721e"
+                "reference": "111166291a0f8130081195ac4556a5587d7f1b5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/67ab6e18aaa14d753cc148911d273f6e6cb6721e",
-                "reference": "67ab6e18aaa14d753cc148911d273f6e6cb6721e",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/111166291a0f8130081195ac4556a5587d7f1b5d",
+                "reference": "111166291a0f8130081195ac4556a5587d7f1b5d",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -884,16 +884,20 @@
                 ]
             },
             "require": {
-                "php": ">=5.5"
+                "php": "^7.2.5 || ^8.0"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "^4.4 || ^5.1"
+                "bamarni/composer-bin-plugin": "^1.8.1",
+                "phpunit/phpunit": "^8.5.29 || ^9.5.23"
             },
             "type": "library",
+            "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": false
+                }
+            },
             "autoload": {
-                "files": [
-                    "src/functions_include.php"
-                ],
                 "psr-4": {
                     "GuzzleHttp\\Promise\\": "src/"
                 }
@@ -930,7 +934,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/1.5.3"
+                "source": "https://github.com/guzzle/promises/tree/2.0.1"
             },
             "funding": [
                 {
@@ -946,20 +950,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-21T12:31:43+00:00"
+            "time": "2023-08-03T15:11:55+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.5.0",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "b635f279edd83fc275f822a1188157ffea568ff6"
+                "reference": "8bd7c33a0734ae1c5d074360512beb716bef3f77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/b635f279edd83fc275f822a1188157ffea568ff6",
-                "reference": "b635f279edd83fc275f822a1188157ffea568ff6",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/8bd7c33a0734ae1c5d074360512beb716bef3f77",
+                "reference": "8bd7c33a0734ae1c5d074360512beb716bef3f77",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1052,7 +1056,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.5.0"
+                "source": "https://github.com/guzzle/psr7/tree/2.6.0"
             },
             "funding": [
                 {
@@ -1068,7 +1072,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-17T16:11:26+00:00"
+            "time": "2023-08-03T15:06:02+00:00"
         },
         {
             "name": "guzzlehttp/uri-template",
@@ -1308,16 +1312,16 @@
         },
         {
             "name": "league/mime-type-detection",
-            "version": "1.11.0",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/mime-type-detection.git",
-                "reference": "ff6248ea87a9f116e78edd6002e39e5128a0d4dd"
+                "reference": "c7f2872fb273bf493811473dafc88d60ae829f48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/ff6248ea87a9f116e78edd6002e39e5128a0d4dd",
-                "reference": "ff6248ea87a9f116e78edd6002e39e5128a0d4dd",
+                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/c7f2872fb273bf493811473dafc88d60ae829f48",
+                "reference": "c7f2872fb273bf493811473dafc88d60ae829f48",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1354,7 +1358,7 @@
             "description": "Mime-type detection for Flysystem",
             "support": {
                 "issues": "https://github.com/thephpleague/mime-type-detection/issues",
-                "source": "https://github.com/thephpleague/mime-type-detection/tree/1.11.0"
+                "source": "https://github.com/thephpleague/mime-type-detection/tree/1.12.0"
             },
             "funding": [
                 {
@@ -1366,7 +1370,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-17T13:12:02+00:00"
+            "time": "2023-08-03T07:14:11+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -2222,16 +2226,16 @@
         },
         {
             "name": "qcloud/cos-sdk-v5",
-            "version": "v2.6.4",
+            "version": "v2.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tencentyun/cos-php-sdk-v5.git",
-                "reference": "06ccc95599635abd3f431f470b79b8fb8ddbd6a0"
+                "reference": "0eb08d6920df91b2c8fef3a8bfe409649dc8f877"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tencentyun/cos-php-sdk-v5/zipball/06ccc95599635abd3f431f470b79b8fb8ddbd6a0",
-                "reference": "06ccc95599635abd3f431f470b79b8fb8ddbd6a0",
+                "url": "https://api.github.com/repos/tencentyun/cos-php-sdk-v5/zipball/0eb08d6920df91b2c8fef3a8bfe409649dc8f877",
+                "reference": "0eb08d6920df91b2c8fef3a8bfe409649dc8f877",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2290,9 +2294,9 @@
             ],
             "support": {
                 "issues": "https://github.com/tencentyun/cos-php-sdk-v5/issues",
-                "source": "https://github.com/tencentyun/cos-php-sdk-v5/tree/v2.6.4"
+                "source": "https://github.com/tencentyun/cos-php-sdk-v5/tree/v2.6.5"
             },
-            "time": "2023-07-12T03:41:07+00:00"
+            "time": "2023-08-16T02:26:48+00:00"
         },
         {
             "name": "qiniu/php-sdk",
@@ -2806,16 +2810,16 @@
         },
         {
             "name": "topthink/framework",
-            "version": "v8.0.1",
+            "version": "v8.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "23101f0ad7581de32442553e045cffd7686a337b"
+                "reference": "6477942f80090a7f3d194197765ca1217a7aab87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/framework/zipball/23101f0ad7581de32442553e045cffd7686a337b",
-                "reference": "23101f0ad7581de32442553e045cffd7686a337b",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/6477942f80090a7f3d194197765ca1217a7aab87",
+                "reference": "6477942f80090a7f3d194197765ca1217a7aab87",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2871,9 +2875,9 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/framework/issues",
-                "source": "https://github.com/top-think/framework/tree/v8.0.1"
+                "source": "https://github.com/top-think/framework/tree/v8.0.2"
             },
-            "time": "2023-07-09T09:12:43+00:00"
+            "time": "2023-08-15T03:05:55+00:00"
         },
         {
             "name": "topthink/think-captcha",
@@ -3094,16 +3098,16 @@
         },
         {
             "name": "topthink/think-orm",
-            "version": "v3.0.10",
+            "version": "v3.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-orm.git",
-                "reference": "68b011d5e8b350f8739b9e92c0503a723b47a29c"
+                "reference": "38a6da3ae03bcae4ea2f484a4cf05687a88a5488"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-orm/zipball/68b011d5e8b350f8739b9e92c0503a723b47a29c",
-                "reference": "68b011d5e8b350f8739b9e92c0503a723b47a29c",
+                "url": "https://api.github.com/repos/top-think/think-orm/zipball/38a6da3ae03bcae4ea2f484a4cf05687a88a5488",
+                "reference": "38a6da3ae03bcae4ea2f484a4cf05687a88a5488",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3121,7 +3125,7 @@
                 "topthink/think-helper": "^3.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7|^8|^9.5"
+                "phpunit/phpunit": "^8|^9.5|^10"
             },
             "type": "library",
             "autoload": {
@@ -3149,9 +3153,9 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/think-orm/issues",
-                "source": "https://github.com/top-think/think-orm/tree/v3.0.10"
+                "source": "https://github.com/top-think/think-orm/tree/v3.0.11"
             },
-            "time": "2023-06-21T02:40:23+00:00"
+            "time": "2023-07-18T11:04:31+00:00"
         },
         {
             "name": "topthink/think-template",
@@ -3493,5 +3497,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
