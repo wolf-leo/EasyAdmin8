@@ -6,7 +6,7 @@ use app\admin\model\SystemConfig;
 use app\admin\service\TriggerService;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+use app\admin\service\annotation\NodeAnnotation;
 use think\App;
 
 /**
@@ -24,7 +24,7 @@ class Config extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="列表")
+     * @NodeAnnotation(title="列表")
      */
     public function index()
     {
@@ -32,7 +32,7 @@ class Config extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="保存")
+     * @NodeAnnotation(title="保存")
      */
     public function save()
     {

@@ -2,7 +2,7 @@
 
 namespace app\admin\traits;
 
-use app\admin\service\annotation\NodeAnotation;
+use app\admin\service\annotation\NodeAnnotation;
 use app\admin\service\tool\CommonTool;
 use jianyan\excel\Excel;
 use think\facade\Db;
@@ -17,7 +17,7 @@ trait Curd
 
 
     /**
-     * @NodeAnotation(title="列表")
+     * @NodeAnnotation(title="列表")
      */
     public function index()
     {
@@ -46,7 +46,7 @@ trait Curd
     }
 
     /**
-     * @NodeAnotation(title="添加")
+     * @NodeAnnotation(title="添加")
      */
     public function add()
     {
@@ -65,7 +65,7 @@ trait Curd
     }
 
     /**
-     * @NodeAnotation(title="编辑")
+     * @NodeAnnotation(title="编辑")
      */
     public function edit($id)
     {
@@ -87,7 +87,7 @@ trait Curd
     }
 
     /**
-     * @NodeAnotation(title="删除")
+     * @NodeAnnotation(title="删除")
      */
     public function delete($id)
     {
@@ -103,7 +103,7 @@ trait Curd
     }
 
     /**
-     * @NodeAnotation(title="导出")
+     * @NodeAnnotation(title="导出")
      */
     public function export()
     {
@@ -130,7 +130,7 @@ trait Curd
     }
 
     /**
-     * @NodeAnotation(title="属性修改")
+     * @NodeAnnotation(title="属性修改")
      */
     public function modify()
     {

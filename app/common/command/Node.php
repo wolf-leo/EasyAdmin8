@@ -29,7 +29,7 @@ class Node extends Command
 
     protected function refresh($force)
     {
-        $nodeList = (new NodeService())->getNodelist();
+        $nodeList = (new NodeService())->getNodeList();
         if (empty($nodeList)) {
             return true;
         }

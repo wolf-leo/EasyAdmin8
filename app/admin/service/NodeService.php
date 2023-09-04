@@ -14,11 +14,11 @@ class NodeService
      * @throws \Doctrine\Common\Annotations\AnnotationException
      * @throws \ReflectionException
      */
-    public function getNodelist()
+    public function getNodeList()
     {
         $basePath      = base_path() . 'admin' . DIRECTORY_SEPARATOR . 'controller';
         $baseNamespace = "app\admin\controller";
-        $nodeList      = (new Node($basePath, $baseNamespace))->getNodelist();
+        $nodeList      = (new Node($basePath, $baseNamespace))->getNodeList();
         return $nodeList;
     }
 }

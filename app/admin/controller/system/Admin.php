@@ -7,7 +7,7 @@ use app\admin\service\TriggerService;
 use app\common\constants\AdminConstant;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+use app\admin\service\annotation\NodeAnnotation;
 use think\App;
 
 /**
@@ -33,7 +33,7 @@ class Admin extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="列表")
+     * @NodeAnnotation(title="列表")
      */
     public function index()
     {
@@ -63,7 +63,7 @@ class Admin extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="添加")
+     * @NodeAnnotation(title="添加")
      */
     public function add()
     {
@@ -86,7 +86,7 @@ class Admin extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="编辑")
+     * @NodeAnnotation(title="编辑")
      */
     public function edit($id)
     {
@@ -115,7 +115,7 @@ class Admin extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="编辑")
+     * @NodeAnnotation(title="编辑")
      */
     public function password($id)
     {
@@ -146,7 +146,7 @@ class Admin extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="删除")
+     * @NodeAnnotation(title="删除")
      */
     public function delete($id)
     {
@@ -168,7 +168,7 @@ class Admin extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="属性修改")
+     * @NodeAnnotation(title="属性修改")
      */
     public function modify()
     {

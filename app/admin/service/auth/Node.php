@@ -6,7 +6,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Annotations\DocParser;
 use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+use app\admin\service\annotation\NodeAnnotation;
 use app\admin\service\tool\CommonTool;
 
 /**
@@ -30,8 +30,8 @@ class Node
     /**
      * 构造方法
      * Node constructor.
-     * @param  string  $basePath       读取的文件夹
-     * @param  string  $baseNamespace  读取的命名空间前缀
+     * @param string $basePath 读取的文件夹
+     * @param string $baseNamespace 读取的命名空间前缀
      */
     public function __construct($basePath, $baseNamespace)
     {
@@ -46,12 +46,12 @@ class Node
      * @throws \Doctrine\Common\Annotations\AnnotationException
      * @throws \ReflectionException
      */
-    public function getNodelist()
+    public function getNodeList(): array
     {
         list($nodeList, $controllerList) = [[], $this->getControllerList()];
 
         if (!empty($controllerList)) {
-            AnnotationRegistry::registerLoader('class_exists');
+            AnnotationRegistry::loadAnnotationClass('class_exists');
             $parser = new DocParser();
             $parser->setIgnoreNotImportedAnnotations(true);
             $reader = new AnnotationReader($parser);
@@ -65,8 +65,8 @@ class Node
 
                 // 遍历读取所有方法的注释的参数信息
                 foreach ($methods as $method) {
-                    // 读取NodeAnotation的注解
-                    $nodeAnnotation = $reader->getMethodAnnotation($method, NodeAnotation::class);
+                    // 读取NodeAnnotation的注解
+                    $nodeAnnotation = $reader->getMethodAnnotation($method, NodeAnnotation::class);
                     if (!empty($nodeAnnotation) && !empty($nodeAnnotation->title)) {
                         $actionTitle  = !empty($nodeAnnotation) && !empty($nodeAnnotation->title) ? $nodeAnnotation->title : null;
                         $actionAuth   = !empty($nodeAnnotation) && !empty($nodeAnnotation->auth) ? $nodeAnnotation->auth : false;
@@ -78,7 +78,6 @@ class Node
                         ];
                     }
                 }
-
                 // 方法非空才读取控制器注解
                 if (!empty($actionList)) {
                     // 读取Controller的注解

@@ -13,7 +13,7 @@ use Doctrine\Common\Annotations\Annotation\Attributes;
  *   @Attribute("time", type = "int")
  * })
  */
-final class NodeAnotation
+final class NodeAnnotation
 {
 
     /**
@@ -21,13 +21,13 @@ final class NodeAnotation
      * @Required()
      * @var string
      */
-    public $title;
+    public string $title;
 
     /**
      * 是否开启权限控制
      * @Enum({true,false})
      * @var bool
      */
-    public $auth = true;
+    public bool $auth = true;
 
 }

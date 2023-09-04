@@ -1,6 +1,6 @@
 
     /**
-     * @NodeAnotation(title="列表")
+     * @NodeAnnotation(title="列表")
      */
     public function index()
     {

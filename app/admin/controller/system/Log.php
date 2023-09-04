@@ -5,7 +5,7 @@ namespace app\admin\controller\system;
 use app\admin\model\SystemLog;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+use app\admin\service\annotation\NodeAnnotation;
 use think\App;
 use think\db\exception\DbException;
 use think\db\exception\PDOException;
@@ -25,7 +25,7 @@ class Log extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="列表")
+     * @NodeAnnotation(title="列表")
      */
     public function index()
     {

@@ -6,7 +6,7 @@ use app\admin\model\SystemNode;
 use app\admin\service\TriggerService;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+use app\admin\service\annotation\NodeAnnotation;
 use app\admin\service\NodeService;
 use think\App;
 
@@ -27,7 +27,7 @@ class Node extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="列表")
+     * @NodeAnnotation(title="列表")
      */
     public function index()
     {
@@ -51,13 +51,13 @@ class Node extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="系统节点更新")
+     * @NodeAnnotation(title="系统节点更新")
      */
-    public function refreshNode($force = 0)
+    public function refreshNode($force = 0): void
     {
 
         $this->checkPostRequest();
-        $nodeList = (new NodeService())->getNodelist();
+        $nodeList = (new NodeService())->getNodeList();
         empty($nodeList) && $this->error('暂无需要更新的系统节点');
         $model = new SystemNode();
 
@@ -67,10 +67,12 @@ class Node extends AdminController
                 $formatNodeList = array_format_key($nodeList, 'node');
                 foreach ($updateNodeList as $vo) {
                     isset($formatNodeList[$vo['node']])
-                    && $model->where('id', $vo['id'])->update([
-                                                                  'title'   => $formatNodeList[$vo['node']]['title'],
-                                                                  'is_auth' => $formatNodeList[$vo['node']]['is_auth'],
-                                                              ]);
+                    && $model->where('id', $vo['id'])->update(
+                        [
+                            'title'   => $formatNodeList[$vo['node']]['title'],
+                            'is_auth' => $formatNodeList[$vo['node']]['is_auth'],
+                        ]
+                    );
                 }
             }
             $existNodeList = $model->field('node,title,type,is_auth')->select();
@@ -91,12 +93,12 @@ class Node extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="清除失效节点")
+     * @NodeAnnotation(title="清除失效节点")
      */
-    public function clearNode()
+    public function clearNode(): void
     {
         $this->checkPostRequest();
-        $nodeList = (new NodeService())->getNodelist();
+        $nodeList = (new NodeService())->getNodeList();
         $model    = new SystemNode();
         try {
             $existNodeList  = $model->field('id,node,title,type,is_auth')->select()->toArray();

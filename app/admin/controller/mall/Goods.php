@@ -6,7 +6,7 @@ use app\admin\model\MallGoods;
 use app\admin\traits\Curd;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
-use app\admin\service\annotation\NodeAnotation;
+use app\admin\service\annotation\NodeAnnotation;
 use think\App;
 
 /**
@@ -28,7 +28,7 @@ class Goods extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="列表")
+     * @NodeAnnotation(title="列表")
      */
     public function index()
     {
@@ -59,7 +59,7 @@ class Goods extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="入库")
+     * @NodeAnnotation(title="入库")
      */
     public function stock($id)
     {
