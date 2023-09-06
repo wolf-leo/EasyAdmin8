@@ -38,7 +38,8 @@ class Config extends AdminController
     public function save()
     {
         $this->checkPostRequest();
-        $post = $this->request->post();
+        $post         = $this->request->post();
+        $notAddFields = ['_token', 'file', 'group'];
         try {
             $group = $post['group'] ?? '';
             if (empty($group)) $this->error('保存失败');
@@ -48,10 +49,11 @@ class Config extends AdminController
                 $this->model->where('name', 'upload_allow_type')->update(['value' => implode(',', array_keys($upload_types))]);
             }
             foreach ($post as $key => $val) {
+                if (in_array($key, $notAddFields)) continue;
                 if ($this->model->where('name', $key)->count()) {
                     $this->model->where('name', $key)->update(['value' => $val,]);
                 } else {
-                    $this->model->save(
+                    $this->model->create(
                         [
                             'name'  => $key,
                             'value' => $val,
