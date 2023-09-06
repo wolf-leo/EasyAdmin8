@@ -1,7 +1,6 @@
 <?php
 
 
-
 namespace app\admin\service\upload;
 
 use app\admin\service\upload\driver\Alioss;
@@ -113,18 +112,16 @@ class Uploadfile
         $obj = null;
         if ($this->uploadType == 'local') {
             $obj = new Local();
-        } elseif ($this->uploadType == 'alioss') {
+        } elseif ($this->uploadType == 'oss') {
             $obj = new Alioss();
-        } elseif ($this->uploadType == 'qnoss') {
-            $obj = new Qnoss();
-        } elseif ($this->uploadType == 'txcos') {
+        } elseif ($this->uploadType == 'cos') {
             $obj = new Txcos();
         }
         $save = $obj->setUploadConfig($this->uploadConfig)
-                    ->setUploadType($this->uploadType)
-                    ->setTableName($this->tableName)
-                    ->setFile($this->file)
-                    ->save();
+            ->setUploadType($this->uploadType)
+            ->setTableName($this->tableName)
+            ->setFile($this->file)
+            ->save();
         return $save;
     }
 }

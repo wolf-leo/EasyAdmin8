@@ -210,7 +210,7 @@ VALUES ('41', 'alisms_access_key_id', 'sms', '填你的', '阿里大于公钥', 
 INSERT INTO `ea_system_config`
 VALUES ('42', 'alisms_access_key_secret', 'sms', '填你的', '阿里大鱼私钥', '0', null, null);
 INSERT INTO `ea_system_config`
-VALUES ('55', 'upload_type', 'upload', 'local', '当前上传方式 （local,alioss,qnoss,txoss）', '0', null, null);
+VALUES ('55', 'upload_type', 'upload', 'local', '当前上传方式 （local,oss,cos）', '0', null, null);
 INSERT INTO `ea_system_config`
 VALUES ('56', 'upload_allow_ext', 'upload', 'doc,gif,ico,icon,jpg,mp3,mp4,p12,pem,png,rar,jpeg', '允许上传的文件类型', '0', null, null);
 INSERT INTO `ea_system_config`
@@ -218,17 +218,17 @@ VALUES ('57', 'upload_allow_size', 'upload', '1024000', '允许上传的大小',
 INSERT INTO `ea_system_config`
 VALUES ('58', 'upload_allow_mime', 'upload', 'image/gif,image/jpeg,video/x-msvideo,text/plain,image/png', '允许上传的文件mime', '0', null, null);
 INSERT INTO `ea_system_config`
-VALUES ('59', 'upload_allow_type', 'upload', 'local,alioss,qnoss,txcos', '可用的上传文件方式', '0', null, null);
+VALUES ('59', 'upload_allow_type', 'upload', 'local,oss,qnoss,cos', '可用的上传文件方式', '0', null, null);
 INSERT INTO `ea_system_config`
-VALUES ('60', 'alioss_access_key_id', 'upload', '填你的', '阿里云oss公钥', '0', null, null);
+VALUES ('60', 'oss_access_key_id', 'upload', '填你的', '阿里云oss公钥', '0', null, null);
 INSERT INTO `ea_system_config`
-VALUES ('61', 'alioss_access_key_secret', 'upload', '填你的', '阿里云oss私钥', '0', null, null);
+VALUES ('61', 'oss_access_key_secret', 'upload', '填你的', '阿里云oss私钥', '0', null, null);
 INSERT INTO `ea_system_config`
-VALUES ('62', 'alioss_endpoint', 'upload', '填你的', '阿里云oss数据中心', '0', null, null);
+VALUES ('62', 'oss_endpoint', 'upload', '填你的', '阿里云oss数据中心', '0', null, null);
 INSERT INTO `ea_system_config`
-VALUES ('63', 'alioss_bucket', 'upload', '填你的', '阿里云oss空间名称', '0', null, null);
+VALUES ('63', 'oss_bucket', 'upload', '填你的', '阿里云oss空间名称', '0', null, null);
 INSERT INTO `ea_system_config`
-VALUES ('64', 'alioss_domain', 'upload', '填你的', '阿里云oss访问域名', '0', null, null);
+VALUES ('64', 'oss_domain', 'upload', '填你的', '阿里云oss访问域名', '0', null, null);
 INSERT INTO `ea_system_config`
 VALUES ('65', 'logo_title', 'site', 'EasyAdmin', 'LOGO标题', '0', null, null);
 INSERT INTO `ea_system_config`
@@ -254,13 +254,13 @@ VALUES ('78', 'web_appid', 'wechat', '填你的', '公众号公钥', '0', null, 
 INSERT INTO `ea_system_config`
 VALUES ('79', 'web_appsecret', 'wechat', '填你的', '公众号私钥', '0', null, null);
 INSERT INTO `ea_system_config`
-VALUES ('80', 'txcos_secret_id', 'upload', '填你的', '腾讯云cos密钥', '0', null, null);
+VALUES ('80', 'cos_secret_id', 'upload', '填你的', '腾讯云cos密钥', '0', null, null);
 INSERT INTO `ea_system_config`
-VALUES ('81', 'txcos_secret_key', 'upload', '填你的', '腾讯云cos私钥', '0', null, null);
+VALUES ('81', 'cos_secret_key', 'upload', '填你的', '腾讯云cos私钥', '0', null, null);
 INSERT INTO `ea_system_config`
-VALUES ('82', 'txcos_region', 'upload', '填你的', '存储桶地域', '0', null, null);
+VALUES ('82', 'cos_region', 'upload', '填你的', '存储桶地域', '0', null, null);
 INSERT INTO `ea_system_config`
-VALUES ('83', 'tecos_bucket', 'upload', '填你的', '存储桶名称', '0', null, null);
+VALUES ('83', 'cos_bucket', 'upload', '填你的', '存储桶名称', '0', null, null);
 INSERT INTO `ea_system_config`
 VALUES ('84', 'qnoss_access_key', 'upload', '填你的', '访问密钥', '0', null, null);
 INSERT INTO `ea_system_config`
@@ -549,14 +549,14 @@ CREATE TABLE `ea_system_uploadfile`
 -- Records of ea_system_uploadfile
 -- ----------------------------
 INSERT INTO `ea_system_uploadfile`
-VALUES ('286', 'alioss', 'image/jpeg', 'https://lxn-99php.oss-cn-shenzhen.aliyuncs.com/upload/20191111/0a6de1ac058ee134301501899b84ecb1.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);
+VALUES ('286', 'oss', 'image/jpeg', 'https://lxn-99php.oss-cn-shenzhen.aliyuncs.com/upload/20191111/0a6de1ac058ee134301501899b84ecb1.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);
 INSERT INTO `ea_system_uploadfile`
-VALUES ('287', 'alioss', 'image/jpeg', 'https://lxn-99php.oss-cn-shenzhen.aliyuncs.com/upload/20191111/46d7384f04a3bed331715e86a4095d15.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);
+VALUES ('287', 'oss', 'image/jpeg', 'https://lxn-99php.oss-cn-shenzhen.aliyuncs.com/upload/20191111/46d7384f04a3bed331715e86a4095d15.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);
 INSERT INTO `ea_system_uploadfile`
-VALUES ('288', 'alioss', 'image/x-icon', 'https://lxn-99php.oss-cn-shenzhen.aliyuncs.com/upload/20191111/7d32671f4c1d1b01b0b28f45205763f9.ico', '', '', '', '0', 'image/x-icon', '0', 'ico', '', 1573612437, null, null);
+VALUES ('288', 'oss', 'image/x-icon', 'https://lxn-99php.oss-cn-shenzhen.aliyuncs.com/upload/20191111/7d32671f4c1d1b01b0b28f45205763f9.ico', '', '', '', '0', 'image/x-icon', '0', 'ico', '', 1573612437, null, null);
 INSERT INTO `ea_system_uploadfile`
-VALUES ('289', 'alioss', 'image/jpeg', 'https://lxn-99php.oss-cn-shenzhen.aliyuncs.com/upload/20191111/28cefa547f573a951bcdbbeb1396b06f.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);
+VALUES ('289', 'oss', 'image/jpeg', 'https://lxn-99php.oss-cn-shenzhen.aliyuncs.com/upload/20191111/28cefa547f573a951bcdbbeb1396b06f.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);
 INSERT INTO `ea_system_uploadfile`
-VALUES ('290', 'alioss', 'image/jpeg', 'https://lxn-99php.oss-cn-shenzhen.aliyuncs.com/upload/20191111/2c412adf1b30c8be3a913e603c7b6e4a.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);
+VALUES ('290', 'oss', 'image/jpeg', 'https://lxn-99php.oss-cn-shenzhen.aliyuncs.com/upload/20191111/2c412adf1b30c8be3a913e603c7b6e4a.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);
 INSERT INTO `ea_system_uploadfile`
-VALUES ('296', 'txcos', 'image/jpeg', 'https://easyadmin-1251997243.cos.ap-guangzhou.myqcloud.com/upload/20191114/2381eaf81208ac188fa994b6f2579953.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);
+VALUES ('296', 'cos', 'image/jpeg', 'https://easyadmin-1251997243.cos.ap-guangzhou.myqcloud.com/upload/20191114/2381eaf81208ac188fa994b6f2579953.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', 1573612437, null, null);

@@ -4,6 +4,7 @@
 .env
 config/install/lock/install.lock
 /public/upload
+/public/storage
 /public/docs
 runtime/admin
 runtime/log

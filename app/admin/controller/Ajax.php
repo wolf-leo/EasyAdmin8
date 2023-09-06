@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\SystemUploadfile;
+use app\admin\service\UploadService;
 use app\common\controller\AdminController;
 use app\common\service\MenuService;
 use app\admin\service\upload\Uploadfile;
@@ -59,75 +60,36 @@ class Ajax extends AdminController
     {
         $this->isDemo && $this->error('演示环境下不允许修改');
         $this->checkPostRequest();
+        $type         = $this->request->param('type', '');
         $data         = [
             'upload_type' => $this->request->post('upload_type'),
-            'file'        => $this->request->file('file'),
+            'file'        => $this->request->file($type == 'editor' ? 'upload' : 'file'),
         ];
         $uploadConfig = sysconfig('upload');
         empty($data['upload_type']) && $data['upload_type'] = $uploadConfig['upload_type'];
         $rule = [
             'upload_type|指定上传类型有误' => "in:{$uploadConfig['upload_allow_type']}",
-            'file|文件'              => "require|file|fileExt:{$uploadConfig['upload_allow_ext']}|fileSize:{$uploadConfig['upload_allow_size']}",
+            'file|文件'                    => "require|file|fileExt:{$uploadConfig['upload_allow_ext']}|fileSize:{$uploadConfig['upload_allow_size']}",
         ];
         $this->validate($data, $rule);
+        $upload_type = $uploadConfig['upload_type'];
         try {
-            $upload = Uploadfile::instance()
-                ->setUploadType($data['upload_type'])
-                ->setUploadConfig($uploadConfig)
-                ->setFile($data['file'])
-                ->save();
+            $upload = UploadService::instance()->setConfig($uploadConfig)->$upload_type($data['file'], $type);
         } catch (\Exception $e) {
             return $this->error($e->getMessage());
         }
-        if ($upload['save'] == true) {
-            $this->success($upload['msg'], ['url' => $upload['url']]);
+        $code = $upload['code'] ?? 0;
+        if ($code == 0) {
+            return $this->error($upload['data'] ?? '');
         } else {
-            $this->error($upload['msg']);
-        }
-    }
-
-    /**
-     * 上传图片至编辑器
-     * @return Json
-     */
-    public function uploadEditor(): Json
-    {
-        $this->isDemo && $this->error('演示环境下不允许修改');
-        $this->checkPostRequest();
-        $data         = [
-            'upload_type' => $this->request->post('upload_type'),
-            'file'        => $this->request->file('upload'),
-        ];
-        $uploadConfig = sysconfig('upload');
-        empty($data['upload_type']) && $data['upload_type'] = $uploadConfig['upload_type'];
-        $rule = [
-            'upload_type|指定上传类型有误' => "in:{$uploadConfig['upload_allow_type']}",
-            'file|文件'              => "require|file|fileExt:{$uploadConfig['upload_allow_ext']}|fileSize:{$uploadConfig['upload_allow_size']}",
-        ];
-        $this->validate($data, $rule);
-        try {
-            $upload = Uploadfile::instance()
-                ->setUploadType($data['upload_type'])
-                ->setUploadConfig($uploadConfig)
-                ->setFile($data['file'])
-                ->save();
-        } catch (\Exception $e) {
-            return $this->error($e->getMessage());
-        }
-        if ($upload['save'] == true) {
-            return json([
-                            'error'    => ['message' => '上传成功', 'number' => 201,],
-                            'fileName' => '',
-                            'uploaded' => 1,
-                            'url'      => $upload['url'],
-                        ]);
-        } else {
-            return json([
-                            'error'    => ['message' => $upload['msg'], 'number' => -1,],
-                            'fileName' => '',
-                            'uploaded' => 0,
-                            'url'      => '',
-                        ]);
+            return $type == 'editor' ? json(
+                [
+                    'error'    => ['message' => '上传成功', 'number' => 201,],
+                    'fileName' => '',
+                    'uploaded' => 1,
+                    'url'      => $upload['data']['url'] ?? '',
+                ]
+            ) : $this->success('上传成功', $upload['data'] ?? '');
         }
     }
 

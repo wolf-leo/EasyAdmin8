@@ -21,6 +21,7 @@ class Config extends AdminController
     {
         parent::__construct($app);
         $this->model = new SystemConfig();
+        $this->assign('upload_types', config('admin.upload_types'));
     }
 
     /**
@@ -39,12 +40,24 @@ class Config extends AdminController
         $this->checkPostRequest();
         $post = $this->request->post();
         try {
+            $group = $post['group'] ?? '';
+            if (empty($group)) $this->error('保存失败');
+            if ($group == 'upload') {
+                $upload_types = config('admin.upload_types');
+                // 兼容旧版本
+                $this->model->where('name', 'upload_allow_type')->update(['value' => implode(',', array_keys($upload_types))]);
+            }
             foreach ($post as $key => $val) {
-                $this->model
-                    ->where('name', $key)
-                    ->update([
-                        'value' => $val,
-                    ]);
+                if ($this->model->where('name', $key)->count()) {
+                    $this->model->where('name', $key)->update(['value' => $val,]);
+                } else {
+                    $this->model->save(
+                        [
+                            'name'  => $key,
+                            'value' => $val,
+                            'group' => $group,
+                        ]);
+                }
             }
             TriggerService::updateMenu();
             TriggerService::updateSysconfig();
