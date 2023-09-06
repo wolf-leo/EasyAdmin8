@@ -22,6 +22,7 @@ class Uploadfile extends AdminController
     {
         parent::__construct($app);
         $this->model = new SystemUploadfile();
+        $this->assign('upload_types', config('admin.upload_types'));
     }
 
 }
