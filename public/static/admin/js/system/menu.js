@@ -21,6 +21,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
             var renderTable = function () {
                 layer.load(2);
                 treetable.render({
+                    where: {limit: 9999},
                     treeColIndex: 1,
                     treeSpid: 0,
                     homdPid: 99999999,
