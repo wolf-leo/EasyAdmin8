@@ -1,3 +1,23 @@
+## `EasyAdmin8`所有版本 (当前项目为`ThinkPHP`版本)
+
+> #### ThinKPHP:
+>
+>   [https://github.com/wolf-leo/EasyAdmin8](https://github.com/wolf-leo/EasyAdmin8)
+>
+>   [https://gitee.com/wolf18/easyAdmin8](https://gitee.com/wolf18/easyAdmin8)
+>
+> #### Laravel :
+>
+>   [https://github.com/wolf-leo/EasyAdmin8-Laravel](https://github.com/wolf-leo/EasyAdmin8-Laravel)
+>
+>   [https://gitee.com/wolf18/EasyAdmin8-Laravel](https://gitee.com/wolf18/EasyAdmin8-Laravel)
+>
+> #### webman :
+>
+>   [https://github.com/wolf-leo/EasyAdmin8-webman](https://github.com/wolf-leo/EasyAdmin8-webman)
+>
+>   [https://gitee.com/wolf18/EasyAdmin8-webman](https://gitee.com/wolf18/EasyAdmin8-webman)
+
 ## 项目介绍
 
 > `EasyAdmin8` 在 [`EasyAdmin`](https://gitee.com/zhongshaofa/easyadmin) 的基础上更新 ThinkPHP 框架到 8.0 ，PHP 最低版本要求不低于 8.0
@@ -50,43 +70,9 @@
 
 ## 界面预览
 
-###  
-
-<center>
-  <img src="public/static/common/images/easyadmin8-01.png" />
-</center>
-
-###  
-
-<center>
-  <img src="public/static/common/images/easyadmin8-02.png" />
-</center>
-
-###  
-
-<center>
-  <img src="public/static/common/images/easyadmin8-03.png" />
-</center>
-
-## 所有PHP版本
-
-> #### ThinKPHP:
->
->   [https://github.com/wolf-leo/EasyAdmin8](https://github.com/wolf-leo/EasyAdmin8)
->
->   [https://gitee.com/wolf18/easyAdmin8](https://gitee.com/wolf18/easyAdmin8)
->
-> #### Laravel :
->
->   [https://github.com/wolf-leo/EasyAdmin8-Laravel](https://github.com/wolf-leo/EasyAdmin8-Laravel)
->
->   [https://gitee.com/wolf18/EasyAdmin8-Laravel](https://gitee.com/wolf18/EasyAdmin8-Laravel)
->
-> #### webman :
->
->   [https://github.com/wolf-leo/EasyAdmin8-webman](https://github.com/wolf-leo/EasyAdmin8-webman)
->
->   [https://gitee.com/wolf18/EasyAdmin8-webman](https://gitee.com/wolf18/EasyAdmin8-webman)
+![EasyAdmin8-01](public/static/common/images/easyadmin8-01.png)
+![EasyAdmin8-02](public/static/common/images/easyadmin8-02.png)
+![EasyAdmin8-03](public/static/common/images/easyadmin8-03.png)
 
 ## 交流群
 
@@ -135,4 +121,3 @@
 * 如果本声明的任何部分被认为无效或不可执行，其余部分仍具有完全效力。不可执行的部分声明，并不构成我们放弃执行该声明的权利。
 
 * 本开源项目有权随时对本声明条款及附件内容进行单方面的变更，并以消息推送、网页公告等方式予以公布，公布后立即自动生效，无需另行单独通知；若您在本声明内容公告变更后继续使用的，表示您已充分阅读、理解并接受修改后的声明内容。
-
