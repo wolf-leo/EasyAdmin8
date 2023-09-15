@@ -31,7 +31,7 @@
     "phpoffice/phpspreadsheet": "^1.28",
     "myclabs/php-enum": "^1.8",
     "ext-json": "*",
-    "qiniu/php-sdk": "*"
+    "qiniu/php-sdk": "v7.11.0"
   },
   "require-dev": {
     "symfony/var-dumper": "^4.2",

@@ -28,8 +28,9 @@ return [
 
     //上传类型
     'upload_types'        => [
-        'local'  => '本地存储',
-        'oss' => '阿里云oss',
-        'cos'  => '腾讯云cos'
+        'local' => '本地存储',
+        'oss'   => '阿里云oss',
+        'cos'   => '腾讯云cos',
+        'qnoss' => '七牛云'
     ],
 ];

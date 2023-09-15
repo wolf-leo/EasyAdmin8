@@ -9,6 +9,9 @@ use think\facade\Env;
 use think\file\UploadedFile;
 use think\helper\Str;
 use Qcloud\Cos\Client;
+use Exception;
+use Qiniu\Storage\UploadManager;
+use Qiniu\Auth;
 
 class UploadService
 {
@@ -161,7 +164,7 @@ class UploadService
                 if (empty($location)) return ['code' => 0, 'data' => '上传至COS失败'];
                 $location = 'https://' . $location;
                 $this->setSaveData($file);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 return ['code' => 0, 'data' => $e->getMessage()];
             }
             $data = ['url' => $location];
@@ -170,6 +173,35 @@ class UploadService
         }
         $data = '上传失败';
         return ['code' => 0, 'data' => $data];
+    }
+
+    /**
+     * 七牛云
+     *
+     * @param UploadedFile $file
+     * @param string $type
+     * @return array
+     * @throws Exception
+     */
+    public function qnoss(UploadedFile $file, string $type = ''): array
+    {
+        if (!$file->isValid()) return ['code' => 1, 'data' => '上传验证失败'];
+        $uploadMgr = new UploadManager();
+        $config    = $this->getConfig();
+        $accessKey = $config['qnoss_access_key'];
+        $secretKey = $config['qnoss_secret_key'];
+        $bucket    = $config['qnoss_bucket'];
+        $domain    = $config['qnoss_domain'];
+        $auth      = new Auth($accessKey, $secretKey);
+        $token     = $auth->uploadToken($bucket);
+        $object    = $this->setFilePath($file, Env::get('EASYADMIN.OSS_STATIC_PREFIX', 'easyadmin8') . '/');
+        list($ret, $error) = $uploadMgr->putFile($token, $object, $file->getRealPath());
+        if (empty($ret)) return ['code' => 0, 'data' => $error->getResponse()->error ?? '上传失败，请检查七牛云相关参数配置'];
+        $url  = $domain . "/" . $ret['key'];
+        $data = ['url' => $url];
+        $this->setSaveData($file);
+        $this->save($url);
+        return ['code' => 1, 'data' => $data];
     }
 
     protected function save(string $url = ''): bool
