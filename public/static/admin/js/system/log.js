@@ -5,6 +5,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
         index_url: 'system.log/index',
+        export_url: 'system.log/export',
     };
 
     var Controller = {
@@ -12,7 +13,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
             var util = layui.util;
             ea.table.render({
                 init: init,
-                toolbar: ['refresh'],
+                toolbar: ['refresh', 'export'],
                 cols: [[
                     {field: 'id', width: 80, title: 'ID', search: false},
                     {field: 'month', title: '日志月份', hide: true, search: 'time', timeType: 'month', searchValue: util.toDateString(new Date(), 'yyyy-MM')},

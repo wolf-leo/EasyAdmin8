@@ -3,12 +3,16 @@
 namespace app\admin\controller\system;
 
 use app\admin\model\SystemLog;
+use app\admin\service\tool\CommonTool;
+use app\admin\traits\Curd;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnnotation;
+use jianyan\excel\Excel;
 use think\App;
 use think\db\exception\DbException;
 use think\db\exception\PDOException;
+use think\facade\Db;
 
 /**
  * @ControllerAnnotation(title="操作日志管理")
@@ -17,6 +21,7 @@ use think\db\exception\PDOException;
  */
 class Log extends AdminController
 {
+    use Curd;
 
     public function __construct(App $app)
     {
@@ -39,7 +44,7 @@ class Log extends AdminController
             try {
                 $count = $model->count();
                 $list  = $model->page($page, $limit)->order($this->sort)->select();
-            } catch (PDOException | DbException $exception) {
+            } catch (PDOException|DbException $exception) {
                 $count = 0;
                 $list  = [];
             }
@@ -52,6 +57,39 @@ class Log extends AdminController
             return json($data);
         }
         return $this->fetch();
+    }
+
+    /**
+     * @NodeAnnotation(title="导出")
+     */
+    public function export()
+    {
+        [$page, $limit, $where, $excludeFields] = $this->buildTableParams(['month']);
+        $tableName = $this->model->getName();
+        $tableName = CommonTool::humpToLine(lcfirst($tableName));
+        $prefix    = config('database.connections.mysql.prefix');
+        $dbList    = Db::query("show full columns from {$prefix}{$tableName}");
+        $header    = [];
+        foreach ($dbList as $vo) {
+            $comment = !empty($vo['Comment']) ? $vo['Comment'] : $vo['Field'];
+            if (!in_array($vo['Field'], $this->noExportFields)) {
+                $header[] = [$comment, $vo['Field']];
+            }
+        }
+        $month = !empty($excludeFields['month']) ? date('Ym', strtotime($excludeFields['month'])) : date('Ym');
+        $model = $this->model->setMonth($month)->with('admin')->where($where);
+        try {
+            $list = $model
+                ->where($where)
+                ->limit(100000)
+                ->order('id', 'desc')
+                ->select()
+                ->toArray();
+        } catch (PDOException|DbException $exception) {
+            $this->error($exception->getMessage());
+        }
+        $fileName = time();
+        return Excel::exportData($list, $header, $fileName, 'xlsx');
     }
 
 }
