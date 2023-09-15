@@ -15,7 +15,6 @@ use think\facade\Db;
 trait Curd
 {
 
-
     /**
      * @NodeAnnotation(title="列表")
      */
@@ -107,6 +106,9 @@ trait Curd
      */
     public function export()
     {
+        if (env('EASYADMIN.IS_DEMO', false)) {
+            $this->error('演示环境下不允许操作');
+        }
         list($page, $limit, $where) = $this->buildTableParams();
         $tableName = $this->model->getName();
         $tableName = CommonTool::humpToLine(lcfirst($tableName));
@@ -137,9 +139,9 @@ trait Curd
         $this->checkPostRequest();
         $post = $this->request->post();
         $rule = [
-            'id|ID'    => 'require',
+            'id|ID'      => 'require',
             'field|字段' => 'require',
-            'value|值'  => 'require',
+            'value|值'   => 'require',
         ];
         $this->validate($post, $rule);
         $row = $this->model->find($post['id']);

@@ -64,6 +64,9 @@ class Log extends AdminController
      */
     public function export()
     {
+        if (env('EASYADMIN.IS_DEMO', false)) {
+            $this->error('演示环境下不允许操作');
+        }
         [$page, $limit, $where, $excludeFields] = $this->buildTableParams(['month']);
         $tableName = $this->model->getName();
         $tableName = CommonTool::humpToLine(lcfirst($tableName));
