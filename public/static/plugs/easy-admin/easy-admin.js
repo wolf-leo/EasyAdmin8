@@ -1146,6 +1146,22 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
             $('body').on('click', '[data-table-export]', function () {
                 var tableId = $(this).attr('data-table-export'),
                     url = $(this).attr('data-url');
+
+                let par=$("#searchFieldset_"+tableId).find('form').serialize();
+                let parArr=par.split('&')
+                var formatFilter = {}, formatOp = {};
+                [formatData]=parArr.map((arr)=>{
+                    [key, val]=arr.split('=');
+                    if (val !== '') {
+                        formatFilter[key] = val;
+                        var op = $('#c-' + key).attr('data-search-op');
+                        op = op || '%*%';
+                        formatOp[key] = op;
+                    }
+                    return {formatFilter, formatOp};
+                })
+                let schPar='filter='+JSON.stringify(formatData.formatFilter)+'&'+'op='+JSON.stringify(formatData.formatOp);
+                url=(url.includes('?'))?url+'&'+schPar:url+'?'+schPar;
                 var index = admin.msg.confirm('根据查询进行导出，确定导出？', function () {
                     window.location = admin.url(url);
                     layer.close(index);
