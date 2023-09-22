@@ -53,7 +53,7 @@ define(["jquery", "easy-admin", "iconPickerFa", "autocomplete"], function ($, ea
                 elem: $('#href')[0],
                 url: ea.url('system.menu/getMenuTips'),
                 template_val: '{{d.node}}',
-                template_txt: '{{d.node}} <span class=\'layui-badge layui-bg-gray\'>{{d.title}}</span>',
+                template_txt: '{{d.node}} <span class="layui-badge">{{d.title}}</span>',
                 onselect: function (resp) {
                 }
             });
@@ -78,7 +78,7 @@ define(["jquery", "easy-admin", "iconPickerFa", "autocomplete"], function ($, ea
                 elem: $('#href')[0],
                 url: ea.url('system.menu/getMenuTips'),
                 template_val: '{{d.node}}',
-                template_txt: '{{d.node}} <span class=\'layui-badge layui-bg-gray\'>{{d.title}}</span>',
+                template_txt: '{{d.node}} <span class="layui-badge">{{d.title}}</span>',
                 onselect: function (resp) {
                 }
             });
