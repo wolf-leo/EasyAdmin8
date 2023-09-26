@@ -1136,6 +1136,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     }, function (res) {
                         admin.msg.success(res.msg, function () {
                             table.reload(tableId);
+                            location.reload()
                         });
                     })
                 });
@@ -1147,11 +1148,11 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 var tableId = $(this).attr('data-table-export'),
                     url = $(this).attr('data-url');
 
-                let par=$("#searchFieldset_"+tableId).find('form').serialize();
-                let parArr=par.split('&')
+                let par = $("#searchFieldset_" + tableId).find('form').serialize();
+                let parArr = par.split('&')
                 var formatFilter = {}, formatOp = {};
-                [formatData]=parArr.map((arr)=>{
-                    [key, val]=arr.split('=');
+                [formatData] = parArr.map((arr) => {
+                    [key, val] = arr.split('=');
                     if (val !== '') {
                         formatFilter[key] = val;
                         var op = $('#c-' + key).attr('data-search-op');
@@ -1160,8 +1161,8 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     }
                     return {formatFilter, formatOp};
                 })
-                let schPar='filter='+JSON.stringify(formatData.formatFilter)+'&'+'op='+JSON.stringify(formatData.formatOp);
-                url=(url.includes('?'))?url+'&'+schPar:url+'?'+schPar;
+                let schPar = 'filter=' + JSON.stringify(formatData.formatFilter) + '&' + 'op=' + JSON.stringify(formatData.formatOp);
+                url = (url.includes('?')) ? url + '&' + schPar : url + '?' + schPar;
                 var index = admin.msg.confirm('根据查询进行导出，确定导出？', function () {
                     window.location = admin.url(url);
                     layer.close(index);
@@ -1451,8 +1452,11 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 });
                                 var url = urlArray.join(uploadSign);
                                 admin.msg.success('选择成功', function () {
-                                    $(elem).val(url);
-                                    $(elem).trigger("input");
+                                    let _dom = $(e).parents('.layui-form-item').find('input')
+                                    _dom.attr('value', url)
+                                    _dom.trigger("input")
+                                    // $(elem).val(url);
+                                    // $(elem).trigger("input");
                                 });
                             }
                         })
