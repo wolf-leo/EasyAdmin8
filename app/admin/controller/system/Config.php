@@ -22,6 +22,7 @@ class Config extends AdminController
         parent::__construct($app);
         $this->model = new SystemConfig();
         $this->assign('upload_types', config('admin.upload_types'));
+        $this->assign('editor_types', config('admin.editor_types'));
     }
 
     /**

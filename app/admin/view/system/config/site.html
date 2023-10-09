@@ -9,7 +9,7 @@
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">浏览器图标</label>
+        <label class="layui-form-label">浏览器图标（ico格式）</label>
         <div class="layui-input-block layuimini-upload">
             <input name="site_ico" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传浏览器图标,ico类型" value="{:sysconfig('site','site_ico')}">
             <div class="layuimini-upload-btn">
@@ -40,6 +40,18 @@
         <div class="layui-input-block">
             <input type="text" name="site_copyright" class="layui-input" lay-verify="required" placeholder="请输入版权信息" value="{:sysconfig('site','site_copyright')}">
             <tip>填写版权信息。</tip>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">默认编辑器</label>
+        <div class="layui-input-block">
+            {foreach $editor_types as $key=>$val}
+            <input type="radio" name="editor_type" lay-filter="editor_type" value="{$key}" title="{$val}" {if $key==sysconfig('site','editor_type')}checked=""{/if}>
+            {/foreach}
+            <br>
+            <tip>默认百度编辑器。</tip>
         </div>
     </div>
 

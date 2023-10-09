@@ -33,4 +33,10 @@ return [
         'cos'   => '腾讯云cos',
         'qnoss' => '七牛云'
     ],
+
+    // 默认编辑器
+    'editor_types'        => [
+        'ueditor'  => '百度编辑器',
+        'ckeditor' => 'CK编辑器',
+    ],
 ];
