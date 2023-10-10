@@ -102,6 +102,8 @@
 
 * [Echarts](https://github.com/apache/incubator-echarts)
 
+* [UEditorPlus](https://github.com/modstart-lib/ueditor-plus)
+
 ## 免责声明
 
 > 所有协议遵循 [`EasyAdmin`](https://gitee.com/zhongshaofa/easyadmin)
