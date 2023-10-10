@@ -133,7 +133,6 @@ class Ajax extends AdminController
      */
     public function uploadUEditor(): Json
     {
-        $this->isDemo && $this->error('演示环境下不允许修改');
         $uploadConfig      = sysconfig('upload');
         $upload_allow_size = $uploadConfig['upload_allow_size'];
         $_upload_allow_ext = explode(',', $uploadConfig['upload_allow_ext']);
@@ -163,6 +162,7 @@ class Ajax extends AdminController
         $upload_type = $uploadConfig['upload_type'];
         switch ($action) {
             case 'image':
+                if ($this->isDemo) return json(['state' => '演示环境下不允许修改']);
                 try {
                     $upload = UploadService::instance()->setConfig($uploadConfig)->$upload_type($file);
                     $code   = $upload['code'] ?? 0;
