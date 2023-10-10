@@ -1301,23 +1301,18 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         }
                         form.on('submit(' + filter + ')', function (data) {
                             var dataField = data.field;
-
+                            var editorList = document.querySelectorAll(".editor");
                             // 富文本数据处理
-                            if (window.CONFIG.EDITOR_TYPE == 'ueditor') {
-                                var editorList = document.querySelectorAll("textarea.layui-textarea.editor");
+                            if (editorList.length > 0) {
                                 $.each(editorList, function (i, v) {
-                                    var name = $(this).attr("name");
-                                    dataField[name] = UE.getEditor(name + i).getContent();
-                                });
-                            } else {
-                                var editorList = document.querySelectorAll(".editor");
-                                if (editorList.length > 0) {
-                                    $.each(editorList, function (i, v) {
+                                    if (window.CONFIG.EDITOR_TYPE == 'ueditor') {
+                                        var name = $(this).attr("id");
+                                        dataField[name] = UE.getEditor(name).getContent();
+                                    } else {
                                         var name = $(this).attr("name");
                                         dataField[name] = CKEDITOR.instances[name].getData();
-
-                                    });
-                                }
+                                    }
+                                });
                             }
                             if (typeof preposeCallback === 'function') {
                                 dataField = preposeCallback(dataField);
@@ -1479,19 +1474,18 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     $.each(editorList, function (i, v) {
                         if (window.CONFIG.EDITOR_TYPE == 'ueditor') {
                             var name = $(this).attr("name");
-                            $(this).parent().find('textarea').attr('id', name + i)
-                            setTimeout(function () {
-                                try {
-                                    UE.getEditor(name + i, {
-                                        initialFrameHeight: 420,
-                                        toolbars: [
-                                            ["fullscreen", "source", "|", "undo", "redo", "|", "bold", "italic", "underline", "fontborder", "strikethrough", "superscript", "subscript", "removeformat", "formatmatch", "autotypeset", "blockquote", "pasteplain", "|", "forecolor", "backcolor", "insertorderedlist", "insertunorderedlist", "selectall", "cleardoc", "|", "rowspacingtop", "rowspacingbottom", "lineheight", "|", "customstyle", "paragraph", "fontfamily", "fontsize", "|", "directionalityltr", "directionalityrtl", "indent", "|", "justifyleft", "justifycenter", "justifyright", "justifyjustify", "|", "touppercase", "tolowercase", "|", "link", "unlink", "anchor", "|", "imagenone", "imageleft", "imageright", "imagecenter", "|", "insertimage", "emotion", "insertframe", "insertcode", "pagebreak", "template", "background", "formula", "|", "horizontal", "date", "time", "spechars", "wordimage", "|", "inserttable", "deletetable", "insertparagraphbeforetable", "insertrow", "deleterow", "insertcol", "deletecol", "mergecells", "mergeright", "mergedown", "splittocells", "splittorows", "splittocols", "|", "print", "preview", "searchreplace", "help",]
-                                        ],
-                                    });
-                                } catch (e) {
-                                    location.reload()
-                                }
-                            }, 200)
+                            try {
+                                UE.getEditor(name, {
+                                    initialFrameWidth: '100%',
+                                    initialFrameHeight: 420,
+                                    initialContent: $(this).data('content'),
+                                    toolbars: [
+                                        ["fullscreen", "source", "|", "undo", "redo", "|", "bold", "italic", "underline", "fontborder", "strikethrough", "superscript", "subscript", "removeformat", "formatmatch", "autotypeset", "blockquote", "pasteplain", "|", "forecolor", "backcolor", "insertorderedlist", "insertunorderedlist", "selectall", "cleardoc", "|", "rowspacingtop", "rowspacingbottom", "lineheight", "|", "customstyle", "paragraph", "fontfamily", "fontsize", "|", "directionalityltr", "directionalityrtl", "indent", "|", "justifyleft", "justifycenter", "justifyright", "justifyjustify", "|", "touppercase", "tolowercase", "|", "link", "unlink", "anchor", "|", "imagenone", "imageleft", "imageright", "imagecenter", "|", "insertimage", "emotion", "insertframe", "insertcode", "pagebreak", "template", "background", "formula", "|", "horizontal", "date", "time", "spechars", "wordimage", "|", "inserttable", "deletetable", "insertparagraphbeforetable", "insertrow", "deleterow", "insertcol", "deletecol", "mergecells", "mergeright", "mergedown", "splittocells", "splittorows", "splittocols", "|", "print", "preview", "searchreplace", "help",]
+                                    ],
+                                });
+                            } catch (e) {
+                                location.reload()
+                            }
                         } else {
                             CKEDITOR.replace(
                                 $(this).attr("name"),
