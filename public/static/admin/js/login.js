@@ -7,6 +7,10 @@ define(["easy-admin"], function (ea) {
                 top.location = self.location;
             }
 
+            if (backgroundUrl) {
+                $('.container').css('background', 'url(' + backgroundUrl + ') 0% 0% / cover no-repeat')
+            }
+
             $('.bind-password').on('click', function () {
                 if ($(this).hasClass('icon-5')) {
                     $(this).removeClass('icon-5');
@@ -24,7 +28,7 @@ define(["easy-admin"], function (ea) {
                     $(this).addClass('icon-check');
                 }
             });
-            
+
             $('.login-tip').on('click', function () {
                 $('.icon-nocheck').click();
             });

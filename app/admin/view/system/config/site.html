@@ -20,6 +20,17 @@
     </div>
 
     <div class="layui-form-item">
+        <label class="layui-form-label">后台背景图</label>
+        <div class="layui-input-block layuimini-upload">
+            <input name="admin_background" class="layui-input layui-col-xs6" placeholder="不填默认#333333" value="{:sysconfig('site','admin_background')}">
+            <div class="layuimini-upload-btn">
+                <span><a class="layui-btn" data-upload="site_ico" data-upload-number="one" data-upload-exts="png|jpg|jpeg"><i class="fa fa-upload"></i> 上传</a></span>
+                <span><a class="layui-btn layui-btn-normal" id="select_admin_background" data-upload-select="admin_background" data-upload-number="one"><i class="fa fa-list"></i> 选择</a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
         <label class="layui-form-label">版本信息</label>
         <div class="layui-input-block">
             <input type="text" name="site_version" class="layui-input" lay-verify="required" placeholder="请输入版本信息" value="{:sysconfig('site','site_version')}">
