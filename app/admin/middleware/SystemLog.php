@@ -52,7 +52,7 @@ class SystemLog
                     $pathInfoExp = explode('/', $pathInfo);
                     $pathInfoExp = explode('.', $pathInfoExp[0] ?? '');
                     $_controller = $pathInfoExp[0] ?? '';
-                    $_action     = strtolower($pathInfoExp[1] ?? '');
+                    $_action     = ucfirst($pathInfoExp[1] ?? '');
                     if ($_controller && $_action) {
                         $className       = "app\admin\controller\\{$_controller}\\{$_action}";
                         $reflectionClass = new \ReflectionClass($className);
