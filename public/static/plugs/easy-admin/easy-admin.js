@@ -205,7 +205,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 options.limit = options.limit || 15;
                 options.limits = options.limits || [10, 15, 20, 25, 50, 100];
                 options.cols = options.cols || [];
-                options.defaultToolbar = (options.defaultToolbar === undefined && !options.search) ? ['filter', 'print'] : ['filter', 'print', {
+                options.defaultToolbar = (options.defaultToolbar === undefined && !options.search) ? ['filter', 'print', 'exports'] : ['filter', 'print', 'exports', {
                     title: '搜索',
                     layEvent: 'TABLE_SEARCH',
                     icon: 'layui-icon-search',
@@ -549,7 +549,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 return cols;
             },
             tool: function (data, option) {
-                var option = data.LAY_COL;
+                var option = data.LAY_COL || {};
                 option.operat = option.operat || ['edit', 'delete'];
                 var elem = option.init.table_elem || init.table_elem;
                 var html = '';
@@ -620,7 +620,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 return html;
             },
             list: function (data, option) {
-                var option = data.LAY_COL;
+                var option = data.LAY_COL || {};
                 option.selectList = option.selectList || {};
                 try {
                     var value = admin.table.defaultValue(data);
@@ -634,7 +634,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 }
             },
             image: function (data, option) {
-                var option = data.LAY_COL;
+                var option = data.LAY_COL || {};
                 option.imageWidth = option.imageWidth || 200;
                 option.imageHeight = option.imageHeight || 40;
                 option.imageSplit = option.imageSplit || '|';
@@ -741,7 +741,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 if (!data.LAY_COL) {
                     return '';
                 }
-                var option = data.LAY_COL;
+                var option = data.LAY_COL || {};
                 field = field || option.field;
                 _value = _value || option.defaultValue;
                 var valueParser = option.valueParser;
