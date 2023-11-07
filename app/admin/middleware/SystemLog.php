@@ -3,6 +3,7 @@
 namespace app\admin\middleware;
 
 use app\admin\service\annotation\ControllerAnnotation;
+use app\admin\service\annotation\NodeAnnotation;
 use app\admin\service\SystemLogService;
 use app\Request;
 use app\admin\service\tool\CommonTool;
@@ -50,17 +51,20 @@ class SystemLog
                 try {
                     $pathInfo    = $request->pathinfo();
                     $pathInfoExp = explode('/', $pathInfo);
+                    $_action     = end($pathInfoExp) ?? '';
                     $pathInfoExp = explode('.', $pathInfoExp[0] ?? '');
-                    $_controller = $pathInfoExp[0] ?? '';
-                    $_action     = ucfirst($pathInfoExp[1] ?? '');
-                    if ($_controller && $_action) {
-                        $className       = "app\admin\controller\\{$_controller}\\{$_action}";
+                    $_name       = $pathInfoExp[0] ?? '';
+                    $_controller = ucfirst($pathInfoExp[1] ?? '');
+                    if ($_name && $_controller && $_action) {
+                        $className       = "app\admin\controller\\{$_name}\\{$_controller}";
                         $reflectionClass = new \ReflectionClass($className);
                         $parser          = new DocParser();
                         $parser->setIgnoreNotImportedAnnotations(true);
                         $reader               = new AnnotationReader($parser);
                         $controllerAnnotation = $reader->getClassAnnotation($reflectionClass, ControllerAnnotation::class);
-                        $title                = $controllerAnnotation->title;
+                        $reflectionAction     = $reflectionClass->getMethod($_action);
+                        $nodeAnnotation       = $reader->getMethodAnnotation($reflectionAction, NodeAnnotation::class);
+                        $title                = $controllerAnnotation->title . ' - ' . $nodeAnnotation->title;
                     }
                 } catch (\Throwable $exception) {
                 }
