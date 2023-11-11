@@ -1,10 +1,10 @@
 ## `EasyAdmin8`所有版本 (当前项目为`ThinkPHP`版本)
 
-> #### ThinKPHP:
+> #### ThinkPHP:
 >
 >   [https://github.com/wolf-leo/EasyAdmin8](https://github.com/wolf-leo/EasyAdmin8)
 >
->   [https://gitee.com/wolf18/easyAdmin8](https://gitee.com/wolf18/easyAdmin8)
+>   [https://gitee.com/wolf18/EasyAdmin8](https://gitee.com/wolf18/EasyAdmin8)
 >
 > #### Laravel :
 >
