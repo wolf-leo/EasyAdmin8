@@ -175,11 +175,7 @@ class Ajax extends AdminController
                     return $this->error($e->getMessage());
                 }
             case 'listImage':
-                $res  = (new SystemUploadfile())->order($this->sort)->limit(100)->column('url');
-                $list = [];
-                array_map(function ($value) use (&$list) {
-                    $list[] = ['url' => $value,];
-                }, $res);
+                $list   = (new SystemUploadfile())->order($this->sort)->limit(100)->field('url')->select()->toArray();
                 $result = [
                     "state" => "SUCCESS",
                     "list"  => $list,
