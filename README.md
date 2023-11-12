@@ -1,22 +1,10 @@
 ## `EasyAdmin8`所有版本 (当前项目为`ThinkPHP`版本)
 
-> #### ThinkPHP:
->
->   [https://github.com/wolf-leo/EasyAdmin8](https://github.com/wolf-leo/EasyAdmin8)
->
->   [https://gitee.com/wolf18/EasyAdmin8](https://gitee.com/wolf18/EasyAdmin8)
->
-> #### Laravel :
->
->   [https://github.com/wolf-leo/EasyAdmin8-Laravel](https://github.com/wolf-leo/EasyAdmin8-Laravel)
->
->   [https://gitee.com/wolf18/EasyAdmin8-Laravel](https://gitee.com/wolf18/EasyAdmin8-Laravel)
->
-> #### webman :
->
->   [https://github.com/wolf-leo/EasyAdmin8-webman](https://github.com/wolf-leo/EasyAdmin8-webman)
->
->   [https://gitee.com/wolf18/EasyAdmin8-webman](https://gitee.com/wolf18/EasyAdmin8-webman)
+|          |                                Github                                |                               Gitee                               |
+|----------|:--------------------------------------------------------------------:|:-----------------------------------------------------------------:|
+| ThinkPHP |         [EasyAdmin8](https://github.com/wolf-leo/EasyAdmin8)         |         [EasyAdmin8](https://gitee.com/wolf18/EasyAdmin8)         |
+| Laravel  | [EasyAdmin8-Laravel](https://github.com/wolf-leo/EasyAdmin8-Laravel) | [EasyAdmin8-Laravel](https://gitee.com/wolf18/EasyAdmin8-Laravel) |
+| webman   |  [EasyAdmin8-webman](https://github.com/wolf-leo/EasyAdmin8-webman)  |  [EasyAdmin8-webman](https://gitee.com/wolf18/EasyAdmin8-webman)  |
 
 ## 项目介绍
 
