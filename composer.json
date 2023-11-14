@@ -1,14 +1,14 @@
 {
   "name": "wolfcode/easyadmin8",
-  "url": "https://github.com/wolf-leo/easyAdmin8",
+  "url": "https://github.com/wolf-leo/EasyAdmin8",
   "description": "基于ThinkPHP8.0和Layui的快速开发的后台管理系统。",
   "type": "project",
   "keywords": [
-    "easyadmin",
     "thinkphp",
+    "easyadmin",
     "admin"
   ],
-  "homepage": "http://easyadmin8.wolfcode.top/",
+  "homepage": "https://easyadmin8.top/",
   "license": "MIT",
   "authors": [
     {
@@ -54,11 +54,5 @@
       "@php think service:discover",
       "@php think vendor:publish"
     ]
-  },
-  "repositories": {
-    "packagist": {
-      "type": "composer",
-      "url": "https://mirrors.aliyun.com/composer/"
-    }
   }
 }
