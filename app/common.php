@@ -40,12 +40,12 @@ if (!function_exists('xdebug')) {
 
     /**
      * debug调试
-     * @deprecated 不建议使用，建议直接使用框架自带的log组件
      * @param string|array $data 打印信息
      * @param string $type 类型
      * @param string $suffix 文件后缀名
      * @param bool $force
      * @param null $file
+     * @deprecated 不建议使用，建议直接使用框架自带的log组件
      */
     function xdebug($data, $type = 'xdebug', $suffix = null, $force = false, $file = null)
     {
@@ -74,7 +74,7 @@ if (!function_exists('sysconfig')) {
         if (empty($value)) {
             if (!empty($name)) {
                 $where['name'] = $name;
-                $value = \app\admin\model\SystemConfig::where($where)->value('value');
+                $value         = \app\admin\model\SystemConfig::where($where)->value('value');
                 Cache::tag('sysconfig')->set("sysconfig_{$group}_{$name}", $value, 3600);
             } else {
                 $value = \app\admin\model\SystemConfig::where($where)->column('value', 'name');
@@ -117,8 +117,23 @@ if (!function_exists('auth')) {
     function auth($node = null)
     {
         $authService = new AuthService(session('admin.id'));
-        $check = $authService->checkNode($node);
+        $check       = $authService->checkNode($node);
         return $check;
     }
 
+    /**
+     * @param $row
+     * @param string $name
+     * @param string $placeholder
+     * @return string
+     */
+    function editor_textarea($row, string $name = 'desc', string $placeholder = '请输入'): string
+    {
+        $editor_type = sysconfig('site', 'editor_type');
+        $detail      = $row[$name] ?? '';
+        return match ($editor_type) {
+            'ckeditor' => "<textarea name='{$name}' rows='20' class='layui-textarea editor' placeholder='{$placeholder}'>{$detail}</textarea>",
+            default    => "<script type='text/plain' id='{$name}' name='{$name}' class='editor' data-content='{$detail}'></script>",
+        };
+    }
 }
