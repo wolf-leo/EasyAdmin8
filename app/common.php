@@ -130,7 +130,7 @@ if (!function_exists('auth')) {
     function editor_textarea($row, string $name = 'desc', string $placeholder = '请输入'): string
     {
         $editor_type = sysconfig('site', 'editor_type');
-        $detail      = $row[$name] ?? '';
+        $detail      = is_array($row) ? ($row[$name] ?? '') : $row;
         return match ($editor_type) {
             'ckeditor' => "<textarea name='{$name}' rows='20' class='layui-textarea editor' placeholder='{$placeholder}'>{$detail}</textarea>",
             default    => "<script type='text/plain' id='{$name}' name='{$name}' class='editor' data-content='{$detail}'></script>",

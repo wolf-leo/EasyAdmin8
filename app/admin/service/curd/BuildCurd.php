@@ -872,7 +872,7 @@ class BuildCurd
             }
 
             // 判断富文本
-            if (in_array($field, $this->editorFields)) {
+            if (in_array($field, $this->editorFields) || in_array($val['type'], ['text', 'tinytext', 'mediumtext', 'longtext'])) {
                 $this->tableColumns[$field]['formType'] = 'editor';
                 continue;
             }
@@ -940,7 +940,7 @@ class BuildCurd
                 }
 
                 // 判断富文本
-                if (in_array($field, $this->editorFields)) {
+                if (in_array($field, $this->editorFields) || in_array($val['type'], ['text', 'tinytext', 'mediumtext', 'longtext'])) {
                     $this->relationArray[$table]['tableColumns'][$field]['formType'] = 'editor';
                     continue;
                 }
@@ -1146,7 +1146,8 @@ class BuildCurd
                 $templateFile = "view{$this->DS}module{$this->DS}files";
                 $define       = isset($val['define']) ? $val['define'] : '|';
             } elseif ($val['formType'] == 'editor') {
-                $templateFile = "view{$this->DS}module{$this->DS}editor";
+                $templateFile   = "view{$this->DS}module{$this->DS}editor";
+                $val['default'] = '""';
             } elseif ($val['formType'] == 'date') {
                 $templateFile = "view{$this->DS}module{$this->DS}date";
                 if (isset($val['define']) && !empty($val['define'])) {
@@ -1221,7 +1222,7 @@ class BuildCurd
                 $templateFile = "view{$this->DS}module{$this->DS}files";
             } elseif ($val['formType'] == 'editor') {
                 $templateFile = "view{$this->DS}module{$this->DS}editor";
-                $value        = '{$row.' . $field . '|raw|default=\'\'}';
+                $value        = '$row["' . $field . '"]';
             } elseif ($val['formType'] == 'date') {
                 $templateFile = "view{$this->DS}module{$this->DS}date";
                 if (isset($val['define']) && !empty($val['define'])) {
