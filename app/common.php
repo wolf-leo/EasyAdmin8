@@ -122,15 +122,14 @@ if (!function_exists('auth')) {
     }
 
     /**
-     * @param $row
+     * @param string $detail
      * @param string $name
      * @param string $placeholder
      * @return string
      */
-    function editor_textarea($row, string $name = 'desc', string $placeholder = '请输入'): string
+    function editor_textarea(string $detail, string $name = 'desc', string $placeholder = '请输入'): string
     {
         $editor_type = sysconfig('site', 'editor_type');
-        $detail      = is_array($row) ? ($row[$name] ?? '') : $row;
         return match ($editor_type) {
             'ckeditor' => "<textarea name='{$name}' rows='20' class='layui-textarea editor' placeholder='{$placeholder}'>{$detail}</textarea>",
             default    => "<script type='text/plain' id='{$name}' name='{$name}' class='editor' data-content='{$detail}'></script>",
