@@ -316,6 +316,12 @@ table样式
     line-height: 1em;
 }
 
+.layui-form-select dl {
+    border: 1px #16b777 solid;
+    border-top: none;
+    z-index: 99999;
+}
+
 .form-search .layui-form-select dl {
     top: 31px;
     padding: 0;
