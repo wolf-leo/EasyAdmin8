@@ -518,7 +518,7 @@ EOT;
             <div class="layui-form-item">
                 <label class="layui-form-label">管理员密码</label>
                 <div class="layui-input-block">
-                    <input type="password" class="layui-input" name="password" autocomplete="off" lay-verify="required" lay-reqtext="请输入管理员密码" placeholder="请输入管理员密码">
+                    <input type="password" class="layui-input" name="password" maxlength="20" autocomplete="off" lay-verify="required" lay-reqtext="请输入管理员密码" placeholder="请输入管理员密码">
                 </div>
             </div>
         </div>
