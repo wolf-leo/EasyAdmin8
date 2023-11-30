@@ -15,7 +15,6 @@ use think\response\Json;
 
 /**
  * @ControllerAnnotation(title="CURD可视化管理")
- * Class Auth
  * @package app\admin\controller\system
  */
 class CurdGenerate extends AdminController
