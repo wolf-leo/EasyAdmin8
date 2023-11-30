@@ -9,6 +9,8 @@ class {{modelName}} extends TimeModel
 
     protected $name = "{{table}}";
 
+    protected $table = "{{prefix_table}}";
+
     protected $deleteTime = {{deleteTime}};
 
     {{relationList}}
