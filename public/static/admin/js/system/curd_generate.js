@@ -16,7 +16,7 @@ define(["jquery", "easy-admin"], function ($, ea, Vue) {
                 let field = data.field
                 tb_prefix = field.tb_prefix
                 tb_name = field.tb_name
-                ea.request.post({url: $(this).attr('lay-submit'), prefix: true, data: field}, function (res) {
+                ea.request.get({url: $(this).attr('lay-submit'), prefix: true, data: field}, function (res) {
                     let code = res.code || '0'
                     if (code != '1') {
                         ea.msg.error(res.msg)

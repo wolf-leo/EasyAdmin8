@@ -35,8 +35,8 @@ class CurdGenerate extends AdminController
     public function save(Request $request, string $type = ''): ?Json
     {
         if (!$request->isAjax()) return $this->error();
-        $tb_prefix = $request->post('tb_prefix/s', '');
-        $tb_name   = $request->post('tb_name/s', '');
+        $tb_prefix = $request->param('tb_prefix/s', '');
+        $tb_name   = $request->param('tb_name/s', '');
         if (empty($tb_name) || empty($tb_prefix)) return $this->error('参数错误');
         switch ($type) {
             case "search":
