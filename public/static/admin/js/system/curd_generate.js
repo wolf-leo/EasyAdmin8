@@ -1,4 +1,4 @@
-define(["jquery", "easy-admin"], function ($, ea, Vue) {
+define(["jquery", "easy-admin", "miniTab"], function ($, ea, miniTab) {
 
     var form = layui.form;
     var table = layui.table;
@@ -9,7 +9,8 @@ define(["jquery", "easy-admin"], function ($, ea, Vue) {
 
     var Controller = {
         index: function () {
-
+            miniTab.listen();
+            let createStatus = false
             let tb_prefix
             let tb_name
             form.on('submit(search)', function (data) {
@@ -17,11 +18,7 @@ define(["jquery", "easy-admin"], function ($, ea, Vue) {
                 tb_prefix = field.tb_prefix
                 tb_name = field.tb_name
                 ea.request.get({url: $(this).attr('lay-submit'), prefix: true, data: field}, function (res) {
-                    let code = res.code || '0'
-                    if (code != '1') {
-                        ea.msg.error(res.msg)
-                        return
-                    }
+                    createStatus = true
                     $('.tableShow').removeClass('layui-hide')
                     $('.table-text').text(field.tb_prefix + field.tb_name)
                     let _data = res.data
@@ -35,15 +32,14 @@ define(["jquery", "easy-admin"], function ($, ea, Vue) {
                                 {field: 'null', title: '是否为空', minWidth: 80},
                                 {field: 'desc', title: '描述', minWidth: 80},
                             ]
-                        ],
-                        data: _data.data,
-                        page: false,
+                        ], data: _data.data, page: false,
                     });
-
+                }, function () {
+                    createStatus = false
                 })
                 form.on('submit(add)', function (data) {
                     let table = $('.table-text').text()
-                    if (!table) {
+                    if (!table || !createStatus) {
                         ea.msg.error('请先查询数据')
                         return
                     }
@@ -51,29 +47,24 @@ define(["jquery", "easy-admin"], function ($, ea, Vue) {
                     let options = {url: url, prefix: true, data: {tb_prefix: tb_prefix, tb_name: tb_name}}
                     layer.confirm('确定要自动生成【' + table + '】对应的CURD?', function (index) {
                         ea.request.post(options, function (res) {
+                            createStatus = true
                             ea.msg.success(res.msg)
-                            let html = ''
-                            $.each(res['data']['result'], function (idx, item) {
-                                html += '<li class="layui-form-item">' + item + '</li>'
-                            })
-                            $('.file-list').html(html)
+                            appendHtml(res['data']['result'], res['data']['link'])
                         }, function (error) {
+                            createStatus = false
                             let code = error.code
                             if (code != '1') {
                                 if (code < 0) {
+                                    createStatus = true
                                     layer.confirm(error.msg, {
-                                        btn: ['确定强制覆盖生成'], title: '提示', icon: 0,
+                                        btn: ['确定强制覆盖生成', '取消'], title: '提示', icon: 0,
                                         yes: function () {
                                             options.prefix = false
                                             options.data.force = 1
                                             ea.request.post(options, function (rs) {
+                                                createStatus = true
                                                 ea.msg.success(rs.msg)
-                                                $('.file-list').empty()
-                                                let html = ''
-                                                $.each(rs['data']['result'], function (idx, item) {
-                                                    html += '<li class="layui-form-item">' + item + '</li>'
-                                                })
-                                                $('.file-list').html(html)
+                                                appendHtml(rs['data']['result'], rs['data']['link'])
                                             })
                                         }
                                     });
@@ -88,7 +79,7 @@ define(["jquery", "easy-admin"], function ($, ea, Vue) {
 
                 form.on('submit(delete)', function (data) {
                     let table = $('.table-text').text()
-                    if (!table) {
+                    if (!table || !createStatus) {
                         ea.msg.error('请先查询数据')
                         return
                     }
@@ -99,11 +90,24 @@ define(["jquery", "easy-admin"], function ($, ea, Vue) {
                             ea.msg.success(res.msg)
                             $('.table-text').text('')
                             $('.file-list').empty()
+                            createStatus = false
                         })
                     })
                 })
                 return
             })
+
+            function appendHtml(array, link) {
+                $('.file-list').empty()
+                let html = ''
+                $.each(array, function (idx, item) {
+                    html += '<li class="layui-form-item">' + item + '</li>'
+                })
+                html += '<a layuimini-content-href="' + link + '" data-title="页面预览">' +
+                    '<button class="layui-btn"><i class="layui-icon layui-icon-link"></i> 自动生成页面预览</button>' +
+                    '</a>'
+                $('.file-list').html(html)
+            }
         }
     };
     return Controller;

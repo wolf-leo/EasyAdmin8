@@ -11,6 +11,7 @@ use app\Request;
 use think\db\exception\PDOException;
 use think\exception\FileException;
 use think\facade\Db;
+use think\helper\Str;
 use think\response\Json;
 
 /**
@@ -66,7 +67,14 @@ class CurdGenerate extends AdminController
                     $fileList = $build->getFileList();
                     if (empty($fileList)) return $this->error('这里什么都没有');
                     $result = $build->create();
-                    return $this->success('生成成功', compact('result'));
+                    $_file  = $result[0] ?? '';
+                    $link   = '';
+                    if (!empty($_file)) {
+                        $_fileExp      = explode(DIRECTORY_SEPARATOR, $_file);
+                        $_fileExp_last = array_slice($_fileExp, -2);
+                        $link          = '/' . env('EASYADMIN.ADMIN', 'admin') . '/' . $_fileExp_last[0] . '.' . Str::snake(explode('.php', end($_fileExp_last))[0] ?? '') . '/index';
+                    }
+                    return $this->success('生成成功', compact('result', 'link'));
                 } catch (FileException $exception) {
                     return json(['code' => -1, 'msg' => $exception->getMessage()]);
                 }
