@@ -34,8 +34,11 @@ define(["jquery", "easy-admin", "miniTab"], function ($, ea, miniTab) {
                             ]
                         ], data: _data.data, page: false,
                     });
-                }, function () {
+                }, function (error) {
                     createStatus = false
+                    ea.msg.error(error.msg)
+                    $('.tableShow').addClass('layui-hide')
+                    return
                 })
                 form.on('submit(add)', function (data) {
                     let table = $('.table-text').text()
