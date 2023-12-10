@@ -37,7 +37,7 @@ class CurdGenerate extends AdminController
         if (!$request->isAjax()) return $this->error();
         $tb_prefix = $request->param('tb_prefix/s', '');
         $tb_name   = $request->param('tb_name/s', '');
-        if (empty($tb_name) || empty($tb_prefix)) return $this->error('参数错误');
+        if (empty($tb_name)) return $this->error('参数错误');
         switch ($type) {
             case "search":
                 try {
@@ -70,9 +70,11 @@ class CurdGenerate extends AdminController
                     $_file  = $result[0] ?? '';
                     $link   = '';
                     if (!empty($_file)) {
-                        $_fileExp      = explode(DIRECTORY_SEPARATOR, $_file);
-                        $_fileExp_last = array_slice($_fileExp, -2);
-                        $link          = '/' . env('EASYADMIN.ADMIN', 'admin') . '/' . $_fileExp_last[0] . '.' . Str::snake(explode('.php', end($_fileExp_last))[0] ?? '') . '/index';
+                        $_fileExp        = explode(DIRECTORY_SEPARATOR, $_file);
+                        $_fileExp_last   = array_slice($_fileExp, -2);
+                        $_fileExp_last_0 = $_fileExp_last[0] . '.';
+                        if ($_fileExp_last[0] == 'controller') $_fileExp_last_0 = '';
+                        $link = '/' . env('EASYADMIN.ADMIN', 'admin') . '/' . $_fileExp_last_0 . Str::snake(explode('.php', end($_fileExp_last))[0] ?? '') . '/index';
                     }
                     return $this->success('生成成功', compact('result', 'link'));
                 } catch (FileException $exception) {
