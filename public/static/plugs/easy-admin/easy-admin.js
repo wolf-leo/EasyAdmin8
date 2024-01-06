@@ -1459,37 +1459,42 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 });
                             }
                         })
-
                     });
-
                 }
             },
             editor: function () {
                 CKEDITOR.tools.setCookie('ckCsrfToken', init.csrf_token);
-                var editorList = document.querySelectorAll(".editor");
+                let editorList = document.querySelectorAll(".editor");
                 if (editorList.length > 0) {
                     $.each(editorList, function (i, v) {
                         if (window.CONFIG.EDITOR_TYPE == 'ueditor') {
-                            var name = $(this).attr("name");
-                            try {
-                                UE.getEditor(name, {
-                                    initialFrameWidth: '100%',
-                                    initialFrameHeight: 420,
-                                    initialContent: $(this).data('content'),
-                                    toolbars: [
-                                        ["fullscreen", "source", "|", "undo", "redo", "|", "bold", "italic", "underline", "fontborder", "strikethrough", "superscript", "subscript", "removeformat", "formatmatch", "autotypeset", "blockquote", "pasteplain", "|", "forecolor", "backcolor", "insertorderedlist", "insertunorderedlist", "selectall", "cleardoc", "|", "rowspacingtop", "rowspacingbottom", "lineheight", "|", "customstyle", "paragraph", "fontfamily", "fontsize", "|", "directionalityltr", "directionalityrtl", "indent", "|", "justifyleft", "justifycenter", "justifyright", "justifyjustify", "|", "touppercase", "tolowercase", "|", "link", "unlink", "anchor", "|", "imagenone", "imageleft", "imageright", "imagecenter", "|", "insertimage", "emotion", "insertframe", "insertcode", "pagebreak", "template", "background", "formula", "|", "horizontal", "date", "time", "spechars", "wordimage", "|", "inserttable", "deletetable", "insertparagraphbeforetable", "insertrow", "deleterow", "insertcol", "deletecol", "mergecells", "mergeright", "mergedown", "splittocells", "splittorows", "splittocols", "|", "print", "preview", "searchreplace", "help",]
-                                    ],
-                                });
-                            } catch (e) {
-                                location.reload()
+                            let name = $(this).attr("name");
+                            let content = $(this).data('content')
+                            let editorOption = {
+                                initialFrameWidth: '100%',
+                                initialFrameHeight: 420,
+                                initialContent: content,
+                                toolbars: [["fullscreen", "source", "|", "undo", "redo", "|", "bold", "italic", "underline", "fontborder", "strikethrough",
+                                    "superscript", "subscript", "removeformat", "formatmatch", "autotypeset", "blockquote", "pasteplain", "|",
+                                    "forecolor", "backcolor", "insertorderedlist", "insertunorderedlist", "selectall", "cleardoc", "|",
+                                    "rowspacingtop", "rowspacingbottom", "lineheight", "|", "customstyle", "paragraph", "fontfamily", "fontsize", "|",
+                                    "directionalityltr", "directionalityrtl", "indent", "|", "justifyleft", "justifycenter", "justifyright", "justifyjustify", "|",
+                                    "touppercase", "tolowercase", "|", "link", "unlink", "anchor", "|", "imagenone", "imageleft", "imageright", "imagecenter", "|",
+                                    "insertimage", "emotion", "insertframe", "insertcode", "pagebreak", "template", "background", "formula", "|",
+                                    "horizontal", "date", "time", "spechars", "wordimage", "|",
+                                    "inserttable", "deletetable", "insertparagraphbeforetable", "insertrow", "deleterow", "insertcol", "deletecol", "mergecells", "mergeright", "mergedown", "splittocells", "splittorows", "splittocols", "|",
+                                    "print", "preview", "searchreplace", "help",
+                                ]],
                             }
+                            setTimeout(function () {
+                                let _UEditor = new baidu.editor.ui.Editor(editorOption);
+                                _UEditor.render(name);
+                            }, 100)
                         } else {
-                            CKEDITOR.replace(
-                                $(this).attr("name"),
-                                {
-                                    height: $(this).height(),
-                                    filebrowserImageUploadUrl: admin.url('ajax/upload?type=editor'),
-                                });
+                            CKEDITOR.replace($(this).attr("name"), {
+                                height: $(this).height(),
+                                filebrowserImageUploadUrl: admin.url('ajax/upload?type=editor'),
+                            });
                         }
                     });
                 }
