@@ -13,6 +13,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
             var util = layui.util;
             ea.table.render({
                 init: init,
+                lineStyle: 'height: auto;',
                 toolbar: ['refresh', 'export'],
                 cols: [[
                     {field: 'id', width: 80, title: 'ID', search: false},
@@ -24,7 +25,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         }
                     },
                     {field: 'method', width: 100, title: '请求方法'},
-                    {field: 'title', width: 180, title: '请求标题'},
+                    {field: 'title', minWidth: 180, title: '请求标题'},
                     {field: 'ip', width: 150, title: 'IP地址'},
                     {field: 'url', minWidth: 150, title: '路由地址', align: "left"},
                     {
