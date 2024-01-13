@@ -12,10 +12,12 @@ return [
     \app\admin\middleware\CsrfMiddleware::class,
 
     // 后台视图初始化
-//    \app\admin\middleware\ViewInit::class,
+    //    \app\admin\middleware\ViewInit::class,
 
     // 检测用户是否登录
-//    \app\admin\middleware\CheckAdmin::class,
+    //    \app\admin\middleware\CheckAdmin::class,
 
+    // 检测是否已经安装程序
+    \app\admin\middleware\CheckInstall::class,
 
 ];

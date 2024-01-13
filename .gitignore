@@ -7,6 +7,7 @@ config/install/lock/install.lock
 /public/storage
 /public/docs
 runtime/admin
+runtime/index
 runtime/log
 runtime/session
 runtime/temp

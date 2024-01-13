@@ -42,4 +42,9 @@ return [
     'default_jsonp_handler' => 'jsonpReturn',
     // 默认JSONP处理方法
     'var_jsonp_handler'     => 'callback',
+
+    // 系统安装后可以删除该中间件判定
+    'middleware'            => [
+        \app\admin\middleware\CheckInstall::class
+    ]
 ];

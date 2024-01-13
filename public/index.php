@@ -18,11 +18,6 @@ require __DIR__ . '/../vendor/autoload.php';
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT_PATH', __DIR__ . DS . '..' . DS);
 
-// 判断是否安装程序
-if (!is_file(ROOT_PATH . 'config' . DS . 'install' . DS . 'lock' . DS . 'install.lock')) {
-    exit(header("location:/install.php"));
-}
-
 // 执行HTTP应用并响应
 $http = (new App())->http;
 
