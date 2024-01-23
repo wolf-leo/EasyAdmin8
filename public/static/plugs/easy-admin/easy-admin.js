@@ -205,21 +205,24 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 options.limit = options.limit || 15;
                 options.limits = options.limits || [10, 15, 20, 25, 50, 100];
                 options.cols = options.cols || [];
-                options.defaultToolbar = (options.defaultToolbar === undefined && !options.search) ? ['filter', 'print', 'exports'] : ['filter', 'print', 'exports', {
+                let searchBtn = options.search ? {
                     title: '搜索',
                     layEvent: 'TABLE_SEARCH',
                     icon: 'layui-icon-search',
                     extend: 'data-table-id="' + options.id + '"'
-                }];
-
+                } : []
+                options.defaultToolbar = options.defaultToolbar !== false ? (
+                    (options.defaultToolbar === undefined ? ['filter', 'print', 'exports'].concat(searchBtn) : options.defaultToolbar.concat(searchBtn))
+                ) : false;
                 // 判断是否为移动端
                 if (admin.checkMobile()) {
-                    options.defaultToolbar = !options.search ? ['filter'] : ['filter', {
-                        title: '搜索',
-                        layEvent: 'TABLE_SEARCH',
-                        icon: 'layui-icon-search',
-                        extend: 'data-table-id="' + options.id + '"'
-                    }];
+                    options.defaultToolbar = options.defaultToolbar !== false ? (
+                        !options.search ? ['filter'] : ['filter', {
+                            title: '搜索',
+                            layEvent: 'TABLE_SEARCH',
+                            icon: 'layui-icon-search',
+                            extend: 'data-table-id="' + options.id + '"'
+                        }]) : false;
                 }
 
                 // 判断元素对象是否有嵌套的
