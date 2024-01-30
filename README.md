@@ -10,7 +10,7 @@
 
 > `EasyAdmin8` 在 [`EasyAdmin`](https://gitee.com/zhongshaofa/easyadmin) 的基础上更新 ThinkPHP 框架到 8.0 ，PHP 最低版本要求不低于 8.0
 >
-> ThinkPHP v8.0 和 layui v2.8.x 的快速开发的后台管理系统。
+> ThinkPHP v8.0 和 Layui v2.9.x 的快速开发的后台管理系统。
 >
 > 项目地址：[http://easyadmin8.top](http://easyadmin8.top)
 >
@@ -55,6 +55,10 @@
 ## CURD命令大全
 
 > 参考 [CURD命令大全](CURD.md)
+
+## 常见问题
+
+> 参考 [常见问题](https://easyadmin8.top/guide/question.html)
 
 ## 界面预览
 
