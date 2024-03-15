@@ -243,6 +243,23 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 // 判断是否有操作列表权限
                 options.cols = admin.table.renderOperat(options.cols, options.elem);
 
+                // 判断是否有初始默认搜索条件
+                options.where = {}
+                $.each(options.cols, function (_, colsV) {
+                    let formatFilter = {}
+                    let formatOp = {}
+                    $.each(colsV, function (i, v) {
+                        if (v.field) {
+                            if (v.searchValue) {
+                                formatFilter[v.field] = v.searchValue
+                                formatOp[v.field] = v.searchOp || '='
+                                options.where['filter'] = JSON.stringify(formatFilter);
+                                options.where['op'] = JSON.stringify(formatOp);
+                            }
+                        }
+                    })
+                })
+
                 // 初始化表格
                 var newTable = table.render(options);
 
