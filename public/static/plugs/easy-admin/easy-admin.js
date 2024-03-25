@@ -379,8 +379,9 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     }
                 });
                 if (formHtml !== '') {
-
-                    $(elem).before('<fieldset id="searchFieldset_' + tableId + '" class="table-search-fieldset ">\n' +
+                    let searchTableShow = $(elem).attr('searchTableShow') || 'true'
+                    let tableSearchClass = searchTableShow === 'false' ? 'table-search-fieldset layui-hide' : 'table-search-fieldset'
+                    $(elem).before('<fieldset id="searchFieldset_' + tableId + '" class="' + tableSearchClass + '">\n' +
                         '<legend>条件搜索</legend>\n' +
                         '<form class="layui-form layui-form-pane form-search">\n' +
                         formHtml +
