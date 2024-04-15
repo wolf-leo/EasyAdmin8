@@ -36,7 +36,8 @@ return [
 
     // 默认编辑器
     'editor_types'        => [
-        'ueditor'  => '百度编辑器',
-        'ckeditor' => 'CK编辑器',
+        'ueditor'    => '百度编辑器',
+        'ckeditor'   => 'CK编辑器',
+        'wangEditor' => 'wangEditor',
     ],
 ];

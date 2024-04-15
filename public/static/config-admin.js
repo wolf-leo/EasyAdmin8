@@ -21,12 +21,6 @@ require.config({
         "iconPickerFa": ["plugs/lay-module/iconPicker/iconPickerFa"],
         "autocomplete": ["plugs/lay-module/autocomplete/autocomplete"],
         "vue": ["plugs/vue-2.6.10/vue.min"],
-        "ckeditor": ["plugs/ckeditor4/ckeditor"],
-        "ueditor.config": ["plugs/ueditor/ueditor.config"],
-        "ueditor": ["plugs/ueditor/ueditor.all"],
-        "ueditor.zh-cn": ["plugs/ueditor/lang/zh-cn/zh-cn"],
-        "codemirror": ["plugs/ueditor/third-party/codemirror"],
-        "ZeroClipboard": ["plugs/ueditor/third-party/zeroclipboard/zeroclipboard"],
     }
 });
 
@@ -45,6 +39,3 @@ if ("undefined" != typeof CONFIG.AUTOLOAD_JS && CONFIG.AUTOLOAD_JS) {
     });
 }
 
-require(['ZeroClipboard', 'ueditor.config', 'ueditor'], function (ZeroClipboard) {
-    window['ZeroClipboard'] = ZeroClipboard;
-})

@@ -21,15 +21,19 @@
             IS_SUPER_ADMIN: "{$isSuperAdmin|default='false'}",
             VERSION: "{$version|default='1.0.0'}",
             CSRF_TOKEN: "{:token()}",
-            EDITOR_TYPE: "{:sysconfig('site','editor_type')?:'ueditor'}",
+            ADMIN_UPLOAD_URL: "{$adminUploadUrl|DEFAULT=''}",
+            EDITOR_TYPE: "{$adminEditor|default='ueditor'}",
         };
     </script>
     <script src="__STATIC__/plugs/layui-v2.8.x/layui.js?v={$version}" charset="utf-8"></script>
     <script src="__STATIC__/plugs/require-2.3.6/require.js?v={$version}" charset="utf-8"></script>
     <script src="__STATIC__/config-admin.js?v={$version}" charset="utf-8"></script>
     <script src="__STATIC__/common/js/admin.js?v={$version}" charset="utf-8"></script>
+    {include file="layout/editor" /}
 </head>
 <body>
+
 {__CONTENT__}
+
 </body>
 </html>

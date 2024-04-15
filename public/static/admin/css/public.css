@@ -523,3 +523,7 @@ table样式
     background: goldenrod;
     white-space: nowrap;
 }
+
+.wangEditor_div {
+    z-index: 99999;
+}

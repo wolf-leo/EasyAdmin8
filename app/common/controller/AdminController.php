@@ -128,7 +128,7 @@ class AdminController extends BaseController
     {
         try {
             parent::validate($data, $validate, $message, $batch);
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             $this->error($e->getMessage());
         }
         return true;
@@ -213,10 +213,10 @@ class AdminController extends BaseController
         foreach ($thisControllerArr as $vo) {
             empty($jsPath) ? $jsPath = parse_name($vo) : $jsPath .= '/' . parse_name($vo);
         }
-        $autoloadJs           = file_exists(root_path('public') . "static/{$thisModule}/js/{$jsPath}.js") ? true : false;
+        $autoloadJs           = file_exists(root_path('public') . "static/{$thisModule}/js/{$jsPath}.js");
         $thisControllerJsPath = "{$thisModule}/js/{$jsPath}.js";
         $adminModuleName      = config('app.admin_alias_name');
-        $isSuperAdmin         = session('admin.id') == AdminConstant::SUPER_ADMIN_ID ? true : false;
+        $isSuperAdmin         = session('admin.id') == AdminConstant::SUPER_ADMIN_ID;
         $data                 = [
             'adminModuleName'      => $adminModuleName,
             'thisController'       => parse_name($thisController),
@@ -226,6 +226,8 @@ class AdminController extends BaseController
             'autoloadJs'           => $autoloadJs,
             'isSuperAdmin'         => $isSuperAdmin,
             'version'              => env('APP_DEBUG') ? time() : ConfigService::getVersion(),
+            'adminUploadUrl'       => url('ajax/upload', [], false),
+            'adminEditor'          => sysconfig('site', 'editor_type') ?: 'ueditor',
         ];
 
         View::assign($data);
