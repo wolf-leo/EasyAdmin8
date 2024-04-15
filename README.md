@@ -96,6 +96,8 @@
 
 * [UEditorPlus](https://github.com/modstart-lib/ueditor-plus)
 
+* [wangEditor](https://github.com/wangeditor-team/wangEditor)
+
 ## 免责声明
 
 > 所有协议遵循 [`EasyAdmin`](https://gitee.com/zhongshaofa/easyadmin)
