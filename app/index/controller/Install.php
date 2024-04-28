@@ -191,7 +191,7 @@ class Install extends BaseController
             if (version_compare($_version, '5.7.0', '<')) {
                 $this->error('mysql版本最低要求 5.7.x');
             }
-        } catch (\Throwable $e) {
+        } catch (\mysqli_sql_exception $e) {
             $this->error($e->getMessage());
         }
         return true;
