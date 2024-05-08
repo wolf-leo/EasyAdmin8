@@ -680,7 +680,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                 }
             },
             url: function (data, option) {
-
+                var option = data.LAY_COL || {};
                 try {
                     var value = admin.table.defaultValue(data);
                 } catch (e) {
@@ -702,7 +702,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                 return laytpl('<input type="checkbox" name="' + option.field + '" value="' + data.id + '" lay-skin="switch" lay-text="' + option.tips + '" lay-filter="' + option.filter + '" ' + checked + ' >').render(data);
             },
             price: function (data, option) {
-
+                var option = data.LAY_COL || {};
                 try {
                     var value = admin.table.defaultValue(data);
                 } catch (e) {
@@ -711,7 +711,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                 return '<span>￥' + value + '</span>';
             },
             percent: function (data, option) {
-
+                var option = data.LAY_COL || {};
                 try {
                     var value = admin.table.defaultValue(data);
                 } catch (e) {
@@ -720,7 +720,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                 return '<span>' + value + '%</span>';
             },
             icon: function (data, option) {
-
+                var option = data.LAY_COL || {};
                 try {
                     var value = admin.table.defaultValue(data);
                 } catch (e) {
@@ -729,7 +729,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                 return '<i class="' + value + '"></i>';
             },
             text: function (data, option) {
-
+                var option = data.LAY_COL || {};
                 try {
                     var value = admin.table.defaultValue(data);
                 } catch (e) {
@@ -738,6 +738,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                 return '<span class="line-limit-length">' + value + '</span>';
             },
             value: function (data, option) {
+                var option = data.LAY_COL || {};
                 try {
                     var value = admin.table.defaultValue(data);
                 } catch (e) {
@@ -747,6 +748,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
             },
             //时间戳转日期
             date: function (data, option) {
+                var option = data.LAY_COL || {};
                 var field = option.field, value = '';
                 try {
                     value = eval("data." + field);
@@ -1543,17 +1545,18 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                                     initialFrameWidth: '100%',
                                     initialFrameHeight: 420,
                                     initialContent: content,
-                                    toolbars: [["fullscreen", "source", "|", "undo", "redo", "|", "bold", "italic", "underline", "fontborder", "strikethrough",
-                                        "superscript", "subscript", "removeformat", "formatmatch", "autotypeset", "blockquote", "pasteplain", "|",
-                                        "forecolor", "backcolor", "insertorderedlist", "insertunorderedlist", "selectall", "cleardoc", "|",
-                                        "rowspacingtop", "rowspacingbottom", "lineheight", "|", "customstyle", "paragraph", "fontfamily", "fontsize", "|",
-                                        "directionalityltr", "directionalityrtl", "indent", "|", "justifyleft", "justifycenter", "justifyright", "justifyjustify", "|",
-                                        "touppercase", "tolowercase", "|", "link", "unlink", "anchor", "|", "imagenone", "imageleft", "imageright", "imagecenter", "|",
-                                        "insertimage", "emotion", "insertframe", "insertcode", "pagebreak", "template", "background", "formula", "|",
-                                        "horizontal", "date", "time", "spechars", "wordimage", "|",
-                                        "inserttable", "deletetable", "insertparagraphbeforetable", "insertrow", "deleterow", "insertcol", "deletecol", "mergecells", "mergeright", "mergedown", "splittocells", "splittorows", "splittocols", "|",
-                                        "print", "preview", "searchreplace", "help",
-                                    ]],
+                                    toolbars: [['fullscreen', 'source', '|', 'undo', 'redo', '|',
+                                        'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+                                        'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+                                        'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+                                        'directionalityltr', 'directionalityrtl', 'indent', '|',
+                                        'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+                                        'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+                                        'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
+                                        'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+                                        'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
+                                        'print', 'preview', 'searchreplace', 'help', 'drafts']
+                                    ],
                                 }
                                 setTimeout(function () {
                                     let _UEditor = new baidu.editor.ui.Editor(editorOption);
