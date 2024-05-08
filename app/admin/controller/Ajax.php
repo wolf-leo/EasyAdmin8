@@ -74,14 +74,14 @@ class Ajax extends AdminController
         $upload_type = $uploadConfig['upload_type'];
         try {
             $upload = UploadService::instance()->setConfig($uploadConfig)->$upload_type($data['file'], $type);
-        } catch (\Exception $e) {
-            return $this->error($e->getMessage());
+        }catch (\Exception $e) {
+            $this->error($e->getMessage());
         }
         $code = $upload['code'] ?? 0;
         if ($code == 0) {
-            return $this->error($upload['data'] ?? '');
-        } else {
-            return $type == 'editor' ? json(
+            $this->error($upload['data'] ?? '');
+        }else {
+            $type == 'editor' ? json(
                 [
                     'error'    => ['message' => '上传成功', 'number' => 201,],
                     'fileName' => '',
@@ -128,8 +128,11 @@ class Ajax extends AdminController
     }
 
     /**
-     * @desc 百度编辑器上传
+     * 百度编辑器上传
      * @return Json
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function uploadUEditor(): Json
     {
@@ -156,24 +159,38 @@ class Ajax extends AdminController
             "imageManagerUrlPrefix"   => "",
             "imageManagerInsertAlign" => "none",
             "imageManagerAllowFiles"  => $upload_allow_ext,
+            // 上传 video
+            "videoActionName"         => "video",
+            "videoFieldName"          => "file",
+            "videoUrlPrefix"          => "",
+            "videoMaxSize"            => $upload_allow_size,
+            "videoAllowFiles"         => $upload_allow_ext,
+            // 上传 附件
+            "fileActionName"          => "attachment",
+            "fileFieldName"           => "file",
+            "fileMaxSize"             => $upload_allow_size,
+            "fileAllowFiles"          => $upload_allow_ext,
         ];
         $action      = $this->request->param('action/s', '');
         $file        = $this->request->file('file');
         $upload_type = $uploadConfig['upload_type'];
         switch ($action) {
             case 'image':
+            case 'attachment':
+            case 'video':
                 if ($this->isDemo) return json(['state' => '演示环境下不允许修改']);
                 try {
                     $upload = UploadService::instance()->setConfig($uploadConfig)->$upload_type($file);
                     $code   = $upload['code'] ?? 0;
                     if ($code == 0) {
                         return json(['state' => $upload['data'] ?? '上传错误信息']);
-                    } else {
+                    }else {
                         return json(['state' => 'SUCCESS', 'url' => $upload['data']['url'] ?? '']);
                     }
-                } catch (\Exception $e) {
-                    return $this->error($e->getMessage());
+                }catch (\Exception $e) {
+                    $this->error($e->getMessage());
                 }
+                break;
             case 'listImage':
                 $list   = (new SystemUploadfile())->order($this->sort)->limit(100)->field('url')->select()->toArray();
                 $result = [
