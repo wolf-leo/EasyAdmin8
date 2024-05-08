@@ -34,10 +34,10 @@ class CurdGenerate extends AdminController
      */
     public function save(Request $request, string $type = ''): ?Json
     {
-        if (!$request->isAjax()) return $this->error();
+        if (!$request->isAjax()) $this->error();
         $tb_prefix = $request->param('tb_prefix/s', '');
         $tb_name   = $request->param('tb_name/s', '');
-        if (empty($tb_name)) return $this->error('参数错误');
+        if (empty($tb_name)) $this->error('参数错误');
         switch ($type) {
             case "search":
                 try {
@@ -53,9 +53,9 @@ class CurdGenerate extends AdminController
                             'desc'  => $value['Comment'],
                         ];
                     }
-                    return $this->success('查询成功', compact('data', 'list'));
-                } catch (PDOException $exception) {
-                    return $this->error($exception->getMessage());
+                    $this->success('查询成功', compact('data', 'list'));
+                }catch (PDOException $exception) {
+                    $this->error($exception->getMessage());
                 }
                 break;
             case "add":
@@ -65,7 +65,7 @@ class CurdGenerate extends AdminController
                     $build->setForce($force); // 强制覆盖
                     $build    = $build->render();
                     $fileList = $build->getFileList();
-                    if (empty($fileList)) return $this->error('这里什么都没有');
+                    if (empty($fileList)) $this->error('这里什么都没有');
                     $result = $build->create();
                     $_file  = $result[0] ?? '';
                     $link   = '';
@@ -76,8 +76,8 @@ class CurdGenerate extends AdminController
                         if ($_fileExp_last[0] == 'controller') $_fileExp_last_0 = '';
                         $link = '/' . env('EASYADMIN.ADMIN', 'admin') . '/' . $_fileExp_last_0 . Str::snake(explode('.php', end($_fileExp_last))[0] ?? '') . '/index';
                     }
-                    return $this->success('生成成功', compact('result', 'link'));
-                } catch (FileException $exception) {
+                    $this->success('生成成功', compact('result', 'link'));
+                }catch (FileException $exception) {
                     return json(['code' => -1, 'msg' => $exception->getMessage()]);
                 }
                 break;
@@ -86,15 +86,15 @@ class CurdGenerate extends AdminController
                     $build    = (new BuildCurd())->setTablePrefix($tb_prefix)->setTable($tb_name);
                     $build    = $build->render();
                     $fileList = $build->getFileList();
-                    if (empty($fileList)) return $this->error('这里什么都没有');
+                    if (empty($fileList)) $this->error('这里什么都没有');
                     $result = $build->delete();
-                    return $this->success('删除自动生成CURD文件成功', compact('result'));
-                } catch (FileException $exception) {
+                    $this->success('删除自动生成CURD文件成功', compact('result'));
+                }catch (FileException $exception) {
                     return json(['code' => -1, 'msg' => $exception->getMessage()]);
                 }
                 break;
             default:
-                return $this->error('参数错误');
+                $this->error('参数错误');
                 break;
         }
     }
