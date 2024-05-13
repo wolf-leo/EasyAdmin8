@@ -11,14 +11,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
         modify_url: 'mall.cate/modify',
     };
 
-    var Controller = {
+    return {
 
         index: function () {
             ea.table.render({
                 init: init,
                 cols: [[
                     {type: "checkbox"},
-                    {field: 'id', width: 80, title: 'ID'},
+                    {field: 'id', width: 80, title: 'ID', searchOp: '='},
                     {field: 'sort', width: 80, title: '排序', edit: 'text'},
                     {field: 'title', minWidth: 80, title: '分类名称'},
                     {field: 'image', minWidth: 80, title: '分类图片', search: false, templet: ea.table.image},
@@ -38,5 +38,4 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.listen();
         },
     };
-    return Controller;
 });

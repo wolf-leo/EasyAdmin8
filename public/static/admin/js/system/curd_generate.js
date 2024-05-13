@@ -7,7 +7,7 @@ define(["jquery", "easy-admin", "miniTab"], function ($, ea, miniTab) {
         save_url: 'system.curd_generate/save',
     };
 
-    var Controller = {
+    return {
         index: function () {
             miniTab.listen();
             let createStatus = false
@@ -113,5 +113,4 @@ define(["jquery", "easy-admin", "miniTab"], function ($, ea, miniTab) {
             }
         }
     };
-    return Controller;
 });

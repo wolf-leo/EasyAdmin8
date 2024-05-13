@@ -11,7 +11,7 @@ class ConfigService
     {
         $version = cache('version');
         if (empty($version)) {
-            $version = sysconfig('site', 'site_version');
+            $version = sysConfig('site', 'site_version');
             cache('site_version', $version);
             Cache::set('version', $version, 3600);
         }

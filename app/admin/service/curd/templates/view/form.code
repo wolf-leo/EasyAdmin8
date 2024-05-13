@@ -6,6 +6,5 @@
             <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
             <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
         </div>
-
     </form>
 </div>

@@ -11,14 +11,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
         export_url: 'system.uploadfile/export',
     };
 
-    var Controller = {
+    return {
 
         index: function () {
             ea.table.render({
                 init: init,
                 cols: [[
                     {type: "checkbox"},
-                    {field: 'id', width: 80, title: 'ID'},
+                    {field: 'id', width: 80, title: 'ID', searchOp: '='},
                     {field: 'upload_type', minWidth: 80, title: '存储位置', search: 'select', selectList: upload_types},
                     {field: 'url', minWidth: 80, search: false, title: '图片信息', templet: ea.table.image},
                     {field: 'url', minWidth: 120, title: '保存地址', templet: ea.table.url},
@@ -42,5 +42,4 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.listen();
         }
     };
-    return Controller;
 });

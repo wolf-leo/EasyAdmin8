@@ -7,7 +7,7 @@ return [
     // pathinfo分隔符
     'pathinfo_depr'         => '/',
     // URL伪静态后缀
-    'url_html_suffix'       => 'html',
+    'url_html_suffix'       => '',
     // URL普通方式参数 用于自动生成
     'url_common_param'      => true,
     // 是否开启路由延迟解析
@@ -27,7 +27,7 @@ return [
     // 默认的路由变量规则
     'default_route_pattern' => '[\w\.]+',
     // 是否开启请求缓存 true自动缓存 支持设置请求缓存规则
-    'request_cache'         => false,
+    'request_cache_key'     => false,
     // 请求缓存有效期
     'request_cache_expire'  => null,
     // 全局请求缓存排除规则
@@ -42,9 +42,4 @@ return [
     'default_jsonp_handler' => 'jsonpReturn',
     // 默认JSONP处理方法
     'var_jsonp_handler'     => 'callback',
-
-    // 系统安装后可以删除该中间件判定
-    'middleware'            => [
-        \app\admin\middleware\CheckInstall::class
-    ]
 ];

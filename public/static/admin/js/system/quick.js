@@ -14,14 +14,14 @@ define(["jquery", "easy-admin", "iconPickerFa", "autocomplete"], function ($, ea
         modify_url: 'system.quick/modify',
     };
 
-    var Controller = {
+    return {
 
         index: function () {
             ea.table.render({
                 init: init,
                 cols: [[
                     {type: "checkbox"},
-                    {field: 'id', width: 80, title: 'ID'},
+                    {field: 'id', width: 80, title: 'ID', searchOp: '='},
                     {field: 'sort', width: 80, title: '排序', edit: 'text'},
                     {field: 'title', minWidth: 80, title: '权限名称'},
                     {field: 'icon', width: 80, title: '图标', templet: ea.table.icon},
@@ -86,5 +86,4 @@ define(["jquery", "easy-admin", "iconPickerFa", "autocomplete"], function ($, ea
             ea.listen();
         },
     };
-    return Controller;
 });

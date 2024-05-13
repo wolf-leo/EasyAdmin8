@@ -17,8 +17,6 @@ use think\App;
 class Quick extends AdminController
 {
 
-    use \app\admin\traits\Curd;
-
     protected array $sort = [
         'sort' => 'desc',
         'id'   => 'desc',

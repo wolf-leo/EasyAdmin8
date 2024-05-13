@@ -7,7 +7,9 @@ use app\admin\service\TriggerService;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnnotation;
+use app\Request;
 use think\App;
+use think\response\Json;
 
 /**
  * Class Config
@@ -28,7 +30,7 @@ class Config extends AdminController
     /**
      * @NodeAnnotation(title="列表")
      */
-    public function index()
+    public function index(Request $request): Json|string
     {
         return $this->fetch();
     }
@@ -36,10 +38,10 @@ class Config extends AdminController
     /**
      * @NodeAnnotation(title="保存")
      */
-    public function save()
+    public function save(Request $request): void
     {
         $this->checkPostRequest();
-        $post         = $this->request->post();
+        $post         = $request->post();
         $notAddFields = ['_token', 'file', 'group'];
         try {
             $group = $post['group'] ?? '';
@@ -53,7 +55,7 @@ class Config extends AdminController
                 if (in_array($key, $notAddFields)) continue;
                 if ($this->model->where('name', $key)->count()) {
                     $this->model->where('name', $key)->update(['value' => $val,]);
-                } else {
+                }else {
                     $this->model->create(
                         [
                             'name'  => $key,
@@ -63,8 +65,8 @@ class Config extends AdminController
                 }
             }
             TriggerService::updateMenu();
-            TriggerService::updateSysconfig();
-        } catch (\Exception $e) {
+            TriggerService::updatesysConfig();
+        }catch (\Exception $e) {
             $this->error('保存失败');
         }
         $this->success('保存成功');

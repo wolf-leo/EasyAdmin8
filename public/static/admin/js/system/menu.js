@@ -15,7 +15,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
         modify_url: 'system.menu/modify',
     };
 
-    var Controller = {
+    return {
         index: function () {
 
             var renderTable = function () {
@@ -194,5 +194,4 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
             });
         }
     };
-    return Controller;
 });

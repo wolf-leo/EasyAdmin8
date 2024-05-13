@@ -5,12 +5,14 @@ namespace app\admin\controller\system;
 use app\admin\model\SystemMenu;
 use app\admin\model\SystemNode;
 use app\admin\service\TriggerService;
-use app\admin\traits\Curd;
 use app\common\constants\MenuConstant;
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnnotation;
 use app\common\controller\AdminController;
+use app\Request;
 use think\App;
+use think\db\exception\DbException;
+use think\response\Json;
 
 /**
  * Class Menu
@@ -19,8 +21,6 @@ use think\App;
  */
 class Menu extends AdminController
 {
-
-    use Curd;
 
     protected array $sort = [
         'sort' => 'desc',
@@ -35,15 +35,16 @@ class Menu extends AdminController
 
     /**
      * @NodeAnnotation(title="列表")
+     * @throws DbException
      */
-    public function index()
+    public function index(Request $request): Json|string
     {
-        if ($this->request->isAjax()) {
+        if ($request->isAjax()) {
             if (input('selectFields')) {
                 return $this->selectList();
             }
             $count = $this->model->count();
-            $list  = $this->model->order($this->sort)->select();
+            $list  = $this->model->order($this->sort)->select()->toArray();
             $data  = [
                 'code'  => 0,
                 'msg'   => '',
@@ -58,14 +59,15 @@ class Menu extends AdminController
     /**
      * @NodeAnnotation(title="添加")
      */
-    public function add($id = null)
+    public function add(Request $request): string
     {
+        $id     = $request->param('id');
         $homeId = $this->model->where(['pid' => MenuConstant::HOME_PID,])->value('id');
         if ($id == $homeId) {
             $this->error('首页不能添加子菜单');
         }
-        if ($this->request->isPost()) {
-            $post = $this->request->post();
+        if ($request->isPost()) {
+            $post = $request->post();
             $rule = [
                 'pid|上级菜单'   => 'require',
                 'title|菜单名称' => 'require',
@@ -74,13 +76,13 @@ class Menu extends AdminController
             $this->validate($post, $rule);
             try {
                 $save = $this->model->save($post);
-            } catch (\Exception $e) {
+            }catch (\Exception $e) {
                 $this->error('保存失败');
             }
             if ($save) {
                 TriggerService::updateMenu();
                 $this->success('保存成功');
-            } else {
+            }else {
                 $this->error('保存失败');
             }
         }
@@ -93,12 +95,12 @@ class Menu extends AdminController
     /**
      * @NodeAnnotation(title="编辑")
      */
-    public function edit($id)
+    public function edit(Request $request, $id = 0): string
     {
         $row = $this->model->find($id);
         empty($row) && $this->error('数据不存在');
-        if ($this->request->isPost()) {
-            $post = $this->request->post();
+        if ($request->isPost()) {
+            $post = $request->post();
             $rule = [
                 'pid|上级菜单'   => 'require',
                 'title|菜单名称' => 'require',
@@ -108,42 +110,42 @@ class Menu extends AdminController
             if ($row->pid == MenuConstant::HOME_PID) $post['pid'] = MenuConstant::HOME_PID;
             try {
                 $save = $row->save($post);
-            } catch (\Exception $e) {
+            }catch (\Exception $e) {
                 $this->error('保存失败');
             }
             if (!empty($save)) {
                 TriggerService::updateMenu();
                 $this->success('保存成功');
-            } else {
+            }else {
                 $this->error('保存失败');
             }
         }
         $pidMenuList = $this->model->getPidMenuList();
         $this->assign([
-                          'id'          => $id,
-                          'pidMenuList' => $pidMenuList,
-                          'row'         => $row,
-                      ]);
+            'id'          => $id,
+            'pidMenuList' => $pidMenuList,
+            'row'         => $row,
+        ]);
         return $this->fetch();
     }
 
     /**
      * @NodeAnnotation(title="删除")
      */
-    public function delete($id)
+    public function delete($id): void
     {
         $this->checkPostRequest();
         $row = $this->model->whereIn('id', $id)->select();
         empty($row) && $this->error('数据不存在');
         try {
             $save = $row->delete();
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             $this->error('删除失败');
         }
         if ($save) {
             TriggerService::updateMenu();
             $this->success('删除成功');
-        } else {
+        }else {
             $this->error('删除失败');
         }
     }
@@ -151,14 +153,14 @@ class Menu extends AdminController
     /**
      * @NodeAnnotation(title="属性修改")
      */
-    public function modify()
+    public function modify(Request $request): void
     {
         $this->checkPostRequest();
-        $post = $this->request->post();
+        $post = $request->post();
         $rule = [
-            'id|ID'    => 'require',
+            'id|ID'      => 'require',
             'field|字段' => 'require',
-            'value|值'  => 'require',
+            'value|值'   => 'require',
         ];
         $this->validate($post, $rule);
         $row = $this->model->find($post['id']);
@@ -170,17 +172,17 @@ class Menu extends AdminController
         }
         $homeId = $this->model
             ->where([
-                        'pid' => MenuConstant::HOME_PID,
-                    ])
+                'pid' => MenuConstant::HOME_PID,
+            ])
             ->value('id');
         if ($post['id'] == $homeId && $post['field'] == 'status') {
             $this->error('首页状态不允许关闭');
         }
         try {
             $row->save([
-                           $post['field'] => $post['value'],
-                       ]);
-        } catch (\Exception $e) {
+                $post['field'] => $post['value'],
+            ]);
+        }catch (\Exception $e) {
             $this->error($e->getMessage());
         }
         TriggerService::updateMenu();
@@ -190,18 +192,18 @@ class Menu extends AdminController
     /**
      * @NodeAnnotation(title="添加菜单提示")
      */
-    public function getMenuTips()
+    public function getMenuTips(): Json
     {
         $node = input('get.keywords');
         $list = SystemNode::whereLike('node', "%{$node}%")
             ->field('node,title')
             ->limit(10)
-            ->select();
+            ->select()->toArray();
         return json([
-                        'code'    => 0,
-                        'content' => $list,
-                        'type'    => 'success',
-                    ]);
+            'code'    => 0,
+            'content' => $list,
+            'type'    => 'success',
+        ]);
     }
 
 }

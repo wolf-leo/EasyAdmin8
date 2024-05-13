@@ -64,7 +64,7 @@ abstract class BaseController
      * @return array|string|true
      * @throws ValidateException
      */
-    protected function validate(array $data, $validate, array $message = [], bool $batch = false)
+    protected function validate(array $data, string|array $validate, array $message = [], bool $batch = false)
     {
         if (is_array($validate)) {
             $v = new Validate();
@@ -72,7 +72,7 @@ abstract class BaseController
         } else {
             if (strpos($validate, '.')) {
                 // 支持场景
-                list($validate, $scene) = explode('.', $validate);
+                [$validate, $scene] = explode('.', $validate);
             }
             $class = false !== strpos($validate, '\\') ? $validate : $this->app->parseClass('validate', $validate);
             $v     = new $class();

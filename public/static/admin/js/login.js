@@ -1,6 +1,6 @@
 define(["easy-admin"], function (ea) {
 
-    var Controller = {
+    return {
         index: function () {
             if (top.location !== self.location) {
                 top.location = self.location;
@@ -46,5 +46,4 @@ define(["easy-admin"], function (ea) {
             });
         },
     };
-    return Controller;
 });

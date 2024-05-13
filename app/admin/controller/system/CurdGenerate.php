@@ -23,7 +23,7 @@ class CurdGenerate extends AdminController
     /**
      * @NodeAnnotation(title="列表")
      */
-    public function index()
+    public function index(Request $request): Json|string
     {
         return $this->fetch();
     }
@@ -74,7 +74,7 @@ class CurdGenerate extends AdminController
                         $_fileExp_last   = array_slice($_fileExp, -2);
                         $_fileExp_last_0 = $_fileExp_last[0] . '.';
                         if ($_fileExp_last[0] == 'controller') $_fileExp_last_0 = '';
-                        $link = '/' . env('EASYADMIN.ADMIN', 'admin') . '/' . $_fileExp_last_0 . Str::snake(explode('.php', end($_fileExp_last))[0] ?? '') . '/index';
+                        $link = '/' . config('admin.alias_name') . '/' . $_fileExp_last_0 . Str::snake(explode('.php', end($_fileExp_last))[0] ?? '') . '/index';
                     }
                     $this->success('生成成功', compact('result', 'link'));
                 }catch (FileException $exception) {

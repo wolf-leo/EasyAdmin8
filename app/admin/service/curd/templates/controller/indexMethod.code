@@ -9,16 +9,8 @@
                 return $this->selectList();
             }
             list($page, $limit, $where) = $this->buildTableParams();
-            $count = $this->model
-                {{relationIndexMethod}}
-                ->where($where)
-                ->count();
-            $list = $this->model
-                {{relationIndexMethod}}
-                ->where($where)
-                ->page($page, $limit)
-                ->order($this->sort)
-                ->select();
+            $count = $this->model{{relationIndexMethod}}->where($where)->count();
+            $list = $this->model{{relationIndexMethod}}->where($where)->page($page, $limit)->order($this->sort)->select()->toArray();
             $data = [
                 'code'  => 0,
                 'msg'   => '',

@@ -8,6 +8,7 @@ use app\admin\service\TriggerService;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnnotation;
+use app\Request;
 use think\App;
 
 /**
@@ -17,8 +18,6 @@ use think\App;
  */
 class Auth extends AdminController
 {
-
-    use \app\admin\traits\Curd;
 
     protected array $sort = [
         'sort' => 'desc',
@@ -34,11 +33,11 @@ class Auth extends AdminController
     /**
      * @NodeAnnotation(title="授权")
      */
-    public function authorize($id)
+    public function authorize(Request $request, $id): string
     {
         $row = $this->model->find($id);
         empty($row) && $this->error('数据不存在');
-        if ($this->request->isAjax()) {
+        if ($request->isAjax()) {
             $list = $this->model->getAuthorizeNodeListByAdminId($id);
             $this->success('获取成功', $list);
         }
@@ -49,11 +48,11 @@ class Auth extends AdminController
     /**
      * @NodeAnnotation(title="授权保存")
      */
-    public function saveAuthorize()
+    public function saveAuthorize(Request $request): void
     {
         $this->checkPostRequest();
-        $id   = $this->request->post('id');
-        $node = $this->request->post('node', "[]");
+        $id   = $request->post('id');
+        $node = $request->post('node', "[]");
         $node = json_decode($node, true);
         $row  = $this->model->find($id);
         empty($row) && $this->error('数据不存在');
@@ -71,7 +70,7 @@ class Auth extends AdminController
                 $authNode->saveAll($saveAll);
             }
             TriggerService::updateMenu();
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             $this->error('保存失败');
         }
         $this->success('保存成功');

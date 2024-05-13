@@ -4,15 +4,16 @@ namespace app\admin\controller\system;
 
 use app\admin\model\SystemLog;
 use app\admin\service\tool\CommonTool;
-use app\admin\traits\Curd;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnnotation;
+use app\Request;
 use jianyan\excel\Excel;
 use think\App;
 use think\db\exception\DbException;
 use think\db\exception\PDOException;
 use think\facade\Db;
+use think\response\Json;
 
 /**
  * @ControllerAnnotation(title="操作日志管理")
@@ -21,7 +22,6 @@ use think\facade\Db;
  */
 class Log extends AdminController
 {
-    use Curd;
 
     public function __construct(App $app)
     {
@@ -32,9 +32,9 @@ class Log extends AdminController
     /**
      * @NodeAnnotation(title="列表")
      */
-    public function index()
+    public function index(Request $request): Json|string
     {
-        if ($this->request->isAjax()) {
+        if ($request->isAjax()) {
             if (input('selectFields')) {
                 return $this->selectList();
             }
@@ -44,7 +44,7 @@ class Log extends AdminController
             try {
                 $count = $model->count();
                 $list  = $model->page($page, $limit)->order($this->sort)->select();
-            } catch (PDOException|DbException $exception) {
+            }catch (PDOException|DbException $exception) {
                 $count = 0;
                 $list  = [];
             }
@@ -62,7 +62,7 @@ class Log extends AdminController
     /**
      * @NodeAnnotation(title="导出")
      */
-    public function export()
+    public function export(): bool
     {
         if (env('EASYADMIN.IS_DEMO', false)) {
             $this->error('演示环境下不允许操作');
@@ -88,7 +88,7 @@ class Log extends AdminController
                 ->order('id', 'desc')
                 ->select()
                 ->toArray();
-        } catch (PDOException|DbException $exception) {
+        }catch (PDOException|DbException $exception) {
             $this->error($exception->getMessage());
         }
         $fileName = time();

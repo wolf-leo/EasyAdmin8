@@ -8,7 +8,10 @@ use app\common\constants\AdminConstant;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnnotation;
+use app\Request;
 use think\App;
+use think\db\exception\DbException;
+use think\response\Json;
 
 /**
  * Class Admin
@@ -17,8 +20,6 @@ use think\App;
  */
 class Admin extends AdminController
 {
-
-    use \app\admin\traits\Curd;
 
     protected array $sort = [
         'sort' => 'desc',
@@ -34,10 +35,11 @@ class Admin extends AdminController
 
     /**
      * @NodeAnnotation(title="列表")
+     * @throws DbException
      */
-    public function index()
+    public function index(Request $request): Json|string
     {
-        if ($this->request->isAjax()) {
+        if ($request->isAjax()) {
             if (input('selectFields')) {
                 return $this->selectList();
             }
@@ -50,7 +52,7 @@ class Admin extends AdminController
                 ->where($where)
                 ->page($page, $limit)
                 ->order($this->sort)
-                ->select();
+                ->select()->toArray();
             $data  = [
                 'code'  => 0,
                 'msg'   => '',
@@ -65,11 +67,11 @@ class Admin extends AdminController
     /**
      * @NodeAnnotation(title="添加")
      */
-    public function add()
+    public function add(Request $request): string
     {
-        if ($this->request->isPost()) {
-            $post             = $this->request->post();
-            $authIds          = $this->request->post('auth_ids', []);
+        if ($request->isPost()) {
+            $post             = $request->post();
+            $authIds          = $request->post('auth_ids', []);
             $post['auth_ids'] = implode(',', array_keys($authIds));
             $rule             = [];
             $this->validate($post, $rule);
@@ -77,7 +79,7 @@ class Admin extends AdminController
             $post['password'] = password($post['password']);
             try {
                 $save = $this->model->save($post);
-            } catch (\Exception $e) {
+            }catch (\Exception $e) {
                 $this->error('保存失败');
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
@@ -88,13 +90,13 @@ class Admin extends AdminController
     /**
      * @NodeAnnotation(title="编辑")
      */
-    public function edit($id)
+    public function edit(Request $request, $id = 0): string
     {
         $row = $this->model->find($id);
         empty($row) && $this->error('数据不存在');
-        if ($this->request->isPost()) {
-            $post             = $this->request->post();
-            $authIds          = $this->request->post('auth_ids', []);
+        if ($request->isPost()) {
+            $post             = $request->post();
+            $authIds          = $request->post('auth_ids', []);
             $post['auth_ids'] = implode(',', array_keys($authIds));
             $rule             = [];
             $this->validate($post, $rule);
@@ -104,7 +106,7 @@ class Admin extends AdminController
             try {
                 $save = $row->save($post);
                 TriggerService::updateMenu($id);
-            } catch (\Exception $e) {
+            }catch (\Exception $e) {
                 $this->error('保存失败');
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
@@ -117,12 +119,12 @@ class Admin extends AdminController
     /**
      * @NodeAnnotation(title="编辑")
      */
-    public function password($id)
+    public function password(Request $request, $id): string
     {
         $row = $this->model->find($id);
         empty($row) && $this->error('数据不存在');
-        if ($this->request->isAjax()) {
-            $post = $this->request->post();
+        if ($request->isAjax()) {
+            $post = $request->post();
             $rule = [
                 'password|登录密码'       => 'require',
                 'password_again|确认密码' => 'require',
@@ -133,9 +135,9 @@ class Admin extends AdminController
             }
             try {
                 $save = $row->save([
-                                       'password' => password($post['password']),
-                                   ]);
-            } catch (\Exception $e) {
+                    'password' => password($post['password']),
+                ]);
+            }catch (\Exception $e) {
                 $this->error('保存失败');
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
@@ -148,7 +150,7 @@ class Admin extends AdminController
     /**
      * @NodeAnnotation(title="删除")
      */
-    public function delete($id)
+    public function delete($id): void
     {
         $this->checkPostRequest();
         $row = $this->model->whereIn('id', $id)->select();
@@ -161,7 +163,7 @@ class Admin extends AdminController
         }
         try {
             $save = $row->delete();
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             $this->error('删除失败');
         }
         $save ? $this->success('删除成功') : $this->error('删除失败');
@@ -170,14 +172,14 @@ class Admin extends AdminController
     /**
      * @NodeAnnotation(title="属性修改")
      */
-    public function modify()
+    public function modify(Request $request): void
     {
         $this->checkPostRequest();
-        $post = $this->request->post();
+        $post = $request->post();
         $rule = [
-            'id|ID'    => 'require',
+            'id|ID'      => 'require',
             'field|字段' => 'require',
-            'value|值'  => 'require',
+            'value|值'   => 'require',
         ];
         $this->validate($post, $rule);
         if (!in_array($post['field'], $this->allowModifyFields)) {
@@ -190,9 +192,9 @@ class Admin extends AdminController
         empty($row) && $this->error('数据不存在');
         try {
             $row->save([
-                           $post['field'] => $post['value'],
-                       ]);
-        } catch (\Exception $e) {
+                $post['field'] => $post['value'],
+            ]);
+        }catch (\Exception $e) {
             $this->error($e->getMessage());
         }
         $this->success('保存成功');

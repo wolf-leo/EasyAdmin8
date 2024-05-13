@@ -2,12 +2,14 @@
 
 namespace app\admin\service\auth;
 
+use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Annotations\DocParser;
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnnotation;
 use app\admin\service\tool\CommonTool;
+use ReflectionException;
 
 /**
  * 节点处理类
@@ -20,12 +22,12 @@ class Node
     /**
      * @var string 当前文件夹
      */
-    protected $basePath;
+    protected string $basePath;
 
     /**
      * @var string 命名空间前缀
      */
-    protected $baseNamespace;
+    protected string $baseNamespace;
 
     /**
      * 构造方法
@@ -33,7 +35,7 @@ class Node
      * @param string $basePath 读取的文件夹
      * @param string $baseNamespace 读取的命名空间前缀
      */
-    public function __construct($basePath, $baseNamespace)
+    public function __construct(string $basePath, string $baseNamespace)
     {
         $this->basePath      = $basePath;
         $this->baseNamespace = $baseNamespace;
@@ -43,8 +45,8 @@ class Node
     /**
      * 获取所有节点
      * @return array
-     * @throws \Doctrine\Common\Annotations\AnnotationException
-     * @throws \ReflectionException
+     * @throws AnnotationException
+     * @throws ReflectionException
      */
     public function getNodeList(): array
     {
@@ -67,9 +69,9 @@ class Node
                 foreach ($methods as $method) {
                     // 读取NodeAnnotation的注解
                     $nodeAnnotation = $reader->getMethodAnnotation($method, NodeAnnotation::class);
-                    if (!empty($nodeAnnotation) && !empty($nodeAnnotation->title)) {
-                        $actionTitle  = !empty($nodeAnnotation) && !empty($nodeAnnotation->title) ? $nodeAnnotation->title : null;
-                        $actionAuth   = !empty($nodeAnnotation) && !empty($nodeAnnotation->auth) ? $nodeAnnotation->auth : false;
+                    if (!empty($nodeAnnotation)) {
+                        $actionTitle  = !empty($nodeAnnotation->title) ? $nodeAnnotation->title : null;
+                        $actionAuth   = !empty($nodeAnnotation->auth) ? $nodeAnnotation->auth : false;
                         $actionList[] = [
                             'node'    => $controllerFormat . '/' . $method->name,
                             'title'   => $actionTitle,
@@ -82,8 +84,8 @@ class Node
                 if (!empty($actionList)) {
                     // 读取Controller的注解
                     $controllerAnnotation = $reader->getClassAnnotation($reflectionClass, ControllerAnnotation::class);
-                    $controllerTitle      = !empty($controllerAnnotation) && !empty($controllerAnnotation->title) ? $controllerAnnotation->title : null;
-                    $controllerAuth       = !empty($controllerAnnotation) && !empty($controllerAnnotation->auth) ? $controllerAnnotation->auth : false;
+                    $controllerTitle      = !empty($controllerAnnotation->title) ? $controllerAnnotation->title : null;
+                    $controllerAuth       = !empty($controllerAnnotation->auth) ? $controllerAnnotation->auth : false;
                     $nodeList[]           = [
                         'node'    => $controllerFormat,
                         'title'   => $controllerTitle,
@@ -102,7 +104,7 @@ class Node
      * 获取所有控制器
      * @return array
      */
-    public function getControllerList()
+    public function getControllerList(): array
     {
         return $this->readControllerFiles($this->basePath);
     }
@@ -112,10 +114,10 @@ class Node
      * @param $path
      * @return array
      */
-    protected function readControllerFiles($path)
+    protected function readControllerFiles($path): array
     {
         list($list, $temp_list, $dirExplode) = [[], scandir($path), explode($this->basePath, $path)];
-        $middleDir = isset($dirExplode[1]) && !empty($dirExplode[1]) ? str_replace('/', '\\', substr($dirExplode[1], 1)) . "\\" : '';
+        $middleDir = !empty($dirExplode[1]) ? str_replace('/', '\\', substr($dirExplode[1], 1)) . "\\" : '';
 
         foreach ($temp_list as $file) {
             // 排除根目录和没有开启注解的模块
@@ -126,7 +128,7 @@ class Node
                 // 子文件夹，进行递归
                 $childFiles = $this->readControllerFiles($path . DIRECTORY_SEPARATOR . $file);
                 $list       = array_merge($childFiles, $list);
-            } else {
+            }else {
                 // 判断是不是控制器
                 $fileExplodeArray = explode('.', $file);
                 if (count($fileExplodeArray) != 2 || end($fileExplodeArray) != 'php') {

@@ -5,27 +5,24 @@ namespace app\admin\controller;
 use app\admin\model\SystemAdmin;
 use app\admin\model\SystemQuick;
 use app\common\controller\AdminController;
+use app\Request;
 use Exception;
-use think\App;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
-use think\facade\Env;
 
 class Index extends AdminController
 {
 
     /**
      * 后台主页
+     * @param Request $request
      * @return string
-     * @throws Exception
      */
-    public function index(): string
+    public function index(Request $request): string
     {
-        return $this->fetch('', [
-            'admin' => session('admin'),
-        ]);
+        return $this->fetch('', ['admin' => $request->adminUserInfo,]);
     }
 
     /**
@@ -50,20 +47,21 @@ class Index extends AdminController
 
     /**
      * 修改管理员信息
+     * @param Request $request
      * @return string
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function editAdmin(): string
+    public function editAdmin(Request $request): string
     {
-        $id  = session('admin.id');
+        $id  =  $this->adminUid;
         $row = (new SystemAdmin())
             ->withoutField('password')
             ->find($id);
         empty($row) && $this->error('用户信息不存在');
-        if ($this->request->isPost()) {
-            $post = $this->request->post();
+        if ($request->isPost()) {
+            $post = $request->post();
             $this->isDemo && $this->error('演示环境下不允许修改');
             $rule = [];
             $this->validate($post, $rule);
@@ -71,7 +69,7 @@ class Index extends AdminController
                 $save = $row
                     ->allowField(['head_img', 'phone', 'remark', 'update_time'])
                     ->save($post);
-            } catch (Exception $e) {
+            }catch (Exception $e) {
                 $this->error('保存失败');
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
@@ -82,22 +80,23 @@ class Index extends AdminController
 
     /**
      * 修改密码
+     * @param Request $request
      * @return string
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function editPassword(): string
+    public function editPassword(Request $request): string
     {
-        $id  = session('admin.id');
+        $id  =  $this->adminUid;
         $row = (new SystemAdmin())
             ->withoutField('password')
             ->find($id);
         if (!$row) {
             $this->error('用户信息不存在');
         }
-        if ($this->request->isPost()) {
-            $post = $this->request->post();
+        if ($request->isPost()) {
+            $post = $request->post();
             $this->isDemo && $this->error('演示环境下不允许修改');
             $rule = [
                 'password|登录密码'       => 'require',
@@ -110,14 +109,14 @@ class Index extends AdminController
 
             try {
                 $save = $row->save([
-                                       'password' => password($post['password']),
-                                   ]);
-            } catch (Exception $e) {
+                    'password' => password($post['password']),
+                ]);
+            }catch (Exception $e) {
                 $this->error('保存失败');
             }
             if ($save) {
                 $this->success('保存成功');
-            } else {
+            }else {
                 $this->error('保存失败');
             }
         }

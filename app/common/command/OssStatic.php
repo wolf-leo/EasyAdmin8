@@ -24,7 +24,7 @@ class OssStatic extends Command
         $output->writeln("========正在上传静态资源到OSS上：========" . date('Y-m-d H:i:s'));
         $dir = root_path() . 'public' . DIRECTORY_SEPARATOR . 'static';
         $list = CommonTool::readDirAllFiles($dir);
-        $uploadConfig = sysconfig('upload');
+        $uploadConfig = sysConfig('upload');
         $uploadPrefix = config('app.oss_static_prefix', 'oss_static_prefix');
         foreach ($list as $key => $val) {
             list($objectName, $filePath) = [$uploadPrefix . DIRECTORY_SEPARATOR . $key, $val];

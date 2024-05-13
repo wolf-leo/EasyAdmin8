@@ -3,25 +3,18 @@
 namespace app\common\controller;
 
 use app\admin\service\ConfigService;
+use app\admin\traits\Curd;
 use app\BaseController;
 use app\common\constants\AdminConstant;
-use app\common\service\AuthService;
-use think\db\exception\DataNotFoundException;
-use think\db\exception\DbException;
-use think\db\exception\ModelNotFoundException;
-use think\facade\Env;
+use app\common\traits\JumpTrait;
 use think\facade\View;
 use think\helper\Str;
 use think\response\Json;
 
-/**
- * Class AdminController
- * @package app\common\controller
- */
 class AdminController extends BaseController
 {
-
-    use \app\common\traits\JumpTrait;
+    use Curd;
+    use JumpTrait;
 
     /**
      * 当前模型
@@ -81,39 +74,45 @@ class AdminController extends BaseController
      */
     protected bool $isDemo = false;
 
+    /**
+     * @var int|string
+     */
+    protected int|string $adminUid;
+
 
     /**
      * 初始化方法
      */
-    protected function initialize()
+    protected function initialize(): void
     {
         parent::initialize();
-        $this->layout && $this->app->view->engine()->layout($this->layout);
-        $this->isDemo = Env::get('EASYADMIN.IS_DEMO', false);
+        $this->adminUid = request()->adminUserInfo['id'] ?? 0;
+        $this->isDemo   = env('EASYADMIN.IS_DEMO', false);
         $this->viewInit();
-        $this->checkAuth();
     }
 
     /**
      * 模板变量赋值
-     * @param string|array $name 模板变量
-     * @param mixed $value 变量值
-     * @return mixed
+     * @param array|string $name 模板变量
+     * @param mixed|null $value 变量值
      */
-    public function assign($name, $value = null): mixed
+    public function assign(array|string $name, mixed $value = null): void
     {
-        return $this->app->view->assign($name, $value);
+        View::assign($name, $value);
     }
 
     /**
      * 解析和获取模板内容 用于输出
      * @param string $template
      * @param array $vars
-     * @return mixed
+     * @param bool $layout 是否需要自动布局
+     * @return string
      */
-    public function fetch(string $template = '', array $vars = []): mixed
+    public function fetch(string $template = '', array $vars = [], bool $layout = true): string
     {
-        return $this->app->view->fetch($template, $vars);
+        if ($layout) View::instance()->engine()->layout('/layout/default');
+        View::assign($vars);
+        return View::fetch($template);
     }
 
     /**
@@ -158,7 +157,7 @@ class AdminController extends BaseController
                 $excludes[$key] = $val;
                 continue;
             }
-            $op = isset($ops[$key]) && !empty($ops[$key]) ? $ops[$key] : '%*%';
+            $op = !empty($ops[$key]) ? $ops[$key] : '%*%';
             if ($this->relationSearch && count(explode('.', $key)) == 1) {
                 $key = "{$tableName}.{$key}";
             }
@@ -195,17 +194,14 @@ class AdminController extends BaseController
     public function selectList(): Json
     {
         $fields = input('selectFields');
-        $data   = $this->model
-            ->where($this->selectWhere)
-            ->field($fields)
-            ->select();
+        $data   = $this->model->where($this->selectWhere)->field($fields)->select()->toArray();
         $this->success(null, $data);
     }
 
     /**
      * 初始化视图参数
      */
-    private function viewInit()
+    private function viewInit(): void
     {
         $request = app()->request;
         list($thisModule, $thisController, $thisAction) = [app('http')->getName(), app()->request->controller(), $request->action()];
@@ -215,9 +211,10 @@ class AdminController extends BaseController
         }
         $autoloadJs           = file_exists(root_path('public') . "static/{$thisModule}/js/{$jsPath}.js");
         $thisControllerJsPath = "{$thisModule}/js/{$jsPath}.js";
-        $adminModuleName      = config('app.admin_alias_name');
-        $isSuperAdmin         = session('admin.id') == AdminConstant::SUPER_ADMIN_ID;
+        $adminModuleName      = config('admin.alias_name');
+        $isSuperAdmin         = $this->adminUid == AdminConstant::SUPER_ADMIN_ID;
         $data                 = [
+            'isDemo'               => $this->isDemo,
             'adminModuleName'      => $adminModuleName,
             'thisController'       => parse_name($thisController),
             'thisAction'           => $thisAction,
@@ -227,60 +224,16 @@ class AdminController extends BaseController
             'isSuperAdmin'         => $isSuperAdmin,
             'version'              => env('APP_DEBUG') ? time() : ConfigService::getVersion(),
             'adminUploadUrl'       => url('ajax/upload', [], false),
-            'adminEditor'          => sysconfig('site', 'editor_type') ?: 'ueditor',
+            'adminEditor'          => sysConfig('site', 'editor_type') ?: 'ueditor',
         ];
-
         View::assign($data);
     }
 
-    /**
-     * 检测权限
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    private function checkAuth()
-    {
-        $adminConfig = config('admin');
-        $adminId     = session('admin.id');
-        $expireTime  = session('admin.expire_time');
-        /** @var AuthService $authService */
-        $authService       = app(AuthService::class, ['adminId' => $adminId]);
-        $currentNode       = $authService->getCurrentNode();
-        $currentController = parse_name(app()->request->controller());
-
-        // 验证登录
-        if (
-            !in_array($currentController, $adminConfig['no_login_controller'])
-            && !in_array($currentNode, $adminConfig['no_login_node'])) {
-            empty($adminId) && $this->error('请先登录后台', [], __url('admin/login/index'));
-
-            // 判断是否登录过期
-            if ($expireTime !== true && time() > $expireTime) {
-                session('admin', null);
-                $this->error('登录已过期，请重新登录', [], __url('admin/login/index'));
-            }
-        }
-
-        // 验证权限
-        if (
-            !in_array($currentController, $adminConfig['no_auth_controller'])
-            && !in_array($currentNode, $adminConfig['no_auth_node'])) {
-            $check = $authService->checkNode($currentNode);
-            !$check && $this->error('无权限访问');
-
-            // 判断是否为演示环境
-            if (env('EASYADMIN.IS_DEMO', false) && app()->request->isPost()) {
-                $this->error('演示环境下不允许修改');
-            }
-
-        }
-    }
 
     /**
      * 严格校验接口是否为POST请求
      */
-    protected function checkPostRequest()
+    protected function checkPostRequest(): void
     {
         if (!$this->request->isPost()) {
             $this->error("当前请求不合法！");

@@ -18,17 +18,19 @@ class Install extends BaseController
         $installPath = config_path() . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR;
         $errorInfo   = null;
         if (is_file($installPath . 'lock' . DIRECTORY_SEPARATOR . 'install.lock')) {
+            // 如果你已经成功安装了后台系统 并且不想再次出现安装界面，可以把下面跳转注释取消
+            // $this->redirect('/');
             $isInstall = true;
             $errorInfo = '已安装系统，如需重新安装请删除文件：/config/install/lock/install.lock，或者删除 /install 路由';
-        } elseif (version_compare(phpversion(), '8.0.0', '<')) {
+        }elseif (version_compare(phpversion(), '8.0.0', '<')) {
             $errorInfo = 'PHP版本不能小于8.0.0';
-        } elseif (!extension_loaded("PDO")) {
+        }elseif (!extension_loaded("PDO")) {
             $errorInfo = '当前未开启PDO，无法进行安装';
         }
         if (!$request->isAjax()) {
             $currentHost = '://';
             $result      = compact('errorInfo', 'currentHost', 'isInstall');
-            return view('', $result);
+            return view('index/install/index', $result);
         }
         if ($errorInfo) $this->error($errorInfo);
         $charset    = 'utf8mb4';
@@ -53,9 +55,9 @@ class Install extends BaseController
         }
         if (strlen($adminUrl) < 2) {
             $validateError = '后台的地址不能小于2位数';
-        } elseif (strlen($password) < 5) {
+        }elseif (strlen($password) < 5) {
             $validateError = '管理员密码不能小于5位数';
-        } elseif (strlen($username) < 4) {
+        }elseif (strlen($username) < 4) {
             $validateError = '管理员账号不能小于4位数';
         }
         if (!empty($validateError)) $this->error($validateError);
@@ -110,7 +112,7 @@ class Install extends BaseController
             !is_dir($installPath) && @mkdir($installPath);
             !is_dir($installPath . 'lock' . DIRECTORY_SEPARATOR) && @mkdir($installPath . 'lock' . DIRECTORY_SEPARATOR);
             @file_put_contents($installPath . 'lock' . DIRECTORY_SEPARATOR . 'install.lock', date('Y-m-d H:i:s'));
-        } catch (\Exception|\PDOException|\Throwable $e) {
+        }catch (\Exception|\PDOException|\Throwable $e) {
             $this->error("系统安装失败：" . $e->getMessage());
         }
         return true;
@@ -160,7 +162,7 @@ class Install extends BaseController
             $con = mysqli_connect($config['host'] ?? '127.0.0.1', $config['username'] ?? 'root', $config['password'] ?? '', null, $config['port'] ?? '');
             mysqli_query($con, "CREATE DATABASE IF NOT EXISTS `{$database}` DEFAULT CHARACTER SET {$config['charset']} COLLATE=utf8mb4_general_ci");
             mysqli_close($con);
-        } catch (\Throwable $e) {
+        }catch (\Throwable $e) {
             return false;
         }
         return true;
@@ -170,12 +172,12 @@ class Install extends BaseController
     {
         try {
             $check = Db::query("SELECT * FROM information_schema.schemata WHERE schema_name='{$database}'");
-        } catch (\Throwable $exception) {
+        }catch (\Throwable $exception) {
             $check = false;
         }
         if (empty($check)) {
             return false;
-        } else {
+        }else {
             return true;
         }
     }
@@ -191,7 +193,7 @@ class Install extends BaseController
             if (version_compare($_version, '5.7.0', '<')) {
                 $this->error('mysql版本最低要求 5.7.x');
             }
-        } catch (\mysqli_sql_exception $e) {
+        }catch (\mysqli_sql_exception $e) {
             $this->error($e->getMessage());
         }
         return true;

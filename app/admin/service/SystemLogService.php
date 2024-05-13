@@ -15,29 +15,25 @@ use think\facade\Env;
 class SystemLogService
 {
 
-    /**
-     * 当前实例
-     * @var object
-     */
-    protected static $instance;
+    protected static ?SystemLogService $instance = null;
 
     /**
      * 表前缀
      * @var string
      */
-    protected $tablePrefix;
+    protected string $tablePrefix;
 
     /**
      * 表后缀
      * @var string
      */
-    protected $tableSuffix;
+    protected string $tableSuffix;
 
     /**
      * 表名
      * @var string
      */
-    protected $tableName;
+    protected string $tableName;
 
     /**
      * 构造方法
@@ -69,14 +65,14 @@ class SystemLogService
      * @param $data
      * @return bool|string
      */
-    public function save($data)
+    public function save($data): bool|string
     {
         Db::startTrans();
         try {
             $this->detectTable();
-            Db::table($this->tableName)->insert($data);
+            Db::table($this->tableName)->strict(false)->insert($data);
             Db::commit();
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             Db::rollback();
             return $e->getMessage();
         }
@@ -119,7 +115,8 @@ CREATE TABLE `{$this->tableName}` (
   `url` varchar(1500) NOT NULL DEFAULT '' COMMENT '操作页面',
   `method` varchar(50) NOT NULL COMMENT '请求方法',
   `title` varchar(100) DEFAULT '' COMMENT '日志标题',
-  `content` text NOT NULL COMMENT '内容',
+  `content` json NOT NULL COMMENT '请求数据',
+  `response` json DEFAULT NULL COMMENT '回调数据',
   `ip` varchar(50) NOT NULL DEFAULT '' COMMENT 'IP',
   `useragent` varchar(255) DEFAULT '' COMMENT 'User-Agent',
   `create_time` int(10) DEFAULT NULL COMMENT '操作时间',

@@ -10,13 +10,10 @@ use think\App;
 
 /**
  * @ControllerAnnotation(title="上传文件管理")
- * Class Uploadfile
  * @package app\admin\controller\system
  */
 class Uploadfile extends AdminController
 {
-
-    use \app\admin\traits\Curd;
 
     public function __construct(App $app)
     {

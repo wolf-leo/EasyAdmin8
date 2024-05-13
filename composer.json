@@ -1,58 +1,63 @@
 {
-  "name": "wolfcode/easyadmin8",
-  "url": "https://github.com/wolf-leo/EasyAdmin8",
-  "description": "基于ThinkPHP8.0和Layui的快速开发的后台管理系统。",
-  "type": "project",
-  "keywords": [
-    "thinkphp",
-    "easyadmin",
-    "admin"
-  ],
-  "homepage": "https://easyadmin8.top/",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "wolfcode"
-    }
-  ],
-  "require": {
-    "php": ">=8.0.0",
-    "topthink/framework": "8.0.3",
-    "topthink/think-orm": "^3.0",
-    "topthink/think-multi-app": "^1.0",
-    "topthink/think-view": "^2.0",
-    "topthink/think-captcha": "^3.0",
-    "topthink/think-filesystem": "^2.0",
-    "aliyuncs/oss-sdk-php": "^2.6",
-    "qcloud/cos-sdk-v5": "^2.6",
-    "alibabacloud/client": "^1.5",
-    "jianyan74/php-excel": "^1.0.2",
-    "doctrine/annotations": "^1.13",
-    "phpoffice/phpspreadsheet": "^1.28",
-    "myclabs/php-enum": "^1.8",
-    "ext-json": "*",
-    "qiniu/php-sdk": "v7.11.0"
-  },
-  "require-dev": {
-    "symfony/var-dumper": "^4.2",
-    "eaglewu/swoole-ide-helper": "dev-master"
-  },
-  "autoload": {
-    "psr-4": {
-      "app\\": "app"
+    "name": "topthink/think",
+    "description": "the new thinkphp framework",
+    "type": "project",
+    "keywords": [
+        "framework",
+        "thinkphp",
+        "ORM"
+    ],
+    "homepage": "https://www.thinkphp.cn/",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "liu21st",
+            "email": "liu21st@gmail.com"
+        },
+        {
+            "name": "yunwuxin",
+            "email": "448901948@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0.0",
+        "topthink/framework": "^8.0",
+        "topthink/think-orm": "^3.0",
+        "topthink/think-multi-app": "^1.0",
+        "topthink/think-view": "^2.0",
+        "topthink/think-captcha": "^3.0",
+        "topthink/think-filesystem": "^2.0",
+        "aliyuncs/oss-sdk-php": "^2.6",
+        "qcloud/cos-sdk-v5": "^2.6",
+        "alibabacloud/client": "^1.5",
+        "jianyan74/php-excel": "^1.0.2",
+        "doctrine/annotations": "^1.13",
+        "phpoffice/phpspreadsheet": "^1.28",
+        "myclabs/php-enum": "^1.8",
+        "ext-json": "*",
+        "qiniu/php-sdk": "v7.11.0",
+      "ext-mysqli": "*",
+      "ext-pdo": "*"
     },
-    "psr-0": {
-      "": "extend/"
+    "require-dev": {
+        "symfony/var-dumper": ">=4.2",
+        "topthink/think-trace": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "app"
+        },
+        "psr-0": {
+            "": "extend/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php think service:discover",
+            "@php think vendor:publish"
+        ]
     }
-  },
-  "config": {
-    "preferred-install": "dist",
-    "secure-http": false
-  },
-  "scripts": {
-    "post-autoload-dump": [
-      "@php think service:discover",
-      "@php think vendor:publish"
-    ]
-  }
 }

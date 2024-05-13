@@ -3,11 +3,13 @@
 namespace app\admin\controller\mall;
 
 use app\admin\model\MallGoods;
-use app\admin\traits\Curd;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnnotation;
+use app\Request;
 use think\App;
+use think\db\exception\DbException;
+use think\response\Json;
 
 /**
  * Class Goods
@@ -16,8 +18,6 @@ use think\App;
  */
 class Goods extends AdminController
 {
-
-    use Curd;
 
     protected bool $relationSearch = true;
 
@@ -29,10 +29,11 @@ class Goods extends AdminController
 
     /**
      * @NodeAnnotation(title="列表")
+     * @throws DbException
      */
-    public function index()
+    public function index(Request $request): Json|string
     {
-        if ($this->request->isAjax()) {
+        if ($request->isAjax()) {
             if (input('selectFields')) {
                 return $this->selectList();
             }
@@ -46,7 +47,7 @@ class Goods extends AdminController
                 ->where($where)
                 ->page($page, $limit)
                 ->order($this->sort)
-                ->select();
+                ->select()->toArray();
             $data  = [
                 'code'  => 0,
                 'msg'   => '',
@@ -61,19 +62,19 @@ class Goods extends AdminController
     /**
      * @NodeAnnotation(title="入库")
      */
-    public function stock($id)
+    public function stock(Request $request, $id): string
     {
         $row = $this->model->find($id);
         empty($row) && $this->error('数据不存在');
-        if ($this->request->isPost()) {
-            $post = $this->request->post();
+        if ($request->isPost()) {
+            $post = $request->post();
             $rule = [];
             $this->validate($post, $rule);
             try {
                 $post['total_stock'] = $row->total_stock + $post['stock'];
                 $post['stock']       = $row->stock + $post['stock'];
                 $save                = $row->save($post);
-            } catch (\Exception $e) {
+            }catch (\Exception $e) {
                 $this->error('保存失败');
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');

@@ -8,7 +8,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         export_url: 'system.log/export',
     };
 
-    var Controller = {
+    return {
         index: function () {
             var util = layui.util;
             ea.table.render({
@@ -29,10 +29,19 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'ip', width: 150, title: 'IP地址'},
                     {field: 'url', minWidth: 150, title: '路由地址', align: "left"},
                     {
-                        field: 'content', minWidth: 200, title: '操作内容', align: "left", templet: function (res) {
+                        field: 'content', minWidth: 200, title: '请求数据', align: "left", templet: function (res) {
                             let html = '<div class="layui-colla-item">' +
                                 '<div class="layui-colla-title">点击预览</div>' +
                                 '<div class="layui-colla-content">' + prettyFormat(res.content) + '</div>' +
+                                '</div>'
+                            return '<div class="layui-collapse" lay-accordion>' + html + '</div>'
+                        }
+                    },
+                    {
+                        field: 'response', minWidth: 200, title: '回调数据', align: "left", templet: function (res) {
+                            let html = '<div class="layui-colla-item">' +
+                                '<div class="layui-colla-title">点击预览</div>' +
+                                '<div class="layui-colla-content">' + prettyFormat(res.response) + '</div>' +
                                 '</div>'
                             return '<div class="layui-collapse" lay-accordion>' + html + '</div>'
                         }
@@ -46,5 +55,4 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.listen();
         },
     };
-    return Controller;
 });

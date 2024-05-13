@@ -13,15 +13,13 @@ use think\App;
 class {{controllerName}} extends AdminController
 {
 
-    use \app\admin\traits\Curd;
-
     public function __construct(App $app)
     {
         parent::__construct($app);
-
         $this->model = new {{modelFilename}}();
         {{selectList}}
     }
 
     {{indexMethod}}
+
 }

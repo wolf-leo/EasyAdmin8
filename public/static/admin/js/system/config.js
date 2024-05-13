@@ -2,7 +2,7 @@ define(["jquery", "easy-admin", "vue"], function ($, ea, Vue) {
 
     var form = layui.form;
 
-    var Controller = {
+    return {
         index: function () {
             var _group = 'site'
             var element = layui.element;
@@ -28,5 +28,4 @@ define(["jquery", "easy-admin", "vue"], function ($, ea, Vue) {
             ea.listen();
         }
     };
-    return Controller;
 });

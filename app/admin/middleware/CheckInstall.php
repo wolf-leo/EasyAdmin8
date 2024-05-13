@@ -2,18 +2,17 @@
 
 namespace app\admin\middleware;
 
-use app\Request;
+use app\common\traits\JumpTrait;
+use Closure;
 
-/**
- *  检测是否安装成功
- *  系统安装后可以在 config/route 中删除该中间件判定
- */
 class CheckInstall
 {
-    public function handle(Request $request, \Closure $next)
+    use JumpTrait;
+
+    public function handle($request, Closure $next)
     {
         $controller = $request->controller();
-        if (!is_file(ROOT_PATH . 'config' . DS . 'install' . DS . 'lock' . DS . 'install.lock')) {
+        if (!is_file(root_path() . 'config' . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR . 'lock' . DIRECTORY_SEPARATOR . 'install.lock')) {
             if ($controller != 'Install') return redirect('/install');
         }
         return $next($request);

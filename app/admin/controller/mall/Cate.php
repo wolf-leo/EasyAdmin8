@@ -3,7 +3,6 @@
 namespace app\admin\controller\mall;
 
 use app\admin\model\MallCate;
-use app\admin\traits\Curd;
 use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnnotation;
@@ -16,8 +15,6 @@ use think\App;
  */
 class Cate extends AdminController
 {
-
-    use Curd;
 
     public function __construct(App $app)
     {

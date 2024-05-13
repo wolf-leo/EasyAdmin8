@@ -4,8 +4,10 @@ namespace app\admin\traits;
 
 use app\admin\service\annotation\NodeAnnotation;
 use app\admin\service\tool\CommonTool;
+use app\Request;
 use jianyan\excel\Excel;
 use think\facade\Db;
+use think\response\Json;
 
 /**
  * 后台CURD复用
@@ -18,21 +20,15 @@ trait Curd
     /**
      * @NodeAnnotation(title="列表")
      */
-    public function index()
+    public function index(Request $request): Json|string
     {
-        if ($this->request->isAjax()) {
+        if ($request->isAjax()) {
             if (input('selectFields')) {
                 return $this->selectList();
             }
             list($page, $limit, $where) = $this->buildTableParams();
-            $count = $this->model
-                ->where($where)
-                ->count();
-            $list  = $this->model
-                ->where($where)
-                ->page($page, $limit)
-                ->order($this->sort)
-                ->select();
+            $count = $this->model->where($where)->count();
+            $list  = $this->model->where($where)->page($page, $limit)->order($this->sort)->select()->toArray();
             $data  = [
                 'code'  => 0,
                 'msg'   => '',
@@ -47,18 +43,20 @@ trait Curd
     /**
      * @NodeAnnotation(title="添加")
      */
-    public function add()
+    public function add(Request $request): string
     {
-        if ($this->request->isPost()) {
-            $post = $this->request->post();
+        if ($request->isPost()) {
+            $post = $request->post();
             $rule = [];
             $this->validate($post, $rule);
             try {
-                $save = $this->model->save($post);
-            } catch (\Exception $e) {
-                $this->error('保存失败:' . $e->getMessage());
+                Db::transaction(function () use ($post, &$save) {
+                    $save = $this->model->strict(false)->save($post);
+                });
+            }catch (\Exception $e) {
+                $this->error('新增失败:' . $e->getMessage());
             }
-            $save ? $this->success('保存成功') : $this->error('保存失败');
+            $save ? $this->success('新增成功') : $this->error('新增失败');
         }
         return $this->fetch();
     }
@@ -66,17 +64,19 @@ trait Curd
     /**
      * @NodeAnnotation(title="编辑")
      */
-    public function edit($id)
+    public function edit(Request $request, $id = 0): string
     {
         $row = $this->model->find($id);
         empty($row) && $this->error('数据不存在');
-        if ($this->request->isPost()) {
-            $post = $this->request->post();
+        if ($request->isPost()) {
+            $post = $request->post();
             $rule = [];
             $this->validate($post, $rule);
             try {
-                $save = $row->save($post);
-            } catch (\Exception $e) {
+                Db::transaction(function () use ($post, $row, &$save) {
+                    $save = $row->save($post);
+                });
+            }catch (\Exception $e) {
                 $this->error('保存失败');
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
@@ -88,14 +88,14 @@ trait Curd
     /**
      * @NodeAnnotation(title="删除")
      */
-    public function delete($id)
+    public function delete($id): void
     {
         $this->checkPostRequest();
         $row = $this->model->whereIn('id', $id)->select();
         $row->isEmpty() && $this->error('数据不存在');
         try {
             $save = $row->delete();
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             $this->error('删除失败');
         }
         $save ? $this->success('删除成功') : $this->error('删除失败');
@@ -134,10 +134,10 @@ trait Curd
     /**
      * @NodeAnnotation(title="属性修改")
      */
-    public function modify()
+    public function modify(Request $request): void
     {
         $this->checkPostRequest();
-        $post = $this->request->post();
+        $post = $request->post();
         $rule = [
             'id|ID'      => 'require',
             'field|字段' => 'require',
@@ -152,10 +152,12 @@ trait Curd
             $this->error('该字段不允许修改：' . $post['field']);
         }
         try {
-            $row->save([
-                           $post['field'] => $post['value'],
-                       ]);
-        } catch (\Exception $e) {
+            Db::transaction(function () use ($post, $row) {
+                $row->save([
+                    $post['field'] => $post['value'],
+                ]);
+            });
+        }catch (\Exception $e) {
             $this->error($e->getMessage());
         }
         $this->success('保存成功');

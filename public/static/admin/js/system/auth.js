@@ -12,14 +12,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
         authorize_url: 'system.auth/authorize',
     };
 
-    var Controller = {
+    return {
 
         index: function () {
             ea.table.render({
                 init: init,
                 cols: [[
                     {type: "checkbox"},
-                    {field: 'id', width: 80, title: 'ID'},
+                    {field: 'id', width: 80, title: 'ID', searchOp: '='},
                     {field: 'sort', width: 80, title: '排序', edit: 'text'},
                     {field: 'title', minWidth: 80, title: '权限名称'},
                     {field: 'remark', minWidth: 80, title: '备注信息'},
@@ -86,5 +86,4 @@ define(["jquery", "easy-admin"], function ($, ea) {
 
         }
     };
-    return Controller;
 });

@@ -12,7 +12,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         stock_url: 'mall.goods/stock',
     };
 
-    var Controller = {
+    return {
 
         index: function () {
             ea.table.render({
@@ -29,7 +29,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     'delete', 'export'],
                 cols: [[
                     {type: "checkbox"},
-                    {field: 'id', width: 80, title: 'ID'},
+                    {field: 'id', width: 80, title: 'ID', searchOp: '='},
                     {field: 'sort', width: 80, title: '排序', edit: 'text'},
                     {field: 'cate.title', minWidth: 80, title: '商品分类'},
                     {field: 'title', minWidth: 80, title: '商品名称'},
@@ -77,5 +77,4 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.listen();
         },
     };
-    return Controller;
 });

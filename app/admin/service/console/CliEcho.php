@@ -5,11 +5,11 @@ namespace app\admin\service\console;
 class CliEcho
 {
 
-    private $foreground_colors = [];
+    private array $foreground_colors = [];
 
-    private $background_colors = [];
+    private array $background_colors = [];
 
-    private static $foregroundColors = [
+    private static array $foregroundColors = [
         'black'        => '0;30',
         'dark_gray'    => '1;30',
         'blue'         => '0;34',
@@ -42,57 +42,57 @@ class CliEcho
     public function __construct()
     {
         // Set up shell colors
-        $this->foreground_colors['black'] = '0;30';
-        $this->foreground_colors['dark_gray'] = '1;30';
-        $this->foreground_colors['blue'] = '0;34';
-        $this->foreground_colors['light_blue'] = '1;34';
-        $this->foreground_colors['green'] = '0;32';
-        $this->foreground_colors['light_green'] = '1;32';
-        $this->foreground_colors['cyan'] = '0;36';
-        $this->foreground_colors['light_cyan'] = '1;36';
-        $this->foreground_colors['red'] = '0;31';
-        $this->foreground_colors['light_red'] = '1;31';
-        $this->foreground_colors['purple'] = '0;35';
+        $this->foreground_colors['black']        = '0;30';
+        $this->foreground_colors['dark_gray']    = '1;30';
+        $this->foreground_colors['blue']         = '0;34';
+        $this->foreground_colors['light_blue']   = '1;34';
+        $this->foreground_colors['green']        = '0;32';
+        $this->foreground_colors['light_green']  = '1;32';
+        $this->foreground_colors['cyan']         = '0;36';
+        $this->foreground_colors['light_cyan']   = '1;36';
+        $this->foreground_colors['red']          = '0;31';
+        $this->foreground_colors['light_red']    = '1;31';
+        $this->foreground_colors['purple']       = '0;35';
         $this->foreground_colors['light_purple'] = '1;35';
-        $this->foreground_colors['brown'] = '0;33';
-        $this->foreground_colors['yellow'] = '1;33';
-        $this->foreground_colors['light_gray'] = '0;37';
-        $this->foreground_colors['white'] = '1;37';
-        $this->background_colors['black'] = '40';
-        $this->background_colors['red'] = '41';
-        $this->background_colors['green'] = '42';
-        $this->background_colors['yellow'] = '43';
-        $this->background_colors['blue'] = '44';
-        $this->background_colors['magenta'] = '45';
-        $this->background_colors['cyan'] = '46';
-        $this->background_colors['light_gray'] = '47';
+        $this->foreground_colors['brown']        = '0;33';
+        $this->foreground_colors['yellow']       = '1;33';
+        $this->foreground_colors['light_gray']   = '0;37';
+        $this->foreground_colors['white']        = '1;37';
+        $this->background_colors['black']        = '40';
+        $this->background_colors['red']          = '41';
+        $this->background_colors['green']        = '42';
+        $this->background_colors['yellow']       = '43';
+        $this->background_colors['blue']         = '44';
+        $this->background_colors['magenta']      = '45';
+        $this->background_colors['cyan']         = '46';
+        $this->background_colors['light_gray']   = '47';
     }
 
     // Returns colored string
-    public function getColoredString($string, $foreground_color = null, $background_color = null, $new_line = false)
+    public function getColoredString($string, $foreground_color = null, $background_color = null, $new_line = false): string
     {
         $colored_string = '';
         // Check if given foreground color found
         if (isset($this->foreground_colors[$foreground_color])) {
-            $colored_string .= "\033[".$this->foreground_colors[$foreground_color].'m';
+            $colored_string .= "\033[" . $this->foreground_colors[$foreground_color] . 'm';
         }
         // Check if given background color found
         if (isset($this->background_colors[$background_color])) {
-            $colored_string .= "\033[".$this->background_colors[$background_color].'m';
+            $colored_string .= "\033[" . $this->background_colors[$background_color] . 'm';
         }
         // Add string and end coloring
-        $colored_string .= $string."\033[0m";
-        return $new_line ? $colored_string.PHP_EOL : $colored_string;
+        $colored_string .= $string . "\033[0m";
+        return $new_line ? $colored_string . PHP_EOL : $colored_string;
     }
 
     // Returns all foreground color names
-    public function getForegroundColors()
+    public function getForegroundColors(): array
     {
         return array_keys($this->foreground_colors);
     }
 
     // Returns all background color names
-    public function getBackgroundColors()
+    public function getBackgroundColors(): array
     {
         return array_keys($this->background_colors);
     }
@@ -100,25 +100,26 @@ class CliEcho
     /**
      * 获取带颜色的文字.
      *
-     * @param string      $string          black|dark_gray|blue|light_blue|green|light_green|cyan|light_cyan|red|light_red|purple|brown|yellow|light_gray|white
+     * @param string $string black|dark_gray|blue|light_blue|green|light_green|cyan|light_cyan|red|light_red|purple|brown|yellow|light_gray|white
      * @param string|null $foregroundColor 前景颜色 black|red|green|yellow|blue|magenta|cyan|light_gray
      * @param string|null $backgroundColor 背景颜色 同$foregroundColor
      *
      * @return string
      */
     public static function initColoredString(
-        $string,
-        $foregroundColor = null,
-        $backgroundColor = null
-    ) {
+        string  $string,
+        ?string $foregroundColor = null,
+        ?string $backgroundColor = null
+    ): string
+    {
         $coloredString = '';
         if (isset(static::$foregroundColors[$foregroundColor])) {
-            $coloredString .= "\033[".static::$foregroundColors[$foregroundColor].'m';
+            $coloredString .= "\033[" . static::$foregroundColors[$foregroundColor] . 'm';
         }
         if (isset(static::$backgroundColors[$backgroundColor])) {
-            $coloredString .= "\033[".static::$backgroundColors[$backgroundColor].'m';
+            $coloredString .= "\033[" . static::$backgroundColors[$backgroundColor] . 'm';
         }
-        $coloredString .= $string."\033[0m";
+        $coloredString .= $string . "\033[0m";
         return $coloredString;
     }
 
@@ -127,9 +128,9 @@ class CliEcho
      *
      * @param $msg
      */
-    public static function notice($msg)
+    public static function notice($msg): void
     {
-        fwrite(STDOUT, self::initColoredString($msg, 'light_gray').PHP_EOL);
+        fwrite(STDOUT, self::initColoredString($msg, 'light_gray') . PHP_EOL);
     }
 
     /**
@@ -137,9 +138,9 @@ class CliEcho
      *
      * @param $msg
      */
-    public static function error($msg)
+    public static function error($msg): void
     {
-        fwrite(STDERR, self::initColoredString($msg, 'white','red').PHP_EOL);
+        fwrite(STDERR, self::initColoredString($msg, 'white', 'red') . PHP_EOL);
     }
 
     /**
@@ -147,9 +148,9 @@ class CliEcho
      *
      * @param $msg
      */
-    public static function warn($msg)
+    public static function warn($msg): void
     {
-        fwrite(STDOUT, self::initColoredString($msg, 'red','yellow').PHP_EOL);
+        fwrite(STDOUT, self::initColoredString($msg, 'red', 'yellow') . PHP_EOL);
     }
 
     /**
@@ -157,9 +158,9 @@ class CliEcho
      *
      * @param $msg
      */
-    public static function success($msg)
+    public static function success($msg): void
     {
-        fwrite(STDOUT, self::initColoredString($msg, 'light_cyan').PHP_EOL);
+        fwrite(STDOUT, self::initColoredString($msg, 'light_cyan') . PHP_EOL);
     }
 
 }

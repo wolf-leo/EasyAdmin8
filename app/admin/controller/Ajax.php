@@ -6,6 +6,7 @@ use app\admin\model\SystemUploadfile;
 use app\admin\service\UploadService;
 use app\common\controller\AdminController;
 use app\common\service\MenuService;
+use app\Request;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -25,28 +26,28 @@ class Ajax extends AdminController
      */
     public function initAdmin(): Json
     {
-        $cacheData = Cache::get('initAdmin_' . session('admin.id'));
+        $cacheData = Cache::get('initAdmin_' . $this->adminUid);
         if (!empty($cacheData)) {
             return json($cacheData);
         }
-        $menuService = new MenuService(session('admin.id'));
+        $menuService = new MenuService($this->adminUid);
         $data        = [
             'logoInfo' => [
-                'title' => sysconfig('site', 'logo_title'),
-                'image' => sysconfig('site', 'logo_image'),
+                'title' => sysConfig('site', 'logo_title'),
+                'image' => sysConfig('site', 'logo_image'),
                 'href'  => __url('index/index'),
             ],
             'homeInfo' => $menuService->getHomeInfo(),
             'menuInfo' => $menuService->getMenuTree(),
         ];
-        Cache::tag('initAdmin')->set('initAdmin_' . session('admin.id'), $data);
+        Cache::tag('initAdmin')->set('initAdmin_' . $this->adminUid, $data);
         return json($data);
     }
 
     /**
      * 清理缓存接口
      */
-    public function clearCache()
+    public function clearCache(): void
     {
         Cache::clear();
         $this->success('清理缓存成功');
@@ -54,17 +55,19 @@ class Ajax extends AdminController
 
     /**
      * 上传文件
+     * @param Request $request
+     * @return void
      */
-    public function upload()
+    public function upload(Request $request): void
     {
         $this->isDemo && $this->error('演示环境下不允许修改');
         $this->checkPostRequest();
-        $type         = $this->request->param('type', '');
+        $type         = $request->param('type', '');
         $data         = [
-            'upload_type' => $this->request->post('upload_type'),
-            'file'        => $this->request->file($type == 'editor' ? 'upload' : 'file'),
+            'upload_type' => $request->post('upload_type'),
+            'file'        => $request->file($type == 'editor' ? 'upload' : 'file'),
         ];
-        $uploadConfig = sysconfig('upload');
+        $uploadConfig = sysConfig('upload');
         empty($data['upload_type']) && $data['upload_type'] = $uploadConfig['upload_type'];
         $rule = [
             'upload_type|指定上传类型有误' => "in:{$uploadConfig['upload_allow_type']}",
@@ -94,17 +97,18 @@ class Ajax extends AdminController
 
     /**
      * 获取上传文件列表
+     * @param Request $request
      * @return Json
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getUploadFiles(): Json
+    public function getUploadFiles(Request $request): Json
     {
-        $get         = $this->request->get();
-        $page        = isset($get['page']) && !empty($get['page']) ? $get['page'] : 1;
-        $limit       = isset($get['limit']) && !empty($get['limit']) ? $get['limit'] : 10;
-        $title       = isset($get['title']) && !empty($get['title']) ? $get['title'] : null;
+        $get         = $request->get();
+        $page        = !empty($get['page']) ? $get['page'] : 1;
+        $limit       = !empty($get['limit']) ? $get['limit'] : 10;
+        $title       = !empty($get['title']) ? $get['title'] : null;
         $this->model = new SystemUploadfile();
         $count       = $this->model
             ->where(function (Query $query) use ($title) {
@@ -117,7 +121,7 @@ class Ajax extends AdminController
             })
             ->page($page, $limit)
             ->order($this->sort)
-            ->select();
+            ->select()->toArray();
         $data        = [
             'code'  => 0,
             'msg'   => '',
@@ -129,14 +133,15 @@ class Ajax extends AdminController
 
     /**
      * 百度编辑器上传
+     * @param Request $request
      * @return Json
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function uploadUEditor(): Json
+    public function uploadUEditor(Request $request): Json
     {
-        $uploadConfig      = sysconfig('upload');
+        $uploadConfig      = sysConfig('upload');
         $upload_allow_size = $uploadConfig['upload_allow_size'];
         $_upload_allow_ext = explode(',', $uploadConfig['upload_allow_ext']);
         $upload_allow_ext  = [];
@@ -171,8 +176,8 @@ class Ajax extends AdminController
             "fileMaxSize"             => $upload_allow_size,
             "fileAllowFiles"          => $upload_allow_ext,
         ];
-        $action      = $this->request->param('action/s', '');
-        $file        = $this->request->file('file');
+        $action      = $request->param('action/s', '');
+        $file        = $request->file('file');
         $upload_type = $uploadConfig['upload_type'];
         switch ($action) {
             case 'image':

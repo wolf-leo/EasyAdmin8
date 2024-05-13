@@ -1,6 +1,6 @@
 define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTab"], function ($, ea, echarts, undefined, miniAdmin, miniTab) {
 
-    var Controller = {
+    return {
         index: function () {
             var options = {
                 iniUrl: ea.url('ajax/initAdmin'),    // 初始化接口
@@ -162,5 +162,4 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
             ea.listen();
         }
     };
-    return Controller;
 });

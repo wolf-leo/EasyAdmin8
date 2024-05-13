@@ -8,7 +8,10 @@ use app\common\controller\AdminController;
 use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnnotation;
 use app\admin\service\NodeService;
+use app\Request;
 use think\App;
+use think\db\exception\DbException;
+use think\response\Json;
 
 /**
  * @ControllerAnnotation(title="系统节点管理")
@@ -18,8 +21,6 @@ use think\App;
 class Node extends AdminController
 {
 
-    use \app\admin\traits\Curd;
-
     public function __construct(App $app)
     {
         parent::__construct($app);
@@ -28,10 +29,11 @@ class Node extends AdminController
 
     /**
      * @NodeAnnotation(title="列表")
+     * @throws DbException
      */
-    public function index()
+    public function index(Request $request): Json|string
     {
-        if ($this->request->isAjax()) {
+        if ($request->isAjax()) {
             if (input('selectFields')) {
                 return $this->selectList();
             }
@@ -86,7 +88,7 @@ class Node extends AdminController
             }
             $model->saveAll($nodeList);
             TriggerService::updateNode();
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             $this->error('节点更新失败');
         }
         $this->success('节点更新成功');
@@ -107,7 +109,7 @@ class Node extends AdminController
                 !isset($formatNodeList[$vo['node']]) && $model->where('id', $vo['id'])->delete();
             }
             TriggerService::updateNode();
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             $this->error('节点更新失败');
         }
         $this->success('节点更新成功');
