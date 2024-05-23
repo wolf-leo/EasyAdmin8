@@ -84,7 +84,7 @@
 
 * [EasyAdmin](http://easyadmin.99php.cn/docs)
 
-* [Layui 2.8.x](https://layui.dev/docs/2.8/)
+* [Layui 2.9.x](https://layui.dev/docs)
 
 * [Layuimini](https://github.com/zhongshaofa/layuimini)
 
