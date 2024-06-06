@@ -56,9 +56,9 @@ class Ajax extends AdminController
     /**
      * 上传文件
      * @param Request $request
-     * @return void
+     * @return Json|null
      */
-    public function upload(Request $request): void
+    public function upload(Request $request): Json|null
     {
         $this->isDemo && $this->error('演示环境下不允许修改');
         $this->checkPostRequest();
@@ -84,14 +84,18 @@ class Ajax extends AdminController
         if ($code == 0) {
             $this->error($upload['data'] ?? '');
         }else {
-            $type == 'editor' ? json(
-                [
-                    'error'    => ['message' => '上传成功', 'number' => 201,],
-                    'fileName' => '',
-                    'uploaded' => 1,
-                    'url'      => $upload['data']['url'] ?? '',
-                ]
-            ) : $this->success('上传成功', $upload['data'] ?? '');
+            if ($type == 'editor') {
+                return json(
+                    [
+                        'error'    => ['message' => '上传成功', 'number' => 201,],
+                        'fileName' => '',
+                        'uploaded' => 1,
+                        'url'      => $upload['data']['url'] ?? '',
+                    ]
+                );
+            }else {
+                $this->success('上传成功', $upload['data'] ?? '');
+            }
         }
     }
 
