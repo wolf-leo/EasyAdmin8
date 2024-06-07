@@ -177,7 +177,7 @@ class BuildCurd
      * 时间字段后缀
      * @var array
      */
-    protected array $dateFieldSuffix = ['time', 'date'];
+    protected array $dateFieldSuffix = ['date', 'time'];
 
     /**
      * 开关组件字段
@@ -328,7 +328,7 @@ class BuildCurd
         try {
             $columns       = Db::query("SHOW FULL COLUMNS FROM {$this->tablePrefix}{$relationTable}");
             $formatColumns = [];
-            $delete       = false;
+            $delete        = false;
             if (!empty($bindSelectField) && !in_array($bindSelectField, array_column($columns, 'Field'))) {
                 throw new TableException("关联表{$relationTable}不存在该字段: {$bindSelectField}");
             }
@@ -642,8 +642,9 @@ class BuildCurd
         if (!empty($formTypeMatch) && isset($formTypeMatch[0])) {
             $colum['comment'] = str_replace($formTypeMatch[0], '', $colum['comment']);
             $formType         = trim(str_replace('}', '', str_replace('{', '', $formTypeMatch[0])));
-            if (in_array($formType, $this->formTypeArray)) {
-                $colum['formType'] = $formType;
+            $_formType        = $this->checkCommentFormType($formType);
+            if ($_formType) {
+                $colum['formType'] = $_formType;
             }
         }
 
@@ -744,8 +745,8 @@ class BuildCurd
      */
     protected function buildOptionView($field, string $select = '')
     {
-        $field      = CommonTool::lineToHump(ucfirst($field));
-        $name       = "get{$field}List";
+        $field = CommonTool::lineToHump(ucfirst($field));
+        $name  = "get{$field}List";
         return CommonTool::replaceTemplate(
             $this->getTemplate("view{$this->DS}module{$this->DS}option"),
             [
@@ -1021,7 +1022,7 @@ class BuildCurd
     protected function renderModel(): static
     {
         // 主表模型
-        $modelFile = "{$this->rootDir}app{$this->DS}admin{$this->DS}model{$this->DS}{$this->modelFilename}.php";
+        $modelFile    = "{$this->rootDir}app{$this->DS}admin{$this->DS}model{$this->DS}{$this->modelFilename}.php";
         $relationList = '';
         if (!empty($this->relationArray)) {
             foreach ($this->relationArray as $key => $val) {
@@ -1428,7 +1429,7 @@ class BuildCurd
     protected function checkContain($string, $array): bool
     {
         foreach ($array as $vo) {
-            if (str_starts_with($string, $vo)) {
+            if (str_starts_with($vo, $string)) {
                 return true;
             }
         }
@@ -1453,6 +1454,25 @@ class BuildCurd
     protected function getTemplate($name): bool|string
     {
         return file_get_contents("{$this->dir}{$this->DS}templates{$this->DS}{$name}.code");
+    }
+
+    /**
+     * 检测字段注释归类的类型
+     * @param string $formType
+     * @return string|null
+     */
+    protected function checkCommentFormType(string $formType = ''): ?string
+    {
+        $classProperties = get_class_vars(get_class($this));
+        foreach ($classProperties as $property => $classProperty) {
+            if (empty($property)) continue;
+            if (str_ends_with($property, 'FieldSuffix')) {
+                if (in_array($formType, $this->$property)) {
+                    return $this->$property[0] ?? '';
+                }
+            }
+        }
+        return '';
     }
 
 }
