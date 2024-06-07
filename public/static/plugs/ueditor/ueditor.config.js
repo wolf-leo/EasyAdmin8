@@ -38,7 +38,6 @@
     } else {
         CORS_URL = getUEBasePath();
     }
-
     /**
      * 配置项主体。注意，此处所有涉及到路径的配置别遗漏URL变量。
      */
@@ -53,7 +52,7 @@
         debug: false,
 
         // 服务器统一请求接口路径
-        serverUrl: "/admin/ajax/uploadUEditor",
+        serverUrl: "/" + (window.CONFIG.ADMIN || 'admin') + "/ajax/uploadUEditor",
         // 服务器统一请求头信息，会在所有请求中带上该信息
         serverHeaders: {
             // 'Authorization': 'Bearer xxx'
