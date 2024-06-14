@@ -141,13 +141,19 @@ class BuildCurd
      * 复选框字段后缀
      * @var array
      */
-    protected array $checkboxFieldSuffix = [];
+    protected array $checkboxFieldSuffix = ['checkbox'];
 
     /**
      * 单选框字段后缀
      * @var array
      */
-    protected array $radioFieldSuffix = [];
+    protected array $radioFieldSuffix = ['radio'];
+
+    /**
+     * 下拉字段后缀
+     * @var array
+     */
+    protected array $selectFieldSuffix = ['select'];
 
     /**
      * 单图片字段后缀
@@ -189,7 +195,19 @@ class BuildCurd
      * 下拉选择字段
      * @var array
      */
-    protected array $selectFields = [];
+    protected array $selectFields = ['select'];
+
+    /**
+     * 单选字段
+     * @var array
+     */
+    protected array $radioFields = ['radio'];
+
+    /**
+     * 复选字段
+     * @var array
+     */
+    protected array $checkboxFields = ['checkbox'];
 
     /**
      * 富文本字段
