@@ -101,12 +101,12 @@ if (!function_exists('auth')) {
     }
 
     /**
-     * @param string $detail
+     * @param string|null $detail
      * @param string $name
      * @param string $placeholder
      * @return string
      */
-    function editor_textarea(string $detail, string $name = 'desc', string $placeholder = '请输入'): string
+    function editor_textarea(?string $detail, string $name = 'desc', string $placeholder = '请输入'): string
     {
         $editor_type = sysConfig('site', 'editor_type');
         return match ($editor_type) {
