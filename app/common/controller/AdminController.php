@@ -224,7 +224,7 @@ class AdminController extends BaseController
             'isSuperAdmin'         => $isSuperAdmin,
             'version'              => env('APP_DEBUG') ? time() : ConfigService::getVersion(),
             'adminUploadUrl'       => url('ajax/upload', [], false),
-            'adminEditor'          => sysConfig('site', 'editor_type') ?: 'ueditor',
+            'adminEditor'          => sysConfig('site', 'editor_type') ?: 'wangEditor',
         ];
         View::assign($data);
     }
