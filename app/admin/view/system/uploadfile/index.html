@@ -9,6 +9,5 @@
     </div>
 </div>
 <script>
-    let upload_types = '{$upload_types|json_encode|raw}'
-    upload_types = JSON.parse(upload_types)
+    let upload_types = JSON.parse('{$upload_types|json_encode=256|raw}')
 </script>

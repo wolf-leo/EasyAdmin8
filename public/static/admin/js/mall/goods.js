@@ -31,7 +31,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {type: "checkbox"},
                     {field: 'id', width: 80, title: 'ID', searchOp: '='},
                     {field: 'sort', width: 80, title: '排序', edit: 'text'},
-                    {field: 'cate.title', minWidth: 80, title: '商品分类'},
+                    {field: 'cate_id', minWidth: 80, title: '商品分类', search: 'select', selectList: cateSelects},
                     {field: 'title', minWidth: 80, title: '商品名称'},
                     {field: 'logo', minWidth: 80, title: '分类图片', search: false, templet: ea.table.image},
                     {field: 'market_price', width: 100, title: '市场价', templet: ea.table.price},
