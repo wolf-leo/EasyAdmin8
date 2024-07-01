@@ -20,8 +20,6 @@ use think\response\Json;
 class Goods extends AdminController
 {
 
-    protected bool $relationSearch = true;
-
     public function __construct(App $app)
     {
         parent::__construct($app);
@@ -36,20 +34,10 @@ class Goods extends AdminController
     public function index(Request $request): Json|string
     {
         if ($request->isAjax()) {
-            if (input('selectFields')) {
-                return $this->selectList();
-            }
+            if (input('selectFields')) return $this->selectList();
             list($page, $limit, $where) = $this->buildTableParams();
-            $count = $this->model
-                ->withJoin('cate', 'LEFT')
-                ->where($where)
-                ->count();
-            $list  = $this->model
-                ->withJoin('cate', 'LEFT')
-                ->where($where)
-                ->page($page, $limit)
-                ->order($this->sort)
-                ->select()->toArray();
+            $count = $this->model->where($where)->count();
+            $list  = $this->model->with(['cate'])->where($where)->page($page, $limit)->order($this->sort)->select()->toArray();
             $data  = [
                 'code'  => 0,
                 'msg'   => '',
