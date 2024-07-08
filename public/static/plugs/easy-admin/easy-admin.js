@@ -631,8 +631,19 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                                 operat.title = data[operat.extra] + ' - ' + operat.title;
                             }
 
+                            const show_obj = operat.show || false;
+                            let can_show = 1;
+                            if (show_obj) {
+                                $.each(show_obj, function (j, show_item) {
+                                    if (data[show_item.name] !== show_item.value) {
+                                        can_show = 0;
+                                        return false;
+                                    }
+                                })
+                            }
+
                             operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
-                            if (admin.checkAuth(operat.auth, elem)) {
+                            if (admin.checkAuth(operat.auth, elem) && can_show === 1) {
                                 html += admin.table.buildOperatHtml(operat);
                             }
                         });
