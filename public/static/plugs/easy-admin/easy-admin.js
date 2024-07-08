@@ -614,7 +614,9 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                         }
 
                     } else if (typeof item === 'object') {
+
                         $.each(item, function (i, operat) {
+                            if (typeof operat !== 'object') return
                             operat.class = operat.class || '';
                             operat.icon = operat.icon || '';
                             operat.auth = operat.auth || '';
