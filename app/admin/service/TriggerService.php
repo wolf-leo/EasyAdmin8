@@ -43,7 +43,7 @@ class TriggerService
      */
     public static function updatesysConfig()
     {
-        Cache::tag('sysconfig')->clear();
+        Cache::tag('sysConfig')->clear();
         return true;
     }
 
