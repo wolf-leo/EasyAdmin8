@@ -272,6 +272,9 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                 // 监听表格开关切换
                 admin.table.listenEdit(options.init, options.layFilter, options.id, options.modifyReload);
 
+                // 监听表格排序
+                admin.table.listenSort(options);
+
                 return newTable;
             },
             renderToolbar: function (data, elem, tableId, init) {
@@ -898,6 +901,15 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                     });
                 }
             },
+            listenSort: function (options) {
+                table.on('sort(' + options.layFilter + ')', function (obj) {
+                    let defaultWhere = options.where || {}
+                    let sortWhere = {tableOrder: obj.field + ' ' + obj.type}
+                    table.reload(options.id, {
+                        where: {...defaultWhere, ...sortWhere}
+                    });
+                });
+            }
         },
         checkMobile: function () {
             var userAgentInfo = navigator.userAgent;

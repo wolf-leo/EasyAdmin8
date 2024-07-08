@@ -88,7 +88,22 @@ class AdminController extends BaseController
         parent::initialize();
         $this->adminUid = request()->adminUserInfo['id'] ?? 0;
         $this->isDemo   = env('EASYADMIN.IS_DEMO', false);
+        $this->setOrder();
         $this->viewInit();
+    }
+
+    /**
+     * 初始化排序
+     * @return $this
+     */
+    public function setOrder(): static
+    {
+        $tableOrder = $this->request->param('tableOrder/s', '');
+        if (!empty($tableOrder)) {
+            [$orderField, $orderType] = explode(' ', $tableOrder);
+            $this->sort = [$orderField => $orderType];
+        }
+        return $this;
     }
 
     /**
