@@ -327,6 +327,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                     d.search = admin.parame(d.search, true);
                     d.searchTip = d.searchTip || '请输入' + d.title || '';
                     d.searchValue = d.searchValue || '';
+                    d.laySearch = d.laySearch || false;
                     d.searchOp = d.searchOp || '%*%';
                     d.timeType = d.timeType || 'datetime';
                     if (d.field !== false && d.search !== false) {
@@ -349,10 +350,14 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                                     }
                                     selectHtml += '<option value="' + sI + '" ' + selected + '>' + sV + '</option>/n';
                                 });
+                                var laySearch = ''
+                                if (true === d.laySearch) {
+                                    laySearch = 'lay-search'
+                                }
                                 formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<select class="layui-select" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '" >\n' +
+                                    '<select class="layui-select" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '" ' + laySearch + '>\n' +
                                     '<option value="">- 全部 -</option> \n' +
                                     selectHtml +
                                     '</select>\n' +
