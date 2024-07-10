@@ -2,7 +2,7 @@
 <span><img src="https://img.shields.io/badge/php-%3E=8.0.0-brightgreen.svg?maxAge=2592000&amp;" alt="php"></span>
 <span><img src="https://img.shields.io/badge/mysql-%3E=5.7-brightgreen.svg?maxAge=2592000&amp;color=blue" alt="MySQL"></span>
 <span><img src="https://img.shields.io/badge/thinkphp-%3E=8.0.0-brightgreen.svg?maxAge=2592000" alt="ThinkPHP"></span>
-<span><img src="https://img.shields.io/badge/layui-=2.9.0-brightgreen.svg?maxAge=2592000&amp;color=critical" alt="layui"></span>
+<span><img src="https://img.shields.io/badge/layui-%3E=2.9.0-brightgreen.svg?maxAge=2592000&amp;color=critical" alt="layui"></span>
 <span><img src="https://img.shields.io/badge/license-MIT-green?maxAge=2592000&amp;color=yellow" alt="License"></span>
 </p>
 
