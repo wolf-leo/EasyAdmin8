@@ -305,7 +305,9 @@ table样式
 }
 
 .form-search .layui-input-inline {
-    width: 170px;
+    min-width: 170px;
+    max-width: 300px;
+    width: auto;
 }
 
 .form-search .layui-input-inline input,
