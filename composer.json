@@ -29,15 +29,14 @@
         "topthink/think-filesystem": "^2.0",
         "aliyuncs/oss-sdk-php": "^2.6",
         "qcloud/cos-sdk-v5": "^2.6",
-        "alibabacloud/client": "^1.5",
         "jianyan74/php-excel": "^1.0.2",
         "doctrine/annotations": "^1.13",
         "phpoffice/phpspreadsheet": "^1.28",
         "myclabs/php-enum": "^1.8",
         "ext-json": "*",
         "qiniu/php-sdk": "v7.11.0",
-      "ext-mysqli": "*",
-      "ext-pdo": "*"
+        "ext-mysqli": "*",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "symfony/var-dumper": ">=4.2",
