@@ -20,9 +20,9 @@ return [
         CheckInstall::class,
         // 检测是否登录
         CheckLogin::class,
-        // 验证节点权限
-        CheckAuth::class,
         // 操作日志
         SystemLog::class,
+        // 验证节点权限
+        CheckAuth::class,
     ],
 ];
