@@ -9,6 +9,7 @@ use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnnotation;
 use app\Request;
 use think\App;
+use think\facade\Cache;
 use think\response\Json;
 
 /**
@@ -65,7 +66,7 @@ class Config extends AdminController
                 }
             }
             TriggerService::updateMenu();
-            TriggerService::updatesysConfig();
+            TriggerService::updateSysConfig();
         }catch (\Exception $e) {
             $this->error('保存失败');
         }

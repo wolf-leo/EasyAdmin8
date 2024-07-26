@@ -41,9 +41,9 @@ class TriggerService
      * 更新系统设置缓存
      * @return bool
      */
-    public static function updatesysConfig()
+    public static function updateSysConfig(): bool
     {
-        Cache::tag('sysconfig')->clear();
+        Cache::tag('sysConfig')->clear();
         return true;
     }
 
