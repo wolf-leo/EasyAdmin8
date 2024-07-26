@@ -10,9 +10,16 @@ define(["jquery", "easy-admin", "vue"], function ($, ea, Vue) {
                 _group = $(this).data('group')
             });
 
+            let _upload_type = upload_type || 'local'
+            $('.upload_type').addClass('layui-hide')
+            $('.' + _upload_type).removeClass('layui-hide')
+
             form.on("radio(upload_type)", function (data) {
-                app.upload_type = this.value;
+                _upload_type = this.value;
+                $('.upload_type').addClass('layui-hide')
+                $('.' + _upload_type).removeClass('layui-hide')
             });
+
 
             form.on("submit", function (data) {
                 data.field['group'] = _group
