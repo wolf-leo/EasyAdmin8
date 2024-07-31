@@ -14,7 +14,7 @@ class CommonTool
     {
         $str = preg_replace_callback('/([-_]+([a-z]{1}))/i', function ($matches) {
             return strtoupper($matches[2]);
-        },                           $str);
+        }, $str);
         return $str;
     }
 
@@ -27,7 +27,7 @@ class CommonTool
     {
         $str = preg_replace_callback('/([A-Z]{1})/', function ($matches) {
             return '_' . strtolower($matches[0]);
-        },                           $str);
+        }, $str);
         return $str;
     }
 
@@ -45,11 +45,11 @@ class CommonTool
                     break;
                 }
             }
-        } elseif (isset($_SERVER['HTTP_CLIENT_IP']) && preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER['HTTP_CLIENT_IP'])) {
+        }elseif (isset($_SERVER['HTTP_CLIENT_IP']) && preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (isset($_SERVER['HTTP_CF_CONNECTING_IP']) && preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER['HTTP_CF_CONNECTING_IP'])) {
+        }elseif (isset($_SERVER['HTTP_CF_CONNECTING_IP']) && preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER['HTTP_CF_CONNECTING_IP'])) {
             $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
-        } elseif (isset($_SERVER['HTTP_X_REAL_IP']) && preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER['HTTP_X_REAL_IP'])) {
+        }elseif (isset($_SERVER['HTTP_X_REAL_IP']) && preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER['HTTP_X_REAL_IP'])) {
             $ip = $_SERVER['HTTP_X_REAL_IP'];
         }
         return $ip;
@@ -70,7 +70,7 @@ class CommonTool
                 if (is_dir($path . DIRECTORY_SEPARATOR . $file)) {
                     $childFiles = self::readDirAllFiles($path . DIRECTORY_SEPARATOR . $file, $basePath);
                     $list       = array_merge($childFiles, $list);
-                } else {
+                }else {
                     $filePath        = $path . DIRECTORY_SEPARATOR . $file;
                     $fileName        = str_replace($basePath . DIRECTORY_SEPARATOR, '', $filePath);
                     $list[$fileName] = $filePath;
@@ -95,4 +95,11 @@ class CommonTool
         return $string;
     }
 
+
+    public static function replaceArrayString(?string $arrayString): string
+    {
+        $arrayString = str_replace('array (', '[', $arrayString);
+        $arrayString = str_replace(')', ']', $arrayString);
+        return $arrayString;
+    }
 }

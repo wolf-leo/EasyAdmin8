@@ -8,3 +8,7 @@
         </table>
     </div>
 </div>
+
+<script>
+{{notesScript}}
+</script>

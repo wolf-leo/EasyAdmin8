@@ -47,6 +47,9 @@ class Curd extends Command
     protected function execute(Input $input, Output $output)
     {
 
+        CliEcho::error('请使用系统自带的 CURD 可视化生成功能（关联功能增加中~），命令行 curd 功能不再维护！');
+        return false;
+
         $table              = $input->getOption('table');
         $controllerFilename = $input->getOption('controllerFilename');
         $modelFilename      = $input->getOption('modelFilename');
@@ -132,7 +135,7 @@ class Curd extends Command
                     }
                 }
                 CliEcho::success('自动生成CURD成功');
-            } else {
+            }else {
                 $output->info(">>>>>>>>>>>>>>>");
                 foreach ($fileList as $key => $val) {
                     $output->info($key);
@@ -151,7 +154,7 @@ class Curd extends Command
             foreach ($result as $vo) {
                 CliEcho::success($vo);
             }
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             CliEcho::error($e->getMessage());
             return false;
         }

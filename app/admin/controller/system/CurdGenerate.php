@@ -59,10 +59,49 @@ class CurdGenerate extends AdminController
                 }
                 break;
             case "add":
-                $force = $request->post('force/d', 0);
+                $tb_fields = $request->param('tb_fields');
+                $force     = $request->post('force/d', 0);
                 try {
                     $build = (new BuildCurd())->setTablePrefix($tb_prefix)->setTable($tb_name);
                     $build->setForce($force); // 强制覆盖
+                    // 新增字段类型
+                    if ($tb_fields) {
+                        foreach ($tb_fields as $tk => $tf) {
+                            if (empty($tf)) continue;
+                            $tf = array_values($tf);
+                            switch ($tk) {
+                                case 'ignore':
+                                    $build->setIgnoreFields($tf, true);
+                                    break;
+                                case 'select':
+                                    $build->setSelectFields($tf, true);
+                                    break;
+                                case 'radio':
+                                    $build->setRadioFieldSuffix($tf, true);
+                                    break;
+                                case 'checkbox':
+                                    $build->setCheckboxFieldSuffix($tf, true);
+                                    break;
+                                case 'image':
+                                    $build->setImageFieldSuffix($tf, true);
+                                    break;
+                                case 'images':
+                                    $build->setImagesFieldSuffix($tf, true);
+                                    break;
+                                case 'date':
+                                    $build->setDateFieldSuffix($tf, true);
+                                    break;
+                                case 'datetime':
+                                    $build->setDatetimeFieldSuffix($tf, true);
+                                    break;
+                                case 'editor':
+                                    $build->setEditorFields($tf, true);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
                     $build    = $build->render();
                     $fileList = $build->getFileList();
                     if (empty($fileList)) $this->error('这里什么都没有');

@@ -22,6 +22,27 @@ define(["jquery", "easy-admin", "miniTab"], function ($, ea, miniTab) {
                     $('.tableShow').removeClass('layui-hide')
                     $('.table-text').text(field.tb_prefix + field.tb_name)
                     let _data = res.data
+
+                    let fieldsHtml = ``
+                    $.each(_data.list, function (i, v) {
+                        if (v.Key != 'PRI') fieldsHtml += `
+<div class="input_tag">
+<input lay-skin="tag" class="checkbox_${v.Field}" type="checkbox" 
+title="${v.Field} (${v.Type})" value="${v.Field}" lay-filter="checkbox-filter" />
+</div>
+`
+                    })
+                    $('.table_fields').html(fieldsHtml)
+                    form.render('checkbox')
+
+                    form.on('checkbox(checkbox-filter)', function (data) {
+                        let _checked = data.elem.checked
+                        $.each($(`.checkbox_${data.value}`), function (i, v) {
+                            if (i > 0) $(this).prop('checked', false);
+                        })
+                        $(data.elem).prop('checked', _checked);
+                    });
+
                     table.render({
                         elem: '#currentTable', cols: [
                             [
@@ -47,7 +68,19 @@ define(["jquery", "easy-admin", "miniTab"], function ($, ea, miniTab) {
                         return
                     }
                     let url = $(this).attr('lay-submit')
-                    let options = {url: url, prefix: true, data: {tb_prefix: tb_prefix, tb_name: tb_name}}
+                    let fields = {}
+                    $.each($('.table_fields'), function (i, v) {
+                        let _name = $(this).data('name')
+                        let _inputs = {}
+                        $.each($(v).find('.input_tag'), function (i, v) {
+                            let checkedVal = $(this).find('input:checked').val()
+                            if (checkedVal) {
+                                _inputs[i] = checkedVal
+                            }
+                        })
+                        fields[_name] = _inputs
+                    })
+                    let options = {url: url, prefix: true, data: {tb_prefix: tb_prefix, tb_name: tb_name, tb_fields: fields}}
                     layer.confirm('确定要自动生成【' + table + '】对应的CURD?', function (index) {
                         ea.request.post(options, function (res) {
                             createStatus = true
@@ -93,6 +126,8 @@ define(["jquery", "easy-admin", "miniTab"], function ($, ea, miniTab) {
                             ea.msg.success(res.msg)
                             $('.table-text').text('')
                             $('.file-list').empty()
+                            $('.table_fields').empty()
+                            $('.tableShow').addClass('layui-hide')
                             createStatus = false
                         })
                     })

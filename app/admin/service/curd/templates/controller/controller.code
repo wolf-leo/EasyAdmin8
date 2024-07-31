@@ -13,11 +13,14 @@ use think\App;
 class {{controllerName}} extends AdminController
 {
 
+    private array $notes;
+
     public function __construct(App $app)
     {
         parent::__construct($app);
         $this->model = new {{modelFilename}}();
-        {{selectList}}
+        $this->notes = $notes = $this->model->notes;
+        $this->assign(compact('notes'));
     }
 
     {{indexMethod}}
