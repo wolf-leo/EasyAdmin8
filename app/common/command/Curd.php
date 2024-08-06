@@ -47,8 +47,8 @@ class Curd extends Command
     protected function execute(Input $input, Output $output)
     {
 
-        CliEcho::error('请使用系统自带的 CURD 可视化生成功能（关联功能增加中~），命令行 curd 功能不再维护！');
-        return false;
+        //        CliEcho::error('请使用系统自带的 CURD 可视化生成功能（关联功能增加中~），命令行 curd 功能不再维护！');
+        //        return false;
 
         $table              = $input->getOption('table');
         $controllerFilename = $input->getOption('controllerFilename');
