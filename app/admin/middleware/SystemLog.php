@@ -62,7 +62,7 @@ class SystemLog
                     }
                 }catch (\Throwable $exception) {
                 }
-                $ip   = $request->server('HTTP_X_FORWARDED_FOR', $request->ip());
+                $ip   = $request->ip();
                 $data = [
                     'admin_id'    => session('admin.id'),
                     'title'       => $title,
