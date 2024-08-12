@@ -37,7 +37,7 @@ class CheckLogin
             $expireTime = $adminUserInfo['expire_time'];
             if ($expireTime !== true && time() > $expireTime) {
                 session('admin', null);
-                $this->error('登录已过期，请重新登录', [], __url('admin/login/index'));
+                $this->error('登录已过期，请重新登录', [], __url(env('EASYADMIN.ADMIN') . '/login/index'));
             }
         }
         $request->adminUserInfo = $adminUserInfo ?: [];
