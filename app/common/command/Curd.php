@@ -47,8 +47,8 @@ class Curd extends Command
     protected function execute(Input $input, Output $output)
     {
 
-        //        CliEcho::error('请使用系统自带的 CURD 可视化生成功能（关联功能增加中~），命令行 curd 功能不再维护！');
-        //        return false;
+        CliEcho::warn('请优先使用系统自带的 CURD/CRUD 可视化生成功能（关联功能增加中~），命令行 CURD/CRUD 功能将逐步下线！');
+        CliEcho::notice(PHP_EOL);
 
         $table              = $input->getOption('table');
         $controllerFilename = $input->getOption('controllerFilename');
@@ -83,7 +83,7 @@ class Curd extends Command
                 'foreignKey'         => $foreignKey[$key] ?? null,
                 'primaryKey'         => $primaryKey[$key] ?? null,
                 'modelFilename'      => $relationModelFilename[$key] ?? null,
-                'onlyFileds'         => isset($relationOnlyFields[$key]) ? explode(",", $relationOnlyFields[$key]) : [],
+                'onlyField'          => isset($relationOnlyFields[$key]) ? explode(",", $relationOnlyFields[$key]) : [],
                 'relationBindSelect' => $relationBindSelect[$key] ?? null,
             ];
         }
@@ -114,7 +114,7 @@ class Curd extends Command
             !empty($ignoreFields) && $build = $build->setIgnoreFields($ignoreFields);
 
             foreach ($relations as $relation) {
-                $build = $build->setRelation($relation['table'], $relation['foreignKey'], $relation['primaryKey'], $relation['modelFilename'], $relation['onlyFileds'], $relation['relationBindSelect']);
+                $build = $build->setRelation($relation['table'], $relation['foreignKey'], $relation['primaryKey'], $relation['modelFilename'], $relation['onlyField'], $relation['relationBindSelect']);
             }
 
             $build    = $build->render();
