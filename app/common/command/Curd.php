@@ -47,9 +47,6 @@ class Curd extends Command
     protected function execute(Input $input, Output $output)
     {
 
-        CliEcho::warn('请优先使用系统自带的 CURD/CRUD 可视化生成功能（关联功能增加中~），命令行 CURD/CRUD 功能将逐步下线！');
-        CliEcho::notice(PHP_EOL);
-
         $table              = $input->getOption('table');
         $controllerFilename = $input->getOption('controllerFilename');
         $modelFilename      = $input->getOption('modelFilename');
@@ -89,7 +86,10 @@ class Curd extends Command
         }
 
         if (empty($table)) {
-            CliEcho::error('请设置主表');
+            if (PHP_SAPI == 'cli')
+                CliEcho::error('请设置主表');
+            else
+                $output->writeln('请设置主表');
             return false;
         }
 
@@ -123,41 +123,58 @@ class Curd extends Command
             if (!$delete) {
                 $result = $build->create();
                 if ($force) {
+                    if (PHP_SAPI == 'cli') {
+                        $output->info(">>>>>>>>>>>>>>>");
+                        foreach ($fileList as $key => $val) {
+                            $output->info($key);
+                        }
+                        $output->info(">>>>>>>>>>>>>>>");
+                        $output->info("确定强制生成上方所有文件? 如果文件存在会直接覆盖。 请输入 'yes' 按回车键继续操作: ");
+                        $line = fgets(defined('STDIN') ? STDIN : fopen('php://stdin', 'r'));
+                        if (trim($line) != 'yes') {
+                            throw new Exception("取消文件CURD生成操作");
+                        }
+                        CliEcho::success('自动生成CURD成功');
+                    }else {
+                        $output->writeln('自动生成CURD成功');
+                    }
+                }
+            }else {
+                if (PHP_SAPI == 'cli') {
                     $output->info(">>>>>>>>>>>>>>>");
                     foreach ($fileList as $key => $val) {
                         $output->info($key);
                     }
                     $output->info(">>>>>>>>>>>>>>>");
-                    $output->info("确定强制生成上方所有文件? 如果文件存在会直接覆盖。 请输入 'yes' 按回车键继续操作: ");
+                    $output->info("确定删除上方所有文件?  请输入 'yes' 按回车键继续操作: ");
                     $line = fgets(defined('STDIN') ? STDIN : fopen('php://stdin', 'r'));
                     if (trim($line) != 'yes') {
-                        throw new Exception("取消文件CURD生成操作");
+                        throw new Exception("取消删除文件操作");
+                    }
+                    $result = $build->delete();
+                    CliEcho::success('>>>>>>>>>>>>>>>');
+                    CliEcho::success('删除自动生成CURD文件成功');
+                    CliEcho::success('>>>>>>>>>>>>>>>');
+                    foreach ($result as $vo) {
+                        CliEcho::success($vo);
+                    }
+                }else {
+                    $result = $build->delete();
+                    $output->writeln('>>>>>>>>>>>>>>>');
+                    $output->writeln('删除自动生成CURD文件成功');
+                    $output->writeln('>>>>>>>>>>>>>>>');
+                    foreach ($result as $vo) {
+                        $output->writeln($vo);
                     }
                 }
-                CliEcho::success('自动生成CURD成功');
-            }else {
-                $output->info(">>>>>>>>>>>>>>>");
-                foreach ($fileList as $key => $val) {
-                    $output->info($key);
-                }
-                $output->info(">>>>>>>>>>>>>>>");
-                $output->info("确定删除上方所有文件?  请输入 'yes' 按回车键继续操作: ");
-                $line = fgets(defined('STDIN') ? STDIN : fopen('php://stdin', 'r'));
-                if (trim($line) != 'yes') {
-                    throw new Exception("取消删除文件操作");
-                }
-                $result = $build->delete();
-                CliEcho::success('>>>>>>>>>>>>>>>');
-                CliEcho::success('删除自动生成CURD文件成功');
-            }
-            CliEcho::success('>>>>>>>>>>>>>>>');
-            foreach ($result as $vo) {
-                CliEcho::success($vo);
             }
         }catch (\Exception $e) {
-            CliEcho::error($e->getMessage());
-            return false;
+            if (PHP_SAPI == 'cli')
+                CliEcho::error($e->getMessage());
+            else
+                $output->writeln($e->getMessage());
         }
+        return false;
     }
 
 

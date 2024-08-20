@@ -1125,6 +1125,7 @@ class BuildCurd
                 //                'selectList'     => $selectList,
                 'selectArrays'   => CommonTool::replaceArrayString(var_export($selectArrays, true)),
             ]);
+
         $this->fileList[$modelFile] = $modelValue;
 
         // 关联模型
@@ -1347,13 +1348,13 @@ class BuildCurd
                 continue;
             }elseif (in_array($field, $this->switchFields)) {
                 if (!empty($val['define'])) {
-                    $templateValue = "{field: '{$field}', search: 'select', selectList: {$field}List, title: '{$val['comment']}', templet: ea.table.switch}";
+                    $templateValue = "{field: '{$field}', search: 'select', selectList: notes?.{$field} || {}, title: '{$val['comment']}', templet: ea.table.switch}";
                 }else {
                     $templateValue = "{field: '{$field}', title: '{$val['comment']}', templet: ea.table.switch}";
                 }
             }elseif (in_array($val['formType'], ['select', 'checkbox', 'radio', 'switch'])) {
                 if (!empty($val['define'])) {
-                    $templateValue = "{field: '{$field}', search: 'select', selectList: {$field}List, title: '{$val['comment']}'}";
+                    $templateValue = "{field: '{$field}', search: 'select', selectList: notes?.{$field} || {}, title: '{$val['comment']}'}";
                 }else {
                     $templateValue = "{field: '{$field}', title: '{$val['comment']}'}";
                 }
@@ -1528,12 +1529,6 @@ class BuildCurd
 
     protected function formatNotesScript(): string
     {
-        $array = [];
-        foreach ($this->tableColumns as $key => $column) {
-            if (empty($column['formType'])) continue;
-            if (!in_array($column['formType'], ['select', 'switch', 'radio', 'checkbox'])) continue;
-            $array[] = '    let ' . $key . 'List = JSON.parse(\'{$notes.' . $key . '|json_encode=256|raw}\');';
-        }
-        return implode(PHP_EOL, $array);
+        return '    let notes = JSON.parse(\'{$notes|json_encode=256|raw}\');';
     }
 }

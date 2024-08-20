@@ -9,6 +9,63 @@ define(["jquery", "easy-admin", "miniTab"], function ($, ea, miniTab) {
 
     return {
         index: function () {
+
+            let element = layui.element;
+            element.on('tab(curd-hash)', function (obj) {
+                let id = obj.id
+                let _html = `
+<div style="padding: 50px 25px;">
+<fieldset class="layui-elem-field">
+  <legend>提示</legend>
+  <div class="layui-field-box">
+  <p><a class="layui-font-blue" target="_blank" rel="nofollow" href="https://edocs.easyadmin8.top/curd/command.html">命令可查询文档</a></p>
+  </div>
+</fieldset>
+<form class="layui-form layui-form-pane" action="">
+  <div class="layui-form-item">
+    <div class="layui-input-group" style="width: 100%;">
+      <div class="layui-input-split layui-input-prefix" style="width: 100px;">
+          php think curd
+      </div>
+        <input type="text" class="layui-input" name="command" placeholder="在这里输入命令参数" lay-verify="required"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+        <button class="layui-btn layui-btn-fluid layui-bg-cyan" type="button" lay-submit="system.CurdGenerate/save?type=console" lay-filter="curd-console-submit">一键执行</button>
+  </div>
+</form>
+</div>
+`
+                if (id == '2') {
+                    layer.open({
+                        title: '命令行一键生成 CRUD/CRUD',
+                        type: 1,
+                        shade: 0.3,
+                        shadeClose: false,
+                        area: ['42%', 'auto'],
+                        content: _html,
+                        success: function () {
+                            form.on('submit(curd-console-submit)', function (data) {
+                                let field = data.field
+                                let url = $(this).attr('lay-submit')
+                                let options = {url: ea.url(url), data: field}
+                                ea.msg.confirm('确认执行该操作？<br>如果命令行中存在强制覆盖或者删除将会马上执行！', function () {
+                                    ea.request.post(options, function (rs) {
+                                        let msg = rs.msg || '未知~'
+                                        layer.msg(msg.replace(/\n/g, '<br>'), {shade: 0.3, shadeClose: true})
+                                        let code = rs?.code || '-1'
+                                        if (code != '1') return
+                                    })
+                                })
+                            })
+                        },
+                        end: function () {
+                            element.tabChange('curd-hash', '1');
+                        }
+                    })
+                }
+            });
+
             miniTab.listen();
             let createStatus = false
             let tb_prefix

@@ -10,6 +10,7 @@ use app\admin\service\annotation\NodeAnnotation;
 use app\Request;
 use think\db\exception\PDOException;
 use think\exception\FileException;
+use think\facade\Console;
 use think\facade\Db;
 use think\helper\Str;
 use think\response\Json;
@@ -35,11 +36,12 @@ class CurdGenerate extends AdminController
     public function save(Request $request, string $type = ''): ?Json
     {
         if (!$request->isAjax()) $this->error();
-        $tb_prefix = $request->param('tb_prefix/s', '');
-        $tb_name   = $request->param('tb_name/s', '');
-        if (empty($tb_name)) $this->error('参数错误');
         switch ($type) {
             case "search":
+                $tb_prefix = $request->param('tb_prefix/s', '');
+                $tb_name   = $request->param('tb_name/s', '');
+                if (empty($tb_name)) $this->error('参数错误');
+
                 try {
                     $list = Db::query("SHOW FULL COLUMNS FROM {$tb_prefix}{$tb_name}");
                     $data = [];
@@ -59,6 +61,10 @@ class CurdGenerate extends AdminController
                 }
                 break;
             case "add":
+                $tb_prefix = $request->param('tb_prefix/s', '');
+                $tb_name   = $request->param('tb_name/s', '');
+                if (empty($tb_name)) $this->error('参数错误');
+
                 $tb_fields = $request->param('tb_fields');
                 $force     = $request->post('force/d', 0);
                 try {
@@ -121,6 +127,10 @@ class CurdGenerate extends AdminController
                 }
                 break;
             case "delete":
+                $tb_prefix = $request->param('tb_prefix/s', '');
+                $tb_name   = $request->param('tb_name/s', '');
+                if (empty($tb_name)) $this->error('参数错误');
+
                 try {
                     $build    = (new BuildCurd())->setTablePrefix($tb_prefix)->setTable($tb_name);
                     $build    = $build->render();
@@ -131,6 +141,19 @@ class CurdGenerate extends AdminController
                 }catch (FileException $exception) {
                     return json(['code' => -1, 'msg' => $exception->getMessage()]);
                 }
+                break;
+            case 'console':
+                $command = $request->post('command', '');
+                if (empty($command)) $this->error('请输入命令');
+                $commandExp = explode(' ', $command);
+                try {
+
+                    $output = Console::call('curd', [...$commandExp]);
+                }catch (\Throwable $exception) {
+                    $this->error($exception->getMessage() . $exception->getLine());
+                }
+                if (empty($output)) $this->error('设置错误');
+                $this->success($output->fetch());
                 break;
             default:
                 $this->error('参数错误');
