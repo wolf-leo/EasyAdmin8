@@ -34,7 +34,11 @@ window.PATH_CONFIG = PATH_CONFIG;
 window.addEventListener('load', function () {
     if ("undefined" != typeof CONFIG.AUTOLOAD_JS && CONFIG.AUTOLOAD_JS) {
         require([BASE_URL + CONFIG.CONTROLLER_JS_PATH], function (Controller) {
-            Controller[CONFIG.ACTION]()
+            if (typeof Controller[CONFIG.ACTION] == "function") {
+                Controller[CONFIG.ACTION]()
+            } else {
+                console.error(`\r\n控制器对应的JS ${CONFIG.CONTROLLER_JS_PATH} 监测异常\r\n当前Js文件中不存在监听 ${CONFIG.ACTION} 方法`)
+            }
         }, function (e) {
             console.error(e);
         });
