@@ -194,7 +194,7 @@ class BuildCurd
      * 开关组件字段
      * @var array
      */
-    protected array $switchFields = ['status'];
+    protected array $switchFields = [];
 
     /**
      * 下拉选择字段
