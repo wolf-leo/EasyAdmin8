@@ -279,40 +279,43 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
             },
             renderToolbar: function (data, elem, tableId, init) {
                 data = data || [];
-                var toolbarHtml = '';
-                $.each(data, function (i, v) {
-                    if (v === 'refresh') {
-                        toolbarHtml += ' <button class="layui-btn layui-btn-sm layuimini-btn-primary" data-table-refresh="' + tableId + '"><i class="fa fa-refresh"></i> </button>\n';
-                    } else if (v === 'add') {
-                        if (admin.checkAuth('add', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加"><i class="fa fa-plus"></i> 添加</button>\n';
-                        }
-                    } else if (v === 'delete') {
-                        if (admin.checkAuth('delete', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-url="' + init.delete_url + '" data-table-delete="' + tableId + '"><i class="fa fa-trash-o"></i> 删除</button>\n';
-                        }
-                    } else if (v === 'export') {
-                        if (admin.checkAuth('export', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success easyadmin-export-btn" data-url="' + init.export_url + '" data-table-export="' + tableId + '"><i class="fa fa-file-excel-o"></i> 导出</button>\n';
-                        }
-                    } else if (typeof v === "object") {
-                        $.each(v, function (ii, vv) {
-                            vv.class = vv.class || '';
-                            vv.icon = vv.icon || '';
-                            vv.auth = vv.auth || '';
-                            vv.url = vv.url || '';
-                            vv.method = vv.method || 'open';
-                            vv.title = vv.title || vv.text;
-                            vv.text = vv.text || vv.title;
-                            vv.extend = vv.extend || '';
-                            vv.checkbox = vv.checkbox || false;
-                            if (admin.checkAuth(vv.auth, elem)) {
-                                toolbarHtml += admin.table.buildToolbarHtml(vv, tableId);
+                if (typeof data == "object") {
+                    var toolbarHtml = '';
+                    $.each(data, function (i, v) {
+                        if (v === 'refresh') {
+                            toolbarHtml += ' <button class="layui-btn layui-btn-sm layuimini-btn-primary" data-table-refresh="' + tableId + '"><i class="fa fa-refresh"></i> </button>\n';
+                        } else if (v === 'add') {
+                            if (admin.checkAuth('add', elem)) {
+                                toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加"><i class="fa fa-plus"></i> 添加</button>\n';
                             }
-                        });
-                    }
-                });
-                return '<div>' + toolbarHtml + '</div>';
+                        } else if (v === 'delete') {
+                            if (admin.checkAuth('delete', elem)) {
+                                toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-url="' + init.delete_url + '" data-table-delete="' + tableId + '"><i class="fa fa-trash-o"></i> 删除</button>\n';
+                            }
+                        } else if (v === 'export') {
+                            if (admin.checkAuth('export', elem)) {
+                                toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success easyadmin-export-btn" data-url="' + init.export_url + '" data-table-export="' + tableId + '"><i class="fa fa-file-excel-o"></i> 导出</button>\n';
+                            }
+                        } else if (typeof v === "object") {
+                            $.each(v, function (ii, vv) {
+                                vv.class = vv.class || '';
+                                vv.icon = vv.icon || '';
+                                vv.auth = vv.auth || '';
+                                vv.url = vv.url || '';
+                                vv.method = vv.method || 'open';
+                                vv.title = vv.title || vv.text;
+                                vv.text = vv.text || vv.title;
+                                vv.extend = vv.extend || '';
+                                vv.checkbox = vv.checkbox || false;
+                                if (admin.checkAuth(vv.auth, elem)) {
+                                    toolbarHtml += admin.table.buildToolbarHtml(vv, tableId);
+                                }
+                            });
+                        }
+                    });
+                    return '<div>' + toolbarHtml + '</div>';
+                }
+                return data
             },
             renderSearch: function (cols, elem, tableId) {
                 // TODO 只初始化第一个table搜索字段，如果存在多个(绝少数需求)，得自己去扩展
