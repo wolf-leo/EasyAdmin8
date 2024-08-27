@@ -199,7 +199,7 @@ class AdminController extends BaseController
                     $where[] = [$key, $op, "%{$val}"];
             }
         }
-        return [$page, $limit, $where, $excludes];
+        return [(int)$page, (int)$limit, $where, $excludes];
     }
 
     /**
