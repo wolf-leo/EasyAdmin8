@@ -30,6 +30,7 @@ return [
         'ueditor'    => '百度编辑器(不建议使用)',
         'ckeditor'   => 'CK编辑器',
         'wangEditor' => 'wangEditor(推荐使用)',
+        'EasyMDE'    => 'EasyMDE(markdown)',
     ],
 
 ];

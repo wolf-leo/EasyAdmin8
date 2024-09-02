@@ -1363,6 +1363,10 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                                                 layer.msg(e.message)
                                             }
                                             break;
+                                        case 'EasyMDE':
+                                            var name = $(this).attr("name");
+                                            dataField[name] = (window["easyMDE" + i]).value()
+                                            break;
                                         default:
                                             var name = $(this).attr("id");
                                             dataField[name] = UE.getEditor(name).getContent();
@@ -1566,6 +1570,13 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                                     selector: '#editor_toolbar_' + $(this).attr("name"),
                                     config: {}
                                 })
+                                break;
+                            case 'EasyMDE':
+                                const easyMDEName = "easyMDE" + i
+                                window[easyMDEName] = new EasyMDE({
+                                    element: document.getElementById($(this).attr("name")),
+                                    initialValue: $(this).text(),
+                                });
                                 break;
                             default:
                                 let name = $(this).attr("name");
