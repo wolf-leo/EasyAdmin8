@@ -390,7 +390,12 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                     }
                 });
                 if (formHtml !== '') {
+
+                    // 默认显示搜索表单
                     let searchTableShow = $(elem).attr('searchTableShow') || 'true'
+                    // 默认关闭搜索表单自动补全功能
+                    let searchTableAutocomplete = $(elem).attr('searchTableAutocomplete') || 'false'
+
                     let tableSearchClass = searchTableShow === 'false' ? 'table-search-fieldset layui-hide' : 'table-search-fieldset'
                     $(elem).before('<fieldset id="searchFieldset_' + tableId + '" class="' + tableSearchClass + '">\n' +
                         '<legend>条件搜索</legend>\n' +
@@ -406,6 +411,10 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                     admin.table.listenTableSearch(tableId);
 
                     // 初始化form表单
+                    form.set({
+                        // 是否阻止 input 框默认的自动输入完成功能
+                        autocomplete: searchTableAutocomplete == 'false' ? 'off' : 'on'
+                    })
                     form.render();
                     $.each(newCols, function (ncI, ncV) {
                         if (ncV.search === 'range') {
@@ -988,7 +997,6 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
             // 监听时间控件生成
             admin.api.date();
 
-            // 初始化layui表单
             form.render();
 
             // 表格修改
@@ -1559,7 +1567,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                                         },
                                     }
                                 })
-                                let editor =window[wangEditorName]
+                                let editor = window[wangEditorName]
                                 wangEditor.createToolbar({
                                     editor,
                                     selector: '#editor_toolbar_' + $(this).attr("name"),
