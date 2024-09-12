@@ -138,6 +138,15 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>DEBUG模式</td>
+                                <td>
+                                    <button type="button" class="layui-btn layui-btn-xs {:env('APP_DEBUG')?'layui-btn-warm':'layui-bg-gray'}">
+                                        {:env('APP_DEBUG')?'开启中':'已关闭'}
+                                    </button>
+                                    <span class="layui-badge layui-bg-gray">建议线上环境关闭 APP_DEBUG</span>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>主要特色</td>
                                 <td>
                                     <span class="layui-btn layui-btn-xs layui-btn-primary layui-border">零门槛</span>
