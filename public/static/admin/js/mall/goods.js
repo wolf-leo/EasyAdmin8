@@ -59,6 +59,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 method: 'open',
                                 auth: 'stock',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
+                                visible: function (row) {
+                                    return row.status === 1;
+                                },
                             }],
                             'delete']
                     }
