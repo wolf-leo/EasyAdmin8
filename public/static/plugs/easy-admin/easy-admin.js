@@ -501,7 +501,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
 
                 return html;
             },
-            buildOperatHtml: function (operat) {
+            buildOperatHtml: function (operat, data) {
                 var html = '';
                 operat.class = operat.class || '';
                 operat.icon = operat.icon || '';
@@ -512,6 +512,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                 operat.field = operat.field || 'id';
                 operat.title = operat.title || operat.text;
                 operat.text = operat.text || operat.title;
+                operat.visible = typeof operat.visible !== 'undefined' ? operat.visible : true;
 
                 var formatOperat = operat;
                 formatOperat.icon = formatOperat.icon !== '' ? '<i class="' + formatOperat.icon + '"></i> ' : '';
@@ -524,6 +525,17 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                     formatOperat.method = formatOperat.method !== '' ? 'data-request="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
                 }
                 html = '<a ' + formatOperat.class + formatOperat.method + formatOperat.extend + '>' + formatOperat.icon + formatOperat.text + '</a>';
+
+                if ('function' === typeof formatOperat.visible) {
+                    let visible = formatOperat.visible(data);
+                    if (typeof visible === 'boolean') {
+                        if (!visible) html = ''
+                    }
+                } else {
+                    if (typeof formatOperat.visible === 'boolean') {
+                        if (!formatOperat.visible) html = ''
+                    }
+                }
 
                 return html;
             },
@@ -611,7 +623,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                                 };
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                                 if (admin.checkAuth(operat.auth, elem)) {
-                                    html += admin.table.buildOperatHtml(operat);
+                                    html += admin.table.buildOperatHtml(operat, data);
                                 }
                                 break;
                             case 'delete':
@@ -628,7 +640,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                                 };
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                                 if (admin.checkAuth(operat.auth, elem)) {
-                                    html += admin.table.buildOperatHtml(operat);
+                                    html += admin.table.buildOperatHtml(operat, data);
                                 }
                                 break;
                         }
@@ -655,7 +667,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
 
                             operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                             if (admin.checkAuth(operat.auth, elem)) {
-                                html += admin.table.buildOperatHtml(operat);
+                                html += admin.table.buildOperatHtml(operat, data);
                             }
                         });
                     }
