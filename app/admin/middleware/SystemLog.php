@@ -6,6 +6,7 @@ use app\admin\service\annotation\ControllerAnnotation;
 use app\admin\service\annotation\NodeAnnotation;
 use app\admin\service\SystemLogService;
 use app\common\traits\JumpTrait;
+use app\Request;
 use Closure;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\DocParser;
@@ -25,7 +26,7 @@ class SystemLog
         'mobile',
     ];
 
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $params = $request->param();
         if (isset($params['s'])) unset($params['s']);

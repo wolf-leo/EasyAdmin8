@@ -3,6 +3,7 @@
 namespace app\admin\middleware;
 
 use app\common\traits\JumpTrait;
+use app\Request;
 use Closure;
 use ReflectionClass;
 use ReflectionException;
@@ -14,7 +15,7 @@ class CheckLogin
     /**
      * @throws ReflectionException
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $controller = $request->controller();
         if (empty($controller)) return $next($request);

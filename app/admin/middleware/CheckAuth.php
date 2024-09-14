@@ -4,6 +4,7 @@ namespace app\admin\middleware;
 
 use app\common\service\AuthService;
 use app\common\traits\JumpTrait;
+use app\Request;
 use Closure;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -18,7 +19,7 @@ class CheckAuth
      * @throws DbException
      * @throws DataNotFoundException
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $adminUserInfo = $request->adminUserInfo;
         if (empty($adminUserInfo)) return $next($request);
