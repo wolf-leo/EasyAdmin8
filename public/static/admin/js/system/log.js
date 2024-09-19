@@ -13,7 +13,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
             var util = layui.util;
             ea.table.render({
                 init: init,
-                lineStyle: 'height: auto;',
+                lineStyle: 'height: auto;word-break: break-all;',
                 toolbar: ['refresh', 'export'],
                 cols: [[
                     {field: 'id', width: 80, title: 'ID', search: false},
