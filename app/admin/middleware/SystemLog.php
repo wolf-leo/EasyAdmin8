@@ -66,8 +66,8 @@ class SystemLog
 
                 $ip = $request->ip();
                 // 限制记录的响应内容，避免过大
-                $response = json_encode($response->getData(), JSON_UNESCAPED_UNICODE);
-                $response = mb_substr($response, 0, 3000, 'utf-8');
+                $_response = json_encode($response->getData(), JSON_UNESCAPED_UNICODE);
+                $_response = mb_substr($_response, 0, 3000, 'utf-8');
 
                 $data = [
                     'admin_id'    => session('admin.id'),
@@ -76,7 +76,7 @@ class SystemLog
                     'method'      => $method,
                     'ip'          => $ip,
                     'content'     => json_encode($params, JSON_UNESCAPED_UNICODE),
-                    'response'    => $response,
+                    'response'    => $_response,
                     'useragent'   => $request->server('HTTP_USER_AGENT'),
                     'create_time' => time(),
                 ];
