@@ -25,6 +25,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         auth: 'add',
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
                         icon: 'fa fa-plus ',
+                        extend: 'data-width="90%" data-height="95%"',
                     }],
                     'delete', 'export'],
                 cols: [[
@@ -53,6 +54,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 method: 'open',
                                 auth: 'edit',
                                 class: 'layui-btn layui-btn-xs layui-btn-success',
+                                extend: 'data-width="90%" data-height="95%"',
                             }, {
                                 text: '入库',
                                 url: init.stock_url,
