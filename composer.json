@@ -36,7 +36,8 @@
         "ext-json": "*",
         "qiniu/php-sdk": "v7.11.0",
         "ext-mysqli": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "wolf-leo/phplogviewer": "^0.05.0"
     },
     "require-dev": {
         "symfony/var-dumper": ">=4.2",

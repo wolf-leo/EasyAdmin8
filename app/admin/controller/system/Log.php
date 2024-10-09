@@ -95,4 +95,12 @@ class Log extends AdminController
         return Excel::exportData($list, $header, $fileName, 'xlsx');
     }
 
+    /**
+     * @NodeAnnotation(title="框架日志")
+     */
+    public function record(): string
+    {
+        return (new \Wolfcode\PhpLogviewer\thinkphp\LogViewer())->fetch();
+    }
+
 }

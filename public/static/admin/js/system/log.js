@@ -14,7 +14,18 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.table.render({
                 init: init,
                 lineStyle: 'height: auto;word-break: break-all;',
-                toolbar: ['refresh', 'export'],
+                toolbar: ['refresh', 'export',
+                    [{
+                        text: '框架日志',
+                        url: 'system.log/record',
+                        method: 'open',
+                        auth: 'record',
+                        class: 'layui-btn layui-btn-sm',
+                        icon: 'fa fa-book',
+                        extend: 'data-width="95%" data-height="95%"'
+                    },
+                    ]
+                ],
                 cols: [[
                     {field: 'id', width: 80, title: 'ID', search: false},
                     {field: 'month', width: 80, title: '日志月份', hide: true, search: 'time', timeType: 'month', searchValue: util.toDateString(new Date(), 'yyyy-MM')},
