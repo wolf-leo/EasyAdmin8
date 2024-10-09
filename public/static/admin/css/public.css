@@ -509,6 +509,10 @@ table样式
     .easyadmin-export-btn {
         display: none;
     }
+
+    .form-search .layui-input-inline input, .form-search .layui-input-inline select {
+        width: 100% !important;
+    }
 }
 
 /**
