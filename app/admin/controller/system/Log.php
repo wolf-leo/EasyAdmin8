@@ -22,6 +22,7 @@ use think\response\Json;
  */
 class Log extends AdminController
 {
+    protected array $ignoreLog = ['record'];
 
     public function __construct(App $app)
     {

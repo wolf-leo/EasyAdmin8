@@ -7,9 +7,11 @@ use app\admin\service\annotation\NodeAnnotation;
 use app\admin\service\SystemLogService;
 use app\common\traits\JumpTrait;
 use app\Request;
+use ReflectionClass;
 use Closure;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\DocParser;
+use ReflectionException;
 
 class SystemLog
 {
@@ -26,9 +28,13 @@ class SystemLog
         'mobile',
     ];
 
+    /**
+     * @throws ReflectionException
+     */
     public function handle(Request $request, Closure $next)
     {
-        $params = $request->param();
+        $response = $next($request);
+        $params   = $request->param();
         if (isset($params['s'])) unset($params['s']);
         foreach ($params as $key => $val) {
             in_array($key, $this->sensitiveParams) && $params[$key] = "***********";
@@ -39,9 +45,18 @@ class SystemLog
         if (env('APP_DEBUG')) {
             trace(['url' => $url, 'method' => $method, 'params' => $params,], 'requestDebugInfo');
         }
-        $response = $next($request);
         if ($request->isAjax()) {
             if (in_array($method, ['post', 'put', 'delete'])) {
+
+                $controller = $request->controller();
+                if (str_contains($controller, '.')) $controller = str_replace('.', '\\', $controller);
+                $action          = $request->action();
+                $controllerClass = 'app\\admin\\controller\\' . $controller;
+                $classObj        = new ReflectionClass($controllerClass);
+                $properties      = $classObj->getDefaultProperties();
+                $ignoreLog       = $properties['ignoreLog'] ?? [];
+                if (in_array($action, $ignoreLog)) return $response;
+
                 $title = '';
                 try {
                     $pathInfo    = $request->pathinfo();
