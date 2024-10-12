@@ -98,7 +98,7 @@ class Log extends AdminController
     /**
      * @NodeAnnotation(title="框架日志")
      */
-    public function record(): string
+    public function record(): Json|string
     {
         return (new \Wolfcode\PhpLogviewer\thinkphp\LogViewer())->fetch();
     }
