@@ -19,8 +19,10 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
         table_render_id: 'currentTableRenderId',
         upload_url: 'ajax/upload',
         upload_exts: 'doc|gif|ico|icon|jpg|mp3|mp4|p12|pem|png|rar',
-        csrf_token: window.CONFIG.CSRF_TOKEN
+        csrf_token: window.CONFIG.CSRF_TOKEN,
+        wait_submit: false
     };
+
 
     var admin = {
         config: {
@@ -112,6 +114,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                         // @todo 刷新csrf-token
                         let token = data.responseJSON ? data.responseJSON.__token__ : ''
                         init.csrf_token = token
+                        init.wait_submit = false
                     }
                 });
             }
@@ -1365,6 +1368,10 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                             url = admin.url(url);
                         }
                         form.on('submit(' + filter + ')', function (data) {
+                            if (init.wait_submit) {
+                                layer.msg('你点击太快了', {icon: 16, shade: 0.3, shadeClose: false, time: 1000})
+                                return false
+                            }
                             var dataField = data.field;
                             var editorList = document.querySelectorAll(".editor");
                             // 富文本数据处理
@@ -1392,6 +1399,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                             if (typeof preposeCallback === 'function') {
                                 dataField = preposeCallback(dataField);
                             }
+                            init.wait_submit = true
                             admin.api.form(url, dataField, ok, no, ex, refresh);
                             return false;
                         });
