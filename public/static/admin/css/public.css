@@ -253,34 +253,8 @@ table样式
 
 .layuimini-container .layui-table-tool {
     background-color: #ffffff;
-    border-bottom: none !important;
+    padding: 10px;
     padding-bottom: 15px !important;
-}
-
-.dark .layuimini-container .layui-table-tool {
-    background-color: var(--lay-color-bg-1);
-    border-bottom: none !important;
-    padding-bottom: 15px !important;
-}
-
-.layuimini-container .layui-table-view {
-    border: none !important;
-}
-
-.layuimini-container .layui-table-box {
-    border-width: 1px;
-    border-style: solid;
-    border-color: #e6e6e6;
-}
-
-.dark .layuimini-container .layui-table-box {
-    border-width: 1px;
-    border-style: solid;
-    border-color: #363636;
-}
-
-.layuimini-container .layui-table-page, .layui-table-total {
-    border-width: 0px 0 0;
 }
 
 .layuimini-container .layui-table-box .layui-table-header th {
@@ -329,10 +303,6 @@ table样式
     padding: 0;
 }
 
-
-/**
-按钮
- */
 .layuimini-container .layui-btn-success {
     color: #fff;
     background-color: #4bb368;
@@ -358,14 +328,6 @@ table样式
 
 .layuimini-container .layui-table-tool .layui-inline .layui-icon {
     font-size: 16px;
-}
-
-.layuimini-container .layui-table-tool-self {
-    right: 0px;
-}
-
-.layuimini-container .layui-table-tool {
-    padding: 10px 0px;
 }
 
 /**
