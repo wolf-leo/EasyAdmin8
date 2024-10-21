@@ -977,6 +977,14 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                 before: function () {
                 },
                 success: function (layero, index) {
+                    if (window.CONFIG.IFRAME_OPEN_TOP == '1') {
+                        let _winTopBtn = `
+                            <span class="_winTopBtn layui-btn layui-btn-primary layui-btn-xs" 
+                            style="position: absolute;top: 14px;right: 120px;color: #fff;border-color: #fff;" onclick="window.open(location.href)">
+                            新标签页打开
+                            </span>`
+                        $('.layui-layer-iframe').append(_winTopBtn)
+                    }
                 },
                 end: function () {
                     index = null
