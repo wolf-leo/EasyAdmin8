@@ -44,14 +44,13 @@ class SystemLogService
         $this->tablePrefix = Config::get('database.connections.mysql.prefix');
         $this->tableSuffix = date('Ym', time());
         $this->tableName   = "{$this->tablePrefix}system_log_{$this->tableSuffix}";
-        return $this;
     }
 
     /**
      * 获取实例对象
-     * @return SystemLogService|object
+     * @return SystemLogService
      */
-    public static function instance()
+    public static function instance(): SystemLogService
     {
         if (is_null(self::$instance)) {
             self::$instance = new static();
@@ -85,15 +84,16 @@ class SystemLogService
      */
     public function detectTable(): bool
     {
+        $_key = "system_log_{$this->tableName}_table";
         // 手动删除日志表时候 记得清除缓存
-        $isset = Cache::get("systemLog{$this->tableName}Table");
+        $isset = Cache::get($_key);
         if ($isset) return true;
         $check = Db::query("show tables like '{$this->tableName}'");
         if (empty($check)) {
             $sql = $this->getCreateSql();
             Db::execute($sql);
         }
-        Cache::set("system_log_{$this->tableName}_table", !empty($check));
+        Cache::set($_key, !empty($check));
         return true;
     }
 
