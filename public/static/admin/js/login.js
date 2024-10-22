@@ -1,4 +1,4 @@
-define(["easy-admin"], function (ea) {
+define(["jquery", "easy-admin"], function ($, ea) {
 
     return {
         index: function () {
