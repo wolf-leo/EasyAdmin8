@@ -475,6 +475,18 @@ table样式
     .form-search .layui-input-inline input, .form-search .layui-input-inline select {
         width: 100% !important;
     }
+
+    .tableSelect {
+        margin: 5px !important;
+        min-width: auto !important;
+        left: 1px !important;
+        right: 1px !important;
+    }
+
+    .tableSelect img {
+        object-fit: cover;
+        height: 100%;
+    }
 }
 
 /**
