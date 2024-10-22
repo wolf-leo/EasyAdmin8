@@ -48,15 +48,6 @@ class SystemLog
         if ($request->isAjax()) {
             if (in_array($method, ['post', 'put', 'delete'])) {
 
-                $controller = $request->controller();
-                if (str_contains($controller, '.')) $controller = str_replace('.', '\\', $controller);
-                $action          = $request->action();
-                $controllerClass = 'app\\admin\\controller\\' . $controller;
-                $classObj        = new ReflectionClass($controllerClass);
-                $properties      = $classObj->getDefaultProperties();
-                $ignoreLog       = $properties['ignoreLog'] ?? [];
-                if (in_array($action, $ignoreLog)) return $response;
-
                 $title = '';
                 try {
                     $pathInfo    = $request->pathinfo();
@@ -68,7 +59,10 @@ class SystemLog
                     if ($_name && $_controller && $_action) {
                         $className       = "app\admin\controller\\{$_name}\\{$_controller}";
                         $reflectionClass = new \ReflectionClass($className);
-                        $parser          = new DocParser();
+                        $properties      = $reflectionClass->getDefaultProperties();
+                        $ignoreLog       = $properties['ignoreLog'] ?? [];
+                        if (in_array($_action, $ignoreLog)) return $response;
+                        $parser = new DocParser();
                         $parser->setIgnoreNotImportedAnnotations(true);
                         $reader               = new AnnotationReader($parser);
                         $controllerAnnotation = $reader->getClassAnnotation($reflectionClass, ControllerAnnotation::class);
