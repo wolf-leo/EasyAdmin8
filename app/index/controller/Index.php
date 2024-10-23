@@ -14,6 +14,6 @@ class Index extends BaseController
     public function index(): Redirect
     {
         // 这是项目首页 系统默认跳转后台页面
-        return redirect('/' . Env::get('EASYADMIN.ADMIN', false));
+        return redirect('/' . Env::get('EASYADMIN.ADMIN', 'admin'));
     }
 }

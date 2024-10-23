@@ -27,6 +27,9 @@ class Install extends BaseController
         }elseif (!extension_loaded("PDO")) {
             $errorInfo = '当前未开启PDO，无法进行安装';
         }
+        if (!is_file(root_path() . '.env')) {
+            $errorInfo = '.env 文件不存在，请先配置 .env 文件';
+        }
         if (!$request->isAjax()) {
             $currentHost = '://';
             $result      = compact('errorInfo', 'currentHost', 'isInstall');
