@@ -20,7 +20,9 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
         upload_url: 'ajax/upload',
         upload_exts: 'doc|gif|ico|icon|jpg|mp3|mp4|p12|pem|png|rar',
         csrf_token: window.CONFIG.CSRF_TOKEN,
-        wait_submit: false
+        wait_submit: false,
+        xmSelectList: {},
+        xmSelectModel: {},
     };
 
 
@@ -369,6 +371,15 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                                     '</select>\n' +
                                     '</div>\n' +
                                     '</div>';
+                                break;
+                            case 'xmSelect':
+                                formHtml += '\t<div class="layui-form-item layui-inline">\n' +
+                                    '<label class="layui-form-label">' + d.title + '</label>\n' +
+                                    '<div class="layui-input-inline">\n' +
+                                    '<div id="c-' + d.fieldAlias + '" class="tableSearch-xmSelect xmSelect-' + d.fieldAlias + '" name="' + d.fieldAlias + '" data-search-op="' + d.searchOp + '"></div>\n' +
+                                    '</div>\n' +
+                                    '</div>';
+                                init.xmSelectList[d.fieldAlias] = d.selectList
                                 break;
                             case 'range':
                                 d.searchOp = 'range';
@@ -823,6 +834,17 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                 return value;
             },
             listenTableSearch: function (tableId) {
+                if (Object.keys(init.xmSelectList).length > 0) {
+                    $.each(init.xmSelectList, function (index, value) {
+                        const keysArray = Object.keys(value).map((key) => {
+                            return {name: value[key], value: key}
+                        })
+                        init.xmSelectModel[index] = xmSelect.render({
+                            el: '.xmSelect-' + index, language: 'zn', data: keysArray, name: index,
+                            filterable: true, paging: true, pageSize: 10, theme: {color: '#16b777'}, toolbar: {show: true},
+                        })
+                    })
+                }
                 form.on('submit(' + tableId + '_filter)', function (data) {
                     var dataField = data.field;
                     var formatFilter = {},
@@ -1154,6 +1176,11 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                 var tableId = $(this).attr('data-table-reset');
                 if (tableId === undefined || tableId === '' || tableId == null) {
                     tableId = init.table_render_id;
+                }
+                if (Object.keys(init.xmSelectModel).length > 0) {
+                    $.each(init.xmSelectModel, function (index, value) {
+                        init.xmSelectModel[index].setValue([])
+                    })
                 }
                 table.reload(tableId, {
                     page: {

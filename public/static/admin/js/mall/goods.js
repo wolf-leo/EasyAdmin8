@@ -42,6 +42,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'virtual_sales', width: 100, title: '虚拟销量'},
                     {field: 'sales', width: 80, title: '销量'},
                     {field: 'status', title: '状态', width: 85, selectList: {0: '禁用', 1: '启用'}, templet: ea.table.switch},
+                    // 演示多选，实际数据库并无 status2 字段，搜索后会报错
+                    {
+                        field: 'status2', title: '演示多选', width: 105, search: 'xmSelect', selectList: {1: '模拟选项1', 2: '模拟选项2', 3: '模拟选项3', 4: '模拟选项4', 5: '模拟选项5'},
+                        searchOp: 'in', templet: function (res) {
+                            // 根据自己实际项目进行输出
+                            return res?.status2 || '模拟数据'
+                        }
+                    },
                     {field: 'create_time', minWidth: 80, title: '创建时间', search: 'range'},
                     {
                         width: 250,

@@ -134,6 +134,12 @@ html.dark, body {
     color: #a29c9c;
 }
 
+.layui-form-item xm-select {
+    min-height: 30px !important;
+    line-height: 30px !important;
+    margin: 0 !important;
+}
+
 /** 按钮背景色 */
 .layuimini-container .layuimini-btn-primary {
     color: #fff;
