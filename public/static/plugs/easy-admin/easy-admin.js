@@ -1000,9 +1000,17 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                 },
                 success: function (layero, index) {
                     if (window.CONFIG.IFRAME_OPEN_TOP == '1') {
+                        let iframeUrl = ``
+                        try {
+                            let iframeId = $('iframe:eq(0)').attr('id')
+                            let iframe = document.getElementById(iframeId)
+                            iframeUrl = iframe.contentWindow.location.href
+                        } catch (e) {
+                            iframeUrl = location.href
+                        }
                         let _winTopBtn = `
                             <span class="_winTopBtn layui-btn layui-btn-primary layui-btn-xs" 
-                            style="position: absolute;top: 14px;right: 120px;color: #fff;border-color: #fff;" onclick="window.open(location.href)">
+                            style="position: absolute;top: 14px;right: 120px;color: #fff;border-color: #fff;" onclick="window.open('${iframeUrl}')">
                             新标签页打开
                             </span>`
                         $('.layui-layer-iframe').append(_winTopBtn)
