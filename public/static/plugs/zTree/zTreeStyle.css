@@ -1,0 +1,250 @@
+/**
+ * @author zhixin wen <wenzhixin2010@gmail.com>
+ * version: 1.2.0
+ * https://github.com/wenzhixin/font-awesome-zTree
+ */
+.ztree * {
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.ztree .fa, .ztree .fab, .ztree .fad, .ztree .fal, .ztree .far, .ztree .fas {
+    font-family: "Font Awesome 5 Free";
+}
+
+.ztree .ztree-search {
+    margin: 5px;
+}
+
+.ztree .ztree-search input {
+    padding: 5px 10px;
+}
+
+.ztree .ztree-search .search-clear {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.ztree li ul {
+    position: relative;
+    background: none;
+    margin-left: 12px;
+    padding-left: 0;
+}
+
+.ztree li ul.line {
+    background: none;
+}
+
+.ztree li ul::before {
+    content: "";
+    display: block;
+    width: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    border-left: 1px dotted #ccc;
+}
+
+.ztree li li {
+    position: relative;
+    padding-left: 9px;
+    line-height: inherit;
+}
+
+.ztree li li::before {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 0;
+    border-top: 1px dotted #ccc;
+    position: absolute;
+    top: 13px;
+    left: 0;
+}
+
+.ztree li .noline_open + a + ul li::before {
+    border-top: none;
+}
+
+.ztree li .noline_open + a + ul::before {
+    border-left: none;
+}
+
+.ztree li span.node_name {
+    margin-right: 6px;
+}
+
+.ztree li span.button[class$=Page] {
+    width: 15px;
+}
+
+.ztree li span.button::before {
+    display: block;
+    line-height: 26px;
+    text-align: center;
+}
+
+.ztree li span.button.roots_docu, .ztree li span.button.center_docu, .ztree li span.button.bottom_docu {
+    position: relative;
+    height: 26px;
+    padding: 0;
+}
+
+.ztree li span.button.roots_docu::before, .ztree li span.button.center_docu::before, .ztree li span.button.bottom_docu::before {
+    content: "";
+    display: block;
+    width: 18px;
+    height: 0;
+    border-top: 1px dotted #ccc;
+    position: absolute;
+    top: 13px;
+    left: 0;
+}
+
+.ztree li span.button.root_open::before, .ztree li span.button.roots_open::before, .ztree li span.button.center_open::before, .ztree li span.button.bottom_open::before, .ztree li span.button.noline_open::before {
+    content: "\f146";
+    color: #3c8dbc;
+}
+
+.ztree li span.button.root_close::before, .ztree li span.button.roots_close::before, .ztree li span.button.center_close::before, .ztree li span.button.bottom_close::before, .ztree li span.button.noline_close::before {
+    content: "\f0fe";
+    color: #3c8dbc;
+}
+
+.ztree li span.button.chk {
+    color: #6b6b6b;
+}
+
+.ztree li span.button.chk[class$=focus]::before {
+    font-weight: bold;
+}
+
+.ztree li span.button.chk[class$=disable] {
+    color: #ccc;
+}
+
+.ztree li span.button.chk.checkbox_true_full::before, .ztree li span.button.chk.checkbox_true_disable::before, .ztree li span.button.chk.checkbox_true_full_focus::before {
+    content: "\f14a";
+    font-weight: normal !important;
+    color: #16b777;
+}
+
+.ztree li span.button.chk.checkbox_false_full::before, .ztree li span.button.chk.checkbox_false_disable::before, .ztree li span.button.chk.checkbox_false_full_focus::before {
+    content: "\f0c8";
+    font-weight: normal !important;
+}
+
+.ztree li span.button.chk.checkbox_true_part::before, .ztree li span.button.chk.checkbox_true_part_focus::before, .ztree li span.button.chk.checkbox_false_part::before, .ztree li span.button.chk.checkbox_false_part_focus::before {
+    content: "\f146";
+    font-weight: bold !important;
+    color: #16B777;
+}
+
+.ztree li span.button.chk.radio_true_full::before, .ztree li span.button.chk.radio_true_disable::before, .ztree li span.button.chk.radio_true_full_focus::before {
+    content: "\f058";
+    font-weight: normal !important;
+}
+
+.ztree li span.button.chk.radio_false_full::before, .ztree li span.button.chk.radio_false_disable::before, .ztree li span.button.chk.radio_false_full_focus::before {
+    content: "\f111";
+    font-weight: normal !important;
+}
+
+.ztree li span.button.chk.radio_true_part::before, .ztree li span.button.chk.radio_true_part_focus::before, .ztree li span.button.chk.radio_false_part::before, .ztree li span.button.chk.radio_false_part_focus::before {
+    content: "\f192";
+    font-weight: normal !important;
+}
+
+.ztree li span.button.ico_open::before {
+    content: "\f07c";
+}
+
+.ztree li span.button.ico_close::before {
+    content: "\f07b";
+}
+
+.ztree li span.button.ico_docu::before {
+    content: "\f15b";
+}
+
+.ztree li span.button.add::before {
+    content: "\f067";
+}
+
+.ztree li span.button.edit::before {
+    content: "\f044";
+}
+
+.ztree li span.button.remove::before {
+    content: "\f2ed";
+}
+
+.ztree li span.button.fa_history_ico_open::before, .ztree li span.button.fa_history_ico_close::before, .ztree li span.button.fa_history_ico_docu::before {
+    font-weight: bold !important;
+    content: "\f1da";
+}
+
+.ztree li span.button.fa_tasks_ico_open::before {
+    font-weight: bold !important;
+    content: "\f233";
+}
+
+.ztree li span.button.firstPage::before {
+    content: "\f100";
+}
+
+.ztree li span.button.prevPage::before {
+    content: "\f053";
+}
+
+.ztree li span.button.nextPage::before {
+    content: "\f054";
+}
+
+.ztree li span.button.lastPage::before {
+    content: "\f101";
+}
+
+.ztree li a span.button[style="width:0px;height:0px;"]::before, .ztree li a span.button[style^=background]::before {
+    content: "";
+}
+
+.ztree li a.curSelectedNode, .ztree li a.tmpTargetNode_inner {
+    height: 26px;
+}
+
+.ztree li > a {
+    height: 26px;
+    line-height: 26px;
+}
+
+.ztree li > span {
+    height: 26px;
+}
+
+.ztree li:last-child::before {
+    height: auto;
+    top: 13px;
+    bottom: 0;
+}
+
+.ztree li span.button.switch,
+.ztree li span.button.chk,
+.ztree li a span.button,
+.ztree li span.button[class$=Page] {
+    position: relative;
+    width: 21px;
+    height: 26px;
+    background: none;
+    background-position: center center !important;
+    padding: 2px 0;
+    vertical-align: middle;
+    display: inline-block;
+    font: normal normal normal 15px/1 "Font Awesome 5 Free";
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
