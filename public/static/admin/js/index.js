@@ -1,4 +1,4 @@
-define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTab"], function ($, ea, echarts, undefined, miniAdmin, miniTab) {
+define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTab", "swiper"], function ($, ea, echarts, undefined, miniAdmin, miniTab) {
 
     return {
         index: function () {
@@ -50,6 +50,14 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
         },
         welcome: function () {
             miniTab.listen();
+
+            new Swiper('.mySwiper', {
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            })
+
             /**
              * 查看公告信息
              **/

@@ -69,16 +69,27 @@
                             <div class="layui-card-body">
                                 <div class="welcome-module">
                                     <div class="layui-row layui-col-space10">
+                                        <div class="swiper mySwiper">
+                                            <div class="swiper-wrapper">
+                                                {foreach $quicks as $value}
 
-                                        {foreach $quicks as $vo}
-                                        <div class="layui-col-xs3 layuimini-qiuck-module">
-                                            <a layuimini-content-href="{:url($vo['href'])}" data-title="{$vo['title']}">
-                                                <i class="{$vo['icon']|raw}"></i>
-                                                <cite>{$vo['title']}</cite>
-                                            </a>
+                                                <div class="swiper-slide">
+                                                    {foreach $value as $vo}
+
+                                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                                        <a layuimini-content-href="{:url($vo['href'])}" data-title="{$vo['title']}">
+                                                            <i class="{$vo['icon']|raw}"></i>
+                                                            <cite>{$vo['title']}</cite>
+                                                        </a>
+                                                    </div>
+                                                    {/foreach}
+
+                                                </div>
+                                                {/foreach}
+
+                                            </div>
                                         </div>
-                                        {/foreach}
-
+                                        <div class="swiper-pagination"></div>
                                     </div>
                                 </div>
                             </div>

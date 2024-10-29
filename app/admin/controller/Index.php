@@ -36,11 +36,9 @@ class Index extends AdminController
         $mysqlVersion = Db::query("select version() as version")[0]['version'] ?? '未知';
         $phpVersion   = phpversion();
         $versions     = compact('tpVersion', 'mysqlVersion', 'phpVersion');
-        $quicks       = SystemQuick::field('id,title,icon,href')
-            ->where(['status' => 1])
-            ->order('sort', 'desc')
-            ->limit(8)
-            ->select();
+        $quick_list   = SystemQuick::field('id,title,icon,href')
+            ->where(['status' => 1])->order('sort', 'desc')->limit(50)->select()->toArray();
+        $quicks       = array_chunk($quick_list, 8);
         $this->assign(compact('quicks', 'versions'));
         return $this->fetch();
     }
@@ -55,7 +53,7 @@ class Index extends AdminController
      */
     public function editAdmin(Request $request): string
     {
-        $id  =  $this->adminUid;
+        $id  = $this->adminUid;
         $row = (new SystemAdmin())
             ->withoutField('password')
             ->find($id);
@@ -88,7 +86,7 @@ class Index extends AdminController
      */
     public function editPassword(Request $request): string
     {
-        $id  =  $this->adminUid;
+        $id  = $this->adminUid;
         $row = (new SystemAdmin())
             ->withoutField('password')
             ->find($id);
