@@ -10,10 +10,22 @@
     <link rel="stylesheet" href="/static/common/css/insatll.css?v={:time()}" media="all">
 </head>
 <body>
-<h1><img src="/static/common/images/logo-1.png"></h1>
+<h1><img src="/static/common/images/logo-1.png" alt="" style="width: 100px;height: 100px;"></h1>
 <h2>安装 EasyAdmin8 后台系统</h2>
 <div class="content">
     <form class="layui-form layui-form-pane" action="">
+        <div class="layui-card">
+            <blockquote class="layui-elem-quote layui-font-green" style="text-align: left;padding: 5px 10px;">
+                <div class="layui-row">
+                    <div class="layui-col-lg6 layui-col-xl6 layui-col-xs6 layui-col-sm6 layui-col-xs6">
+                        官网教程：<a href="https://EasyAdmin8.top?spm=001.3e3c9d.29f459" target="_blank" class="layui-font-blue">EasyAdmin8.top</a>
+                    </div>
+                    <div class="layui-col-lg6 layui-col-xl6 layui-col-xs6 layui-col-sm6 layui-col-xs6">
+                        常见问题：<a href="https://EasyAdmin8.top/guide/question.html?spm=001.3e3c9d.29f460" target="_blank" class="layui-font-blue">Question</a>
+                    </div>
+                </div>
+            </blockquote>
+        </div>
         {if $errorInfo}
         <div class="error">
             {$errorInfo}
