@@ -3,7 +3,6 @@
 namespace app\common\service;
 
 use app\common\constants\AdminConstant;
-use EasyAdmin\tool\CommonTool;
 use think\facade\Db;
 
 /**
