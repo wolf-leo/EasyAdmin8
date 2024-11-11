@@ -10,14 +10,8 @@
  **************************提示********************************/
 
 (function () {
-    /**
-     * 编辑器资源文件根路径。它所表示的含义是：以编辑器实例化页面为当前路径，指向编辑器资源文件（即dialog等文件夹）的路径。
-     * 鉴于很多同学在使用编辑器的时候出现的种种路径问题，此处强烈建议大家使用"相对于网站根目录的相对路径"进行配置。
-     * "相对于网站根目录的相对路径"也就是以斜杠开头的形如"/myProject/ueditor/"这样的路径。
-     * 如果站点中有多个不在同一层级的页面需要实例化编辑器，且引用了同一UEditor的时候，此处的URL可能不适用于每个页面的编辑器。
-     * 因此，UEditor提供了针对不同页面的编辑器可单独配置的根路径，具体来说，在需要实例化编辑器的页面最顶部写上如下代码即可。当然，需要令此处的URL等于对应的配置。
-     * window.UEDITOR_HOME_URL = "/xxxx/xxxx/";
-     */
+    // 资源文件根路径，如果你的页面不是放在根目录下，请注意修改这个路径
+    // 通常情况下这个可以配置成静态资源CDN的地址
     window.UEDITOR_HOME_URL = "/static/plugs/ueditor/";
     var URL, CORS_URL;
     if (window.UEDITOR_HOME_URL) {
@@ -29,6 +23,8 @@
     } else {
         URL = getUEBasePath();
     }
+    // 需要能跨域的静态资源请求，主要用户弹窗页面等静态资源
+    // 通常情况下这个可以配置成静态资源CDN的地址
     if (window.UEDITOR_CORS_URL) {
         CORS_URL = window.UEDITOR_CORS_URL;
     } else if (window.__msRoot) {
@@ -38,6 +34,7 @@
     } else {
         CORS_URL = getUEBasePath();
     }
+
     /**
      * 配置项主体。注意，此处所有涉及到路径的配置别遗漏URL变量。
      */
@@ -53,9 +50,18 @@
 
         // 服务器统一请求接口路径
         serverUrl: "/" + (window.CONFIG.ADMIN || 'admin') + "/ajax/uploadUEditor",
+
+        // 从服务器获取配置
+        loadConfigFromServer: true,
+
         // 服务器统一请求头信息，会在所有请求中带上该信息
         serverHeaders: {
             // 'Authorization': 'Bearer xxx'
+        },
+        // 服务器返回参数统一转换方法，可以在这里统一处理返回参数
+        serverResponsePrepare: function (res) {
+            // console.log('serverResponsePrepare', res);
+            return res;
         },
 
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的重新定义
@@ -114,8 +120,8 @@
                 "|",
                 "imagenone",           // 图片默认
                 "imageleft",           // 图片左浮动
-                "imageright",          // 图片右浮动
                 "imagecenter",         // 图片居中
+                "imageright",          // 图片右浮动
                 "|",
                 "simpleupload",        // 单图上传
                 "insertimage",         // 多图上传
@@ -154,12 +160,15 @@
                 "print",               // 打印
                 "preview",             // 预览
                 "searchreplace",       // 查询替换
+                "|",
+                "contentimport",
                 "help",                // 帮助
             ]
         ]
 
         // 自定义工具栏按钮点击，返回 true 表示已经处理点击，会阻止默认事件
         , toolbarCallback: function (cmd, editor) {
+            // console.log('toolbarCallback',cmd, editor);
             // switch(cmd){
             //   case 'insertimage':
             //     editor.execCommand('insertHtml', '<p><img src="xxxxx" /></p>');
@@ -174,6 +183,33 @@
             //     editor.execCommand('insertHtml', '<p><a href="xxx.zip">下载文件</a></p>');
             //     return true;
             // }
+        }
+
+        // 自定义上传功能
+        , uploadServiceEnable: false
+        // 自定义上传函数，需要在这个函数中实现自定义上传逻辑
+        // type 上传类型，image 图片，video 视频，audio 音频，attachment 附件
+        // file 文件对象
+        // callback 回调函数，需要在上传完成后调用 callback.success、callback.error、callback.progress
+        // option 上传配置，其他一些未来扩展配置
+        , uploadServiceUpload: function(type, file, callback, option ) {
+            console.log('uploadServiceUpload', type, file, callback, option);
+            // var i = 0;
+            // var call = function(){
+            //     i++;
+            //     if(i > 3){
+            //         callback.success({
+            //             "state": "SUCCESS",
+            //             "url": "https://ms-assets.modstart.com/demo/modstart.jpg",
+            //         })
+            //         return;
+            //     }
+            //     setTimeout(function(){
+            //         callback.progress(0.3 * i);
+            //         call();
+            //     },500);
+            // }
+            // call();
         }
 
         // 插入图片自定义配置
@@ -316,7 +352,8 @@
         // 是否开启初始化时即全屏，默认关闭
         , fullscreen: false
 
-        //,imagePopup:true      //图片操作的浮层开关，默认打开
+        // 图片操作的浮层开关，默认打开
+        //,imagePopup:true
 
         // 自动同步编辑器要提交的数据
         //,autoSyncData:true
@@ -359,17 +396,8 @@
         // 提交到后台的数据是否包含整个html字符串
         , allHtmlEnabled: false
 
-        //insertorderedlist
         //有序列表的下拉配置,值留空时支持多语言自动识别，若配置值，则以此值为准
         //,'insertorderedlist':{
-        //      //自定的样式
-        //        'num':'1,2,3...',
-        //        'num1':'1),2),3)...',
-        //        'num2':'(1),(2),(3)...',
-        //        'cn':'一,二,三....',
-        //        'cn1':'一),二),三)....',
-        //        'cn2':'(一),(二),(三)....',
-        //     //系统自带
         //     'decimal' : '' ,         //'1,2,3...'
         //     'lower-alpha' : '' ,    // 'a,b,c...'
         //     'lower-roman' : '' ,    //'i,ii,iii...'
@@ -380,8 +408,6 @@
         //insertunorderedlist
         //无序列表的下拉配置，值留空时支持多语言自动识别，若配置值，则以此值为准
         //,insertunorderedlist : { //自定的样式
-        //    'dash' :'— 破折号', //-破折号
-        //    'dot':' 。 小圆圈', //系统自带
         //    'circle' : '',  // '○ 小圆圈'
         //    'disc' : '',    // '● 小圆点'
         //    'square' : ''   //'■ 小方块'
@@ -465,6 +491,12 @@
             "forecolor",    // 字体颜色
             // "shadowcolor", // 字体阴影
             "backcolor",   // 背景色
+            "imagenone",
+            "imageleft",
+            "imagecenter",
+            "imageright",
+            "insertimage",
+            "formula",
             // "justifyleft",    // 居左对齐
             // "justifycenter",  // 居中对齐
             // "justifyright",   // 居右对齐
@@ -513,19 +545,19 @@
         // 是否自动长高,默认true
         , autoHeightEnabled: true
 
-        //scaleEnabled
-        //是否可以拉伸长高,默认true(当开启时，自动长高失效)
+        // 是否可以拉伸长高，默认true(当开启时，自动长高失效)
         //,scaleEnabled:false
         //,minFrameWidth:800    //编辑器拖动时最小宽度,默认800
-        //,minFrameHeight:220  //编辑器拖动时最小高度,默认220
 
-        //autoFloatEnabled
-        //是否保持toolbar的位置不动,默认true
-        //,autoFloatEnabled:true
-        //浮动时工具栏距离浏览器顶部的高度，用于某些具有固定头部的页面
-        //,topOffset:30
-        //编辑器底部距离工具栏高度(如果参数大于等于编辑器高度，则设置无效)
-        //,toolbarTopOffset:400
+        // 编辑器最小高度,默认220
+        , minFrameHeight: 220
+
+        // 是否保持toolbar的位置不动,默认true
+        , autoFloatEnabled: true
+        // 浮动时工具栏距离浏览器顶部的高度，用于某些具有固定头部的页面
+        , topOffset: 0
+        // 编辑器底部距离工具栏高度(如果参数大于等于编辑器高度，则设置无效)
+        , toolbarTopOffset: 0
 
         //设置远程图片是否抓取到本地保存
         , catchRemoteImageEnable: true //设置是否抓取远程图片
@@ -595,7 +627,15 @@
         // 允许进入编辑器的 div 标签自动变成 p 标签
         , allowDivTransToP: true
         // 默认产出的数据中的color自动从rgb格式变成16进制格式
-        , rgb2Hex: true
+        , rgb2Hex: true,
+
+        tipError: function (msg, param) {
+            if (window && window.MS && window.MS.dialog) {
+                window.MS.dialog.tipError(msg);
+            } else {
+                alert(msg);
+            }
+        }
     };
 
     function getUEBasePath(docUrl, confUrl) {
