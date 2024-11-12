@@ -97,6 +97,8 @@ CREATE TABLE `ea_system_admin`
     `create_time` int(11) DEFAULT NULL COMMENT '创建时间',
     `update_time` int(11) DEFAULT NULL COMMENT '更新时间',
     `delete_time` int(11) DEFAULT NULL COMMENT '删除时间',
+    `login_type` tinyint unsigned NOT NULL DEFAULT '1' COMMENT '登录方式',
+    `ga_secret` varchar(32) NOT NULL DEFAULT '' COMMENT '谷歌验证码秘钥',
     PRIMARY KEY (`id`),
     UNIQUE KEY `username` (`username`) USING BTREE,
     KEY           `phone` (`phone`)

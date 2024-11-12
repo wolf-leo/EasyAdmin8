@@ -22,6 +22,11 @@
                         <span class="bind-password icon icon-4"></span>
                     </div>
 
+                    <div class="item layui-hide" id="gaCode">
+                        <span class="icon icon-3"></span>
+                        <input type="text" name="ga_code" placeholder="谷歌验证码" maxlength="6">
+                    </div>
+
                     {if $captcha == 1}
                     <div id="validatePanel" class="item" style="width: 137px;">
                         <input type="text" name="captcha" placeholder="请输入验证码" maxlength="4">

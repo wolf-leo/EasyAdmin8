@@ -164,10 +164,22 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
             })
         },
         editAdmin: function () {
+            let form = layui.form
+            form.on('radio(loginType-filter)', function (data) {
+                let elem = data.elem
+                let value = elem.value
+                if (value === '2') {
+                    let width = screen.width < 768 ? '85%' : '60%'
+                    ea.open('绑定谷歌验证码', ea.url('index/set2fa'), width, '75%')
+                }
+            });
             ea.listen();
         },
         editPassword: function () {
             ea.listen();
-        }
+        },
+        set2fa: function () {
+            ea.listen();
+        },
     };
 });

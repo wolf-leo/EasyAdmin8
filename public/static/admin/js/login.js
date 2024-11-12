@@ -39,6 +39,12 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         window.location = ea.url('index');
                     })
                 }, function (res) {
+                    let data = res.data
+                    if (data.is_ga_code) {
+                        let elem = $('#gaCode')
+                        elem.removeClass('layui-hide');
+                        elem.find('input').focus()
+                    }
                     ea.msg.error(res.msg, function () {
                         $('#refreshCaptcha').trigger("click");
                     });

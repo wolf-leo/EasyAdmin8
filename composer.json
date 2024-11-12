@@ -37,7 +37,8 @@
         "qiniu/php-sdk": "v7.11.0",
         "ext-mysqli": "*",
         "ext-pdo": "*",
-        "wolf-leo/phplogviewer": "^0.11.1"
+        "wolf-leo/phplogviewer": "^0.11.3",
+        "wolfcode/authenticator": "^0.0.3"
     },
     "require-dev": {
         "symfony/var-dumper": ">=4.2",
