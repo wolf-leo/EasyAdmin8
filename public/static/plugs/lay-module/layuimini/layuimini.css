@@ -700,14 +700,6 @@
     margin-top: -6px !important;
 }
 
-.layuimini-menu-left .layui-nav .layui-nav-mored,.layuimini-menu-left .layui-nav-itemed>a .layui-nav-more{
-    margin-top: -9px!important;
-}
-
-.layuimini-menu-left-zoom.layui-nav .layui-nav-mored,.layuimini-menu-left-zoom.layui-nav-itemed>a .layui-nav-more{
-    margin-top: -9px!important;
-}
-
 .layuimini-menu-left .layui-nav-more:before,.layuimini-menu-left-zoom .layui-nav-more:before {
     content: "\e61a";
 }
