@@ -141,7 +141,7 @@ class Index extends AdminController
             $old_secret = $row->ga_secret;
             $secret     = $ga->createSecret(32);
             $ga_title   = $this->isDemo ? 'EasyAdmin8演示环境' : '可自定义修改显示标题';
-            $dataUri    = $ga->getQRCode($ga_title, $secret)->getDataUri();
+            $dataUri    = $ga->getQRCode($ga_title, $secret);
             $this->assign(compact('row', 'dataUri', 'old_secret', 'secret'));
             return $this->fetch();
         }
