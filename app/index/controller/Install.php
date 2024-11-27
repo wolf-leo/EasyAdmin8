@@ -91,12 +91,11 @@ class Install extends BaseController
         $installPath = config_path() . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR;
         $sqlPath     = file_get_contents($installPath . 'sql' . DIRECTORY_SEPARATOR . 'install.sql');
         $sqlArray    = $this->parseSql($sqlPath, $config['prefix'], 'ea_');
-        $conn        = mysqli_connect($config['host'], $config['username'], $config['password'], null, $config['port']);
+        $dsn         = $this->pdoDsn($config, true);
         try {
-            mysqli_set_charset($conn, $config['charset']);
-            mysqli_select_db($conn, $config['database']);
+            $pdo = new \PDO($dsn, $config['username'] ?? 'root', $config['password'] ?? '');
             foreach ($sqlArray as $sql) {
-                mysqli_query($conn, $sql);
+                $pdo->query($sql);
             }
             $_password = password($password);
             $tableName = 'system_admin';
@@ -108,9 +107,8 @@ class Install extends BaseController
                 'update_time' => time()
             ];
             foreach ($update as $_k => $_up) {
-                mysqli_query($conn, "UPDATE {$config['prefix']}{$tableName} SET {$_k} = '{$_up}' WHERE id = 1");
+                $pdo->query("UPDATE {$config['prefix']}{$tableName} SET {$_k} = '{$_up}' WHERE id = 1");
             }
-            mysqli_close($conn);
             //  处理安装文件
             !is_dir($installPath) && @mkdir($installPath);
             !is_dir($installPath . 'lock' . DIRECTORY_SEPARATOR) && @mkdir($installPath . 'lock' . DIRECTORY_SEPARATOR);
@@ -161,11 +159,11 @@ class Install extends BaseController
 
     protected function createDatabase($database, $config): bool
     {
+        $dsn = $this->pdoDsn($config);
         try {
-            $con = mysqli_connect($config['host'] ?? '127.0.0.1', $config['username'] ?? 'root', $config['password'] ?? '', null, $config['port'] ?? '');
-            mysqli_query($con, "CREATE DATABASE IF NOT EXISTS `{$database}` DEFAULT CHARACTER SET {$config['charset']} COLLATE=utf8mb4_general_ci");
-            mysqli_close($con);
-        }catch (\Throwable $e) {
+            $pdo = new \PDO($dsn, $config['username'] ?? 'root', $config['password'] ?? '');
+            $pdo->query("CREATE DATABASE IF NOT EXISTS `{$database}` DEFAULT CHARACTER SET {$config['charset']} COLLATE=utf8mb4_general_ci");
+        }catch (\PDOException $e) {
             return false;
         }
         return true;
@@ -187,19 +185,32 @@ class Install extends BaseController
 
     protected function checkConnect(array $config): ?bool
     {
+        $dsn = $this->pdoDsn($config);
         try {
-            $con          = mysqli_connect($config['host'] ?? '127.0.0.1', $config['username'] ?? 'root', $config['password'] ?? '', null, $config['port'] ?? '');
-            $res          = mysqli_query($con, 'select VERSION()');
-            $mysqlVersion = mysqli_fetch_row($res);
-            mysqli_close($con);
-            $_version = $mysqlVersion[0] ?? 0;
+            $pdo      = new \PDO($dsn, $config['username'] ?? 'root', $config['password'] ?? '');
+            $res      = $pdo->query('select VERSION()');
+            $_version = $res->fetch()[0] ?? 0;
             if (version_compare($_version, '5.7.0', '<')) {
                 $this->error('mysql版本最低要求 5.7.x');
             }
-        }catch (\mysqli_sql_exception $e) {
+        }catch (\PDOException $e) {
             $this->error($e->getMessage());
         }
         return true;
     }
 
+    /**
+     * @param array $config
+     * @param bool $needDatabase
+     * @return string
+     */
+    protected function pdoDsn(array $config, bool $needDatabase = false): string
+    {
+        $host     = $config['host'] ?? '127.0.0.1';
+        $database = $config['database'] ?? '';
+        $port     = $config['port'] ?? '3306';
+        $charset  = $config['charset'] ?? 'utf8mb4';
+        if ($needDatabase) return "mysql:host=$host;port=$port;dbname=$database;charset=$charset";
+        return "mysql:host=$host;port=$port;charset=$charset";
+    }
 }
