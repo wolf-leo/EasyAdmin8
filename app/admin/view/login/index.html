@@ -41,7 +41,7 @@
                     <a href="javascript:" class="forget-password">忘记密码？</a>
                 </div>
                 <div class="layui-form-item" style="text-align:center; width:100%;height:100%;margin:0px;">
-                    <button class="login-btn" lay-submit>立即登录</button>
+                    <button type="button" class="login-btn" lay-submit>立即登录</button>
                 </div>
             </form>
         </div>
