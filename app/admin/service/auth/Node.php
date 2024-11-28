@@ -67,6 +67,12 @@ class Node
 
                 // 遍历读取所有方法的注释的参数信息
                 foreach ($methods as $method) {
+
+                    // 忽略的节点
+                    $properties = $reflectionClass->getDefaultProperties();
+                    $ignoreNode = $properties['ignoreNode'] ?? [];
+                    if (!empty($ignoreNode)) if (in_array($method->name, $ignoreNode)) continue;
+
                     // 读取NodeAnnotation的注解
                     $nodeAnnotation = $reader->getMethodAnnotation($method, NodeAnnotation::class);
                     if (!empty($nodeAnnotation)) {
