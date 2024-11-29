@@ -399,6 +399,15 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                                     '</div>\n' +
                                     '</div>';
                                 break;
+                            case 'date':
+                                d.searchOp = '=';
+                                formHtml += `<div class="layui-form-item layui-inline">
+                                                <label class="layui-form-label">${d.title}</label>
+                                                <div class="layui-input-inline">
+                                                    <input data-date data-date-type="date" id="c-${d.fieldAlias}" name="${d.fieldAlias}" data-search-op="${d.searchOp}"  value="${d.searchValue}" placeholder="${d.searchTip}" class="layui-input">
+                                                </div>
+                                            </div>`
+                                break;
                         }
                         newCols.push(d);
                     }
