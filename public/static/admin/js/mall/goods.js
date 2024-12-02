@@ -57,6 +57,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         templet: ea.table.tool,
                         operat: [
                             [{
+                                templet: function (d) {
+                                    return `<button type="button" class="layui-btn layui-btn-xs">自定义 ${d.id}</button>`
+                                }
+                            }, {
                                 text: '编辑',
                                 url: init.edit_url,
                                 method: 'open',

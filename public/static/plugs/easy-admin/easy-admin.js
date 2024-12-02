@@ -672,6 +672,12 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
 
                         $.each(item, function (i, operat) {
                             if (typeof operat !== 'object') return
+
+                            if ('function' === typeof operat.templet) {
+                                html += operat.templet(data);
+                                return true;
+                            }
+
                             operat.class = operat.class || '';
                             operat.icon = operat.icon || '';
                             operat.auth = operat.auth || '';
