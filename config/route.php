@@ -42,4 +42,6 @@ return [
     'default_jsonp_handler' => 'jsonpReturn',
     // 默认JSONP处理方法
     'var_jsonp_handler'     => 'callback',
+    // 操作方法的参数绑定方式 route get param
+    'action_bind_param'     => 'param',
 ];
