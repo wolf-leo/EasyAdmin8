@@ -56,8 +56,8 @@ class SystemLog
                     $pathInfoExp = explode('.', $pathInfoExp[0] ?? '');
                     $_name       = $pathInfoExp[0] ?? '';
                     $_controller = ucfirst($pathInfoExp[1] ?? '');
-                    if ($_name && $_controller && $_action) {
-                        $className       = "app\admin\controller\\{$_name}\\{$_controller}";
+                    $className   = $_controller ? "app\admin\controller\\{$_name}\\{$_controller}" : "app\admin\controller\\{$_name}";
+                    if ($_name && $_action) {
                         $reflectionClass = new \ReflectionClass($className);
                         $properties      = $reflectionClass->getDefaultProperties();
                         $ignoreLog       = $properties['ignoreLog'] ?? [];
