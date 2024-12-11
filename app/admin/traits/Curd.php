@@ -88,8 +88,10 @@ trait Curd
     /**
      * @NodeAnnotation(title="删除")
      */
-    public function delete($id): void
+    public function delete(Request $request): void
     {
+        // 如果不是id作为主键 请在对应的控制器中覆盖重写
+        $id = $request->param('id', []);
         $this->checkPostRequest();
         $row = $this->model->whereIn('id', $id)->select();
         $row->isEmpty() && $this->error('数据不存在');
