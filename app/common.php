@@ -19,6 +19,7 @@ if (!function_exists('__url')) {
      */
     function __url(string $url = '', array $vars = [], bool $suffix = true, bool $domain = false): string
     {
+        if (filter_var($url, FILTER_VALIDATE_URL)) return $url;
         return url($url, $vars, $suffix, $domain)->build();
     }
 }
