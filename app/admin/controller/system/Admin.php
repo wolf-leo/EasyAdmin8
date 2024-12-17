@@ -153,7 +153,7 @@ class Admin extends AdminController
     public function delete(Request $request): void
     {
         $this->checkPostRequest();
-        $id  = $request->post('id');
+        $id  = $request->param('id');
         $row = $this->model->whereIn('id', $id)->select();
         $row->isEmpty() && $this->error('数据不存在');
         $id == AdminConstant::SUPER_ADMIN_ID && $this->error('超级管理员不允许修改');

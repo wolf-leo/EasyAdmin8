@@ -135,7 +135,7 @@ class Menu extends AdminController
     public function delete(Request $request): void
     {
         $this->checkPostRequest();
-        $id  = $request->post('id');
+        $id  = $request->param('id');
         $row = $this->model->whereIn('id', $id)->select();
         empty($row) && $this->error('数据不存在');
         try {
