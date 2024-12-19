@@ -1,21 +1,23 @@
 <div align="center" dir="auto">
 <img alt="log" src="/public/static/common/images/logo-8.png" />
 
-<span><img src="https://img.shields.io/badge/php-%3E=8.0.0-brightgreen.svg?style=for-the-badge&logo=php&colorB=ff69b4" alt="php"></span>
-<span><img src="https://img.shields.io/badge/mysql-%3E=5.7-brightgreen.svg?style=for-the-badge&logo=mysql&colorB=blue" alt="MySQL"></span>
-<span><img src="https://img.shields.io/badge/thinkphp-%3E=8.0.0-brightgreen.svg?style=for-the-badge&logo=thinkphp" alt="ThinkPHP"></span>
-<span><img src="https://img.shields.io/badge/layui-%3E=2.9.0-brightgreen.svg?style=for-the-badge&logo=layui&colorB=orange" alt="layui"></span>
-<span><img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge&logo=license&colorB=purple" alt="License"></span>
+<p>
+<img src="https://img.shields.io/badge/php-%3E=8.0.0-brightgreen.svg?style=for-the-badge&logo=php&colorB=ff69b4" alt="php">
+<img src="https://img.shields.io/badge/mysql-%3E=5.7-brightgreen.svg?style=for-the-badge&logo=mysql&colorB=blue" alt="MySQL">
+<img src="https://img.shields.io/badge/thinkphp-%3E=8.0.0-brightgreen.svg?style=for-the-badge&logo=thinkphp" alt="ThinkPHP">
+<img src="https://img.shields.io/badge/layui-%3E=2.9.0-brightgreen.svg?style=for-the-badge&logo=layui&colorB=orange" alt="layui">
+<img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge&logo=license&colorB=purple" alt="License">
+</p>
 
 </div>
 
 ## `EasyAdmin8`所有版本 (当前项目为`ThinkPHP`版本)
 
-|          |                                Github                                |                               Gitee                               |
-|----------|:--------------------------------------------------------------------:|:-----------------------------------------------------------------:|
-| ThinkPHP |         [EasyAdmin8](https://github.com/wolf-leo/EasyAdmin8)         |         [EasyAdmin8](https://gitee.com/wolf18/EasyAdmin8)         |
-| Laravel  | [EasyAdmin8-Laravel](https://github.com/wolf-leo/EasyAdmin8-Laravel) | [EasyAdmin8-Laravel](https://gitee.com/wolf18/EasyAdmin8-Laravel) |
-| webman   |  [EasyAdmin8-webman](https://github.com/wolf-leo/EasyAdmin8-webman)  |  [EasyAdmin8-webman](https://gitee.com/wolf18/EasyAdmin8-webman)  |
+|          |                                 Github                                 |                                 Gitee                                 |
+|----------|:----------------------------------------------------------------------:|:---------------------------------------------------------------------:|
+| ThinkPHP |         [EasyAdmin8](https://github.com/EasyAdmin8/EasyAdmin8)         |         [EasyAdmin8](https://gitee.com/EasyAdmin8/EasyAdmin8)         |
+| Laravel  | [EasyAdmin8-Laravel](https://github.com/EasyAdmin8/EasyAdmin8-Laravel) | [EasyAdmin8-Laravel](https://gitee.com/EasyAdmin8/EasyAdmin8-Laravel) |
+| webman   |  [EasyAdmin8-webman](https://github.com/EasyAdmin8/EasyAdmin8-webman)  |  [EasyAdmin8-webman](https://gitee.com/EasyAdmin8/EasyAdmin8-webman)  |
 
 ## 项目介绍
 
@@ -50,11 +52,11 @@ if [ -f /usr/bin/curl ];then curl -sSO https://easyadmin8.top/auto-install-EasyA
 ```
 1.下载安装包
 
-  git clone https://github.com/wolf-leo/EasyAdmin8
+  git clone https://github.com/EasyAdmin8/EasyAdmin8
 
   或者
 
-  git clone https://gitee.com/wolf18/EasyAdmin8
+  git clone https://gitee.com/EasyAdmin8/EasyAdmin8
 
 2.安装依赖包（确保 PHP 版本 >= 8.0）
 
@@ -75,7 +77,7 @@ if [ -f /usr/bin/curl ];then curl -sSO https://easyadmin8.top/auto-install-EasyA
 
 ## CURD命令大全
 
-> 参考 [CURD命令大全](CURD.md)
+> 参考 [CURD命令大全](https://edocs.easyadmin8.top/curd/command.html)
 
 ## 常见问题
 
@@ -97,7 +99,7 @@ if [ -f /usr/bin/curl ];then curl -sSO https://easyadmin8.top/auto-install-EasyA
 
 ## 相关文档
 
-* [ThinkPHP 8.0](https://doc.thinkphp.cn/v8_0)
+* [ThinkPHP 8.1](https://doc.thinkphp.cn)
 
 * [EasyAdmin](http://easyadmin.99php.cn/docs)
 
